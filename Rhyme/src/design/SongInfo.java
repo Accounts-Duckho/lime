@@ -1,30 +1,30 @@
 package design;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
 public class SongInfo {
-	JPanel songinfo = new JPanel(new GridLayout(2, 1));
+	JPanel songinfo = new JPanel();
 	private void load(boolean b) {
 		if (b) {
+			songinfo.setLayout(new GridLayout(3,1));
 			String singer="에이핑크";
 			String song="So Long";
 			JLabel showsinger = new JLabel(singer);
 			JLabel showsong = new JLabel(song);
-			showsinger.setHorizontalAlignment(JLabel.LEFT);
-			showsinger.setVerticalAlignment(JLabel.TOP);
-			showsinger.setFont(new Font("Nanum", Font.PLAIN, 14));
 			showsong.setHorizontalAlignment(JLabel.RIGHT);
-			showsong.setVerticalAlignment(JLabel.BOTTOM);
+			showsinger.setFont(new Font("Nanum", Font.PLAIN, 14));
 			showsong.setFont(new Font("Nanum", Font.PLAIN, 14));
 			songinfo.add(showsinger);
 			songinfo.add(showsong);
-			songinfo.setLocation(250, 100);
-			MainFrame.main.setLayout(new GridLayout(6,1));
+			songinfo.add(new JSeparator(JSeparator.HORIZONTAL)); // 구분선 
+			songinfo.setPreferredSize(new Dimension(230,70));
 			MainFrame.main.add(songinfo);
 		}
 	}
