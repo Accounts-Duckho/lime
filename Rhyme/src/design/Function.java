@@ -1,5 +1,6 @@
 package design;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -15,7 +16,7 @@ public class Function {
 		func.setPreferredSize(new Dimension(120, 30));
 		function.setBackground(Color.WHITE);
 		function.setForeground(Color.BLACK);
-		MainFrame.main.add(func);
+		MainFrame.main.add(func, BorderLayout.SOUTH);
 	}
 	public void loadFunc(boolean b) {
 		load(b);

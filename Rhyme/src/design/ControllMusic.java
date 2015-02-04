@@ -1,5 +1,6 @@
 package design;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -16,7 +17,7 @@ public class ControllMusic {
 	private void load(boolean b) {
 		if (b) {
 			ctr_music.setLayout(new BoxLayout(ctr_music, BoxLayout.X_AXIS));
-			ctr_music.setPreferredSize(new Dimension(240,150));
+			ctr_music.setPreferredSize(new Dimension(240,100));
 			/* previous */
 			JButton previous_btn=new JButton(); // ¿Ã¿¸∞Ó
 			previous_btn.setBackground(Color.WHITE);
@@ -45,7 +46,7 @@ public class ControllMusic {
 			next_btn.setMaximumSize(new Dimension(30,150));
 			ctr_music.add(next_btn);
 			ctr_music.setPreferredSize(new Dimension(240,100));
-			MainFrame.main.add(ctr_music);
+			MainFrame.main.add(ctr_music, BorderLayout.CENTER);
 		}
 	}
 

@@ -1,7 +1,7 @@
 package design;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -27,7 +27,7 @@ public class MainFrame {
         initialized = true;
         // MainFrame Size 
         main.setSize(250, 250);
-        main.setLayout(new FlowLayout()); // use East, North, West, South, Center 
+        main.setLayout(new BorderLayout()); // use East, North, West, South, Center 
         main.setTitle("이건 너의 라임");
         Dimension windowSize = main.getSize();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -47,7 +47,7 @@ public class MainFrame {
         new MainFrame().setVisible(true);
         new SongInfo().loadSongInfo(true);
         new ControllMusic().loadCtrMusic(true);
+        new Function().loadFunc(true); // load before ctrvol
         new ControllVolume().loadCtrVolume(true);
-        new Function().loadFunc(true);
     }
 }

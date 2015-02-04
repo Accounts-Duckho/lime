@@ -1,6 +1,6 @@
 package design;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -25,7 +25,7 @@ public class SongInfo {
 			songinfo.add(showsong);
 			songinfo.add(new JSeparator(JSeparator.HORIZONTAL)); // ±¸ºÐ¼± 
 			songinfo.setPreferredSize(new Dimension(230,70));
-			MainFrame.main.add(songinfo);
+			MainFrame.main.add(songinfo, BorderLayout.NORTH);
 		}
 	}
 	public void loadSongInfo(boolean b) {
