@@ -41,5 +41,3 @@ public class Function {
 		load(b);
 	}
 }
-
-// It would be perfect by JungSang ~~

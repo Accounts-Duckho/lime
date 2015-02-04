@@ -18,7 +18,7 @@ public class ControllMusic {
 		if (b) {
 			ctr_music.setLayout(new BoxLayout(ctr_music, BoxLayout.X_AXIS));
 			/* previous */
-			JButton previous_btn=new JButton(); // Ã€ÃŒÃ€Ã¼Â°Ã®
+			JButton previous_btn=new JButton(); // ÀÌÀü°î
 			previous_btn.setBackground(Color.WHITE);
 			previous_btn.setForeground(Color.BLACK);
 			previous_btn.setMaximumSize(new Dimension(30,150));
@@ -31,15 +31,15 @@ public class ControllMusic {
 			onoff_btn.setForeground(Color.BLACK);
 			onoff_btn.setMaximumSize(new Dimension(150,150));
 			if (playing != 1) {
-				onoff_btn.setText("Ã€Ã§Â»Ã½");
+				onoff_btn.setText("Àç»ý");
 			} else {
-				onoff_btn.setText("Â¸Ã˜ÃƒÃ£");
+				onoff_btn.setText("¸ØÃã");
 			}
 			ctr_music.add(onoff_btn);
 			// make some space
 			ctr_music.add(Box.createRigidArea(new Dimension(20, 0)));
 			/* next */
-			JButton next_btn=new JButton(); // Â´Ã™Ã€Â½Â°Ã®
+			JButton next_btn=new JButton(); // ´ÙÀ½°î
 			next_btn.setBackground(Color.WHITE);
 			next_btn.setForeground(Color.BLACK);
 			next_btn.setMaximumSize(new Dimension(30,150));

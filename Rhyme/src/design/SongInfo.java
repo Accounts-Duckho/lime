@@ -14,8 +14,8 @@ public class SongInfo {
 	private void load(boolean b) {
 		if (b) {
 			songinfo.setLayout(new GridLayout(3,1));
-			String singer="Â¿Â¡Ã€ÃŒÃ‡ÃŽÃ…Â©";
-			String song="So Long";
+			String singer="ÇÑ±¹ »ç¶÷";
+			String song="¾Ö±¹°¡";
 			JLabel showsinger = new JLabel(singer);
 			JLabel showsong = new JLabel(song);
 			showsong.setHorizontalAlignment(JLabel.RIGHT);
