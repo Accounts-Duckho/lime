@@ -13,7 +13,6 @@ public class Function {
 		JPanel func = new JPanel();
 		JButton function = new JButton("Function Area");
 		func.add(function);
-		func.setPreferredSize(new Dimension(120, 30));
 		function.setBackground(Color.WHITE);
 		function.setForeground(Color.BLACK);
 		MainFrame.main.add(func, BorderLayout.SOUTH);
