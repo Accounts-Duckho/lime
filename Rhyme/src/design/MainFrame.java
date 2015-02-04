@@ -1,3 +1,6 @@
+/*
+ * This is made by duckho
+ */
 package design;
 
 import java.awt.BorderLayout;
@@ -28,7 +31,7 @@ public class MainFrame {
         // MainFrame Size 
         main.setSize(250, 250);
         main.setLayout(new BorderLayout()); // use East, North, West, South, Center 
-        main.setTitle("이건 너의 라임");
+        main.setTitle("LimE");
         Dimension windowSize = main.getSize();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         // Make screen position center 

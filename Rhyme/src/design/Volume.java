@@ -1,3 +1,6 @@
+/*
+ * This frame is made by Soo Man
+ */
 package design;
 
 import java.awt.Dimension;
@@ -9,7 +12,7 @@ import javax.swing.JScrollBar;
 class ControllVolume {
 	private void load(boolean b) {
 		if (b) {
-			JFrame volume = new JFrame("º¼·ýÁ¶Àý");
+			JFrame volume = new JFrame("Control Volume");
 			volume.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 			volume.setResizable(false);
 			volume.setSize(250, 60);

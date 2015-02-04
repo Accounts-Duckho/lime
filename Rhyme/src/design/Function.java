@@ -1,3 +1,6 @@
+/*
+ * This is made by JungSang
+ */
 package design;
 
 import java.awt.BorderLayout;

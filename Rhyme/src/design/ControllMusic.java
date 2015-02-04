@@ -1,3 +1,6 @@
+/*
+ * This is made by Duckho
+ */
 package design;
 
 import java.awt.BorderLayout;
@@ -18,7 +21,7 @@ public class ControllMusic {
 		if (b) {
 			ctr_music.setLayout(new BoxLayout(ctr_music, BoxLayout.X_AXIS));
 			/* previous */
-			JButton previous_btn=new JButton(); // ¿Ã¿¸∞Ó
+			JButton previous_btn=new JButton(); // Play Previous song
 			previous_btn.setBackground(Color.WHITE);
 			previous_btn.setForeground(Color.BLACK);
 			previous_btn.setMaximumSize(new Dimension(30,150));
@@ -31,15 +34,15 @@ public class ControllMusic {
 			onoff_btn.setForeground(Color.BLACK);
 			onoff_btn.setMaximumSize(new Dimension(150,150));
 			if (playing != 1) {
-				onoff_btn.setText("¿Áª˝");
+				onoff_btn.setText("Play"); // Play song
 			} else {
-				onoff_btn.setText("∏ÿ√„");
+				onoff_btn.setText("Pause"); // Stop song
 			}
 			ctr_music.add(onoff_btn);
 			// make some space
 			ctr_music.add(Box.createRigidArea(new Dimension(20, 0)));
 			/* next */
-			JButton next_btn=new JButton(); // ¥Ÿ¿Ω∞Ó
+			JButton next_btn=new JButton(); // Play Next song
 			next_btn.setBackground(Color.WHITE);
 			next_btn.setForeground(Color.BLACK);
 			next_btn.setMaximumSize(new Dimension(30,150));
