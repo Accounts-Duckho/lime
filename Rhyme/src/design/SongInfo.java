@@ -14,7 +14,7 @@ public class SongInfo {
 	private void load(boolean b) {
 		if (b) {
 			songinfo.setLayout(new GridLayout(3,1));
-			String singer="¿¡ÀÌÇÎÅ©";
+			String singer="Â¿Â¡Ã€ÃŒÃ‡ÃÃ…Â©";
 			String song="So Long";
 			JLabel showsinger = new JLabel(singer);
 			JLabel showsong = new JLabel(song);
@@ -23,8 +23,7 @@ public class SongInfo {
 			showsong.setFont(new Font("Nanum", Font.PLAIN, 14));
 			songinfo.add(showsinger);
 			songinfo.add(showsong);
-			songinfo.add(new JSeparator(JSeparator.HORIZONTAL)); // ±¸ºĞ¼± 
-			songinfo.setPreferredSize(new Dimension(230,70));
+			songinfo.add(new JSeparator(JSeparator.HORIZONTAL)); // Â±Â¸ÂºÃÂ¼Â± 
 			MainFrame.main.add(songinfo, BorderLayout.NORTH);
 		}
 	}
