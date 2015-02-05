@@ -1,5 +1,6 @@
 /*
- * This frame is made by Soo Man
+ * Author : SooMan
+ * Edited by Duckho
  */
 package design;
 
@@ -9,22 +10,26 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JScrollBar;
 
-class ControllVolume {
+class ControllVolume extends JFrame {
+private static final long serialVersionUID = 1L;
 	private void load(boolean b) {
 		if (b) {
-			JFrame volume = new JFrame("Control Volume");
-			volume.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			volume.setResizable(false);
-			volume.setSize(250, 60);
-			JScrollBar ctr_volume = new JScrollBar(JScrollBar.HORIZONTAL, 0, 1,
-					0, 10);
-			volume.add(ctr_volume);
-			volume.setVisible(true);
-			Dimension windowSize = volume.getSize();
+			this.setTitle("Control Volume");
+			this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // this option means exit only this
+			this.setResizable(false);
+			this.setSize(250, 60);
+			this.setVisible(true);
+			Dimension windowSize = this.getSize();
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-			// Make screen position center 
-			volume.setLocation(screenSize.width / 2 - windowSize.width/2,
+			this.setLocation(screenSize.width / 2 - windowSize.width/2,
 					screenSize.height/2 + (windowSize.height*5)/2);
+			
+			/* make */
+			JScrollBar volume_bar = new JScrollBar(JScrollBar.HORIZONTAL, 0, 1,
+					0, 10);
+			
+			/* add */
+			this.add(volume_bar);
 		}
 	}
 	public void loadCtrVolume(boolean b) {
