@@ -4,6 +4,7 @@
 package design;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -46,6 +47,7 @@ class MainFrame extends JFrame {
 		// Make screen position center
 		this.setLocation(screenSize.width / 2 - windowSize.width / 2,
 				screenSize.height / 2 - windowSize.height / 2);
+		
 		/* load */
 		info.loadSongInfo(true);
 		cm.loadCtrMusic(true);
@@ -55,6 +57,7 @@ class MainFrame extends JFrame {
 		this.add(info, BorderLayout.NORTH);
 		this.add(cm, BorderLayout.CENTER);
 		this.add(f, BorderLayout.SOUTH);
+		
 	}
 
 	/* Hide and Show */

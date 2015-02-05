@@ -5,7 +5,6 @@
 package design;
 
 import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -13,7 +12,6 @@ import javax.swing.JPanel;
 public class Function extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private void load(boolean b) {
-		this.setPreferredSize(new Dimension(120, 30));
 		/* make buttons */
 		JButton load_btn = new JButton("+");// load song
 		JButton list_btn = new JButton("L");// play list
