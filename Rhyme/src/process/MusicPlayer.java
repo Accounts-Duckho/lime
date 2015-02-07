@@ -20,7 +20,9 @@ import design.MusicController;
 import design.SongInfo;
 @SuppressWarnings("serial")
 final public class MusicPlayer extends JFrame {
-	public boolean reload=false;
+	public static SongInfo info_panel;
+	public static MusicController ctr_panel;
+	public static FunctionDock dock_panel;
 	public MusicPlayer() {
 		super("LimE");
 		setSize(250, 250);
@@ -42,34 +44,22 @@ final public class MusicPlayer extends JFrame {
 	}
 
 	private void addPanel() {
-		SongInfo info = new SongInfo();
-		MusicController ctr_music = new MusicController();
-		FunctionDock dock = new FunctionDock();
-		if(reload) {			
-			ctr_music.loadCtrMusic(true);
-			this.add(ctr_music, BorderLayout.CENTER);
-		}
-		else {
-			reload=true;
-			/* load */
-			info.loadSongInfo();
-			actionHandler(ctr_music, dock);
-			ctr_music.loadCtrMusic(false);
-			dock.loadDock();
-			
-			/* add */
-			this.add(info, BorderLayout.NORTH);
-			this.add(ctr_music, BorderLayout.CENTER);
-			this.add(dock, BorderLayout.SOUTH);
-		}
-	}
-
-	private void actionHandler(MusicController ctr_music, FunctionDock dock) {
-		ctr_music.getAction(null, null, new Play(), new Pause());
-		dock.getAction(new LoadSong(), new LoadSongList(),
+		info_panel=new SongInfo();
+		info_panel.loadInfoPanel(false);
+		ctr_panel=new MusicController();
+		ctr_panel.getAction(null, null, new Play(), new Pause());
+		ctr_panel.loadCtrPanel();
+		dock_panel=new FunctionDock();
+		dock_panel.getAction(new LoadSong(), new LoadSongList(),
 				new LoadFavoriteSong(), new ControllVolume());
-	}
-	public void showMetheLime() {
+		dock_panel.loadDock();
+			/* add */
+			this.add(info_panel, BorderLayout.NORTH);
+			this.add(ctr_panel, BorderLayout.CENTER);
+			this.add(dock_panel, BorderLayout.SOUTH);
+		}
+
+	private void showMetheLime() {
 		applyDesign();
 		super.setVisible(true);
 	}

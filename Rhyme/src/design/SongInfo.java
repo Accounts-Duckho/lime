@@ -12,15 +12,19 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 @SuppressWarnings("serial")
-final public class SongInfo extends JPanel {
+public class SongInfo extends JPanel {
 	private JLabel showsinger;
 	private JLabel showsong;
+	private String singer;
+	private String songname;
 	public SongInfo() {
 		setLayout(new GridLayout(3, 1));
 	}
+	public void getSongInfo(String singer, String songname) {
+		this.singer=singer;
+		this.songname=songname;
+	}
 	private void makeLabel() {	
-		String singer = "Apink";
-		String songname = "No No No";
 		showsinger = createLabel(singer);
 		showsong = createLabel(songname);		
 	}
@@ -43,7 +47,9 @@ final public class SongInfo extends JPanel {
     	this.add(new JSeparator(JSeparator.HORIZONTAL)); // Separator    	
     }
     
-	public void loadSongInfo() {
+	public void loadInfoPanel(boolean music_loaded) {
+		if(!music_loaded)
+		getSongInfo("Singer", "SongName");
 		makeLabel();
 		applyFeature();
 		addToPanel();

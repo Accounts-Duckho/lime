@@ -13,7 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-final public class MusicController extends JPanel {
+public class MusicController extends JPanel {
 	private JButton previous_btn;
 	private JButton next_btn;
 	private JButton play_btn;
@@ -83,9 +83,9 @@ final public class MusicController extends JPanel {
 		btn.addActionListener(act);
 	}
 
-	public void loadCtrMusic(boolean playing) {
+	public void loadCtrPanel() {
 		applyFeature();
-		switch_btn(playing);
+		switch_btn(false);
 		addButtons();
 	}
 	private JButton createButton() {

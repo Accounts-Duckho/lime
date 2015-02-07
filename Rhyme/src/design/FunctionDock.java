@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-final public class FunctionDock extends JPanel {
+public class FunctionDock extends JPanel {
 	private JButton load_btn;
 	private JButton list_btn;
 	private JButton favorite_btn;

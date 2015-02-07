@@ -2,9 +2,10 @@ package activity;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import design.MusicController;
+
+import process.MusicPlayer;
 public class Pause implements ActionListener {
-	MusicController ctr_music = new MusicController();
 	public void actionPerformed(ActionEvent e) {
+		MusicPlayer.ctr_panel.switch_btn(false);
 	}
 }

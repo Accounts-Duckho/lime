@@ -5,8 +5,7 @@ import java.awt.event.ActionListener;
 
 import process.MusicPlayer;
 public class Play implements ActionListener {
-	MusicPlayer mp = new MusicPlayer();
 	public void actionPerformed(ActionEvent e) {
-		/* making... */
+		MusicPlayer.ctr_panel.switch_btn(true);
 	}
 }
