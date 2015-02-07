@@ -11,26 +11,23 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class FunctionDock extends JPanel {
+final public class FunctionDock extends JPanel {
 	private JButton load_btn;
 	private JButton list_btn;
 	private JButton favorite_btn;
 	private JButton volume_btn;
-	private ActionListener loadsong;
-	private ActionListener loadlist;
-	private ActionListener loadfavorite;
-	private ActionListener loadvolumebar;
+	
+	public FunctionDock() {
+		makeButtons();
+	}
 	
 	private void makeButtons() {
 		load_btn = createButton("+");// load song
-		load_btn.addActionListener(loadsong);
 		list_btn = createButton("L");// play list
-		list_btn.addActionListener(loadlist);
 		favorite_btn = createButton("F");// most_played songs
-		favorite_btn.addActionListener(loadfavorite);
 		volume_btn = createButton("V");// open volume control	
-		volume_btn.addActionListener(loadvolumebar);
 	}
+	
 	private void applyFeature() {
 		/* load button */
 		load_btn.setBackground(Color.WHITE);
@@ -51,19 +48,24 @@ public class FunctionDock extends JPanel {
 
 	public void getAction(ActionListener song, ActionListener list,
 			ActionListener favorite, ActionListener volume_bar) {	
-		loadsong=song;
-		loadlist=list;
-		loadfavorite=favorite;
-		loadvolumebar=volume_bar;
+		assignAct(load_btn, song);
+		assignAct(list_btn, list);
+		assignAct(favorite_btn, favorite);
+		assignAct(volume_btn, volume_bar);		
 	}
+	
+	private void assignAct(JButton btn, ActionListener act) {
+		btn.addActionListener(act);
+	}
+	
 	private void addButtons() {
 		this.add(load_btn);
 		this.add(list_btn);
 		this.add(favorite_btn);
 		this.add(volume_btn);
 	}
+	
 	public void loadDock() {
-		makeButtons();
 		applyFeature();
 		addButtons();
 	}

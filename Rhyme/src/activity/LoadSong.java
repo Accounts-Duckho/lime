@@ -18,7 +18,7 @@ public class LoadSong implements ActionListener {
   int value = chooser.showOpenDialog(null);
   if(value==JFileChooser.APPROVE_OPTION)
   {
-   File file=chooser.getSelectedFile(); // file link
+   File music=chooser.getSelectedFile(); // file link
   }
  }
 }
