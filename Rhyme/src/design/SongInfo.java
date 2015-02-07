@@ -4,12 +4,13 @@
 package design;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
+import javax.swing.JProgressBar;
 
 @SuppressWarnings("serial")
 public class SongInfo extends JPanel {
@@ -17,6 +18,7 @@ public class SongInfo extends JPanel {
 	private JLabel showsong;
 	private String singer;
 	private String songname;
+	private JProgressBar bar;
 	public SongInfo() {
 		setLayout(new GridLayout(3, 1));
 	}
@@ -28,7 +30,14 @@ public class SongInfo extends JPanel {
 		showsinger = createLabel(singer);
 		showsong = createLabel(songname);		
 	}
-	
+	private void makeProgressBar() {
+		bar=createBar(0, 100);
+		bar.setValue(0);
+		bar.setStringPainted(true);
+		Dimension prefSize = bar.getPreferredSize();
+		prefSize.height = 10;
+		bar.setPreferredSize(prefSize);
+	}
 	private void applyFeature() {
 
 		/* Singer */
@@ -44,13 +53,14 @@ public class SongInfo extends JPanel {
     private void addToPanel() {
     	this.add(showsinger);
     	this.add(showsong);
-    	this.add(new JSeparator(JSeparator.HORIZONTAL)); // Separator    	
+//    	this.add(bar); 
     }
     
 	public void loadInfoPanel(boolean music_loaded) {
 		if(!music_loaded)
 		getSongInfo("Singer", "SongName");
 		makeLabel();
+		makeProgressBar();
 		applyFeature();
 		addToPanel();
 	}
@@ -58,5 +68,9 @@ public class SongInfo extends JPanel {
 	private JLabel createLabel(String s) {
 		JLabel label = new JLabel(s);
 		return label;
+	}
+	private JProgressBar createBar(int start, int endline) {
+		JProgressBar bar = new JProgressBar(start, endline);
+		return bar;
 	}
 }

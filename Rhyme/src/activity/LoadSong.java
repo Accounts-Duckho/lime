@@ -20,6 +20,7 @@ public class LoadSong implements ActionListener {
 		browser = createFileChooser();
 		songFilter = createSongFilter();
 		browser.addChoosableFileFilter(songFilter);
+		browser.setFileFilter(songFilter);
 		int value = browser.showOpenDialog(null);
 		if (value == JFileChooser.APPROVE_OPTION) {
 			@SuppressWarnings("unused")
@@ -35,7 +36,7 @@ public class LoadSong implements ActionListener {
 		return chooser;
 	}
 	private FileFilter createSongFilter() {
-	 FileFilter filter =	new FileNameExtensionFilter("music file", "mp3",
+	 FileFilter filter =	new FileNameExtensionFilter("Music File", "mp3",
 				"wav", "m4a");
 	 return filter;
 	}

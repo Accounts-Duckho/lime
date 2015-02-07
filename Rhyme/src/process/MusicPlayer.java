@@ -6,8 +6,11 @@ package process;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import activity.ControllVolume;
 import activity.LoadFavoriteSong;
@@ -25,8 +28,8 @@ final public class MusicPlayer extends JFrame {
 	public static FunctionDock dock_panel;
 	public MusicPlayer() {
 		super("LimE");
-		setSize(250, 250);
 		setLayout(new BorderLayout());
+		setSize(250, 250);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -38,7 +41,7 @@ final public class MusicPlayer extends JFrame {
 		int screenCenter_y = screenSize.height / 2 - windowSize.height / 2;
 		setLocation(screenCenter_x, screenCenter_y);
 	}
-
+	
 	private void applyDesign() {
 		addPanel();
 	}
@@ -63,7 +66,7 @@ final public class MusicPlayer extends JFrame {
 		applyDesign();
 		super.setVisible(true);
 	}
-
+	
 	public static void main(String[] args) {
 		new MusicPlayer().showMetheLime();
 	}
