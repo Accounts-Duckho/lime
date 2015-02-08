@@ -41,12 +41,12 @@ public class SongInfo extends JPanel {
 	private void applyFeature() {
 
 		/* Singer */
-		showsinger.setFont(new Font("GODIC", Font.BOLD, 11));
+		showsinger.setFont(new Font("Apple Casual", Font.PLAIN, 12));
 		showsinger.setForeground(Color.darkGray); // text color
 		showsinger.setHorizontalAlignment(JLabel.CENTER);
 
 		/* Song */
-		showsong.setFont(new Font("GODIC", Font.BOLD, 12));
+		showsong.setFont(new Font("Apple Casual", Font.PLAIN, 13));
 		showsong.setHorizontalAlignment(JLabel.CENTER);
 	}
 	

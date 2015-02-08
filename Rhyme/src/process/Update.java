@@ -7,4 +7,7 @@ public class Update {
     MusicPlayer.info_panel.loadInfoPanel(true);
     MusicPlayer.info_panel.updateUI();
   }
+  public static void SongList() {
+		MusicPlayer.songlist.refresh();
+  }
 }
