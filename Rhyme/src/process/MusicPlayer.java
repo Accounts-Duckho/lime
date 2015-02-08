@@ -4,6 +4,7 @@
 package process;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.net.URL;
@@ -18,6 +19,7 @@ import activity.LoadSong;
 import activity.LoadSongList;
 import activity.Pause;
 import activity.Play;
+import design.SongList;
 import design.FunctionDock;
 import design.MusicController;
 import design.SongInfo;
@@ -26,6 +28,7 @@ final public class MusicPlayer extends JFrame {
 	public static SongInfo info_panel;
 	public static MusicController ctr_panel;
 	public static FunctionDock dock_panel;
+	public static SongList songlist;
 	public MusicPlayer() {
 		super("LimE");
 		setLayout(new BorderLayout());
@@ -40,6 +43,7 @@ final public class MusicPlayer extends JFrame {
 		int screenCenter_x = screenSize.width / 2 - windowSize.width / 2;
 		int screenCenter_y = screenSize.height / 2 - windowSize.height / 2;
 		setLocation(screenCenter_x, screenCenter_y);
+		songlist = new SongList();
 	}
 	
 	private void applyDesign() {
