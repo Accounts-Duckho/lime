@@ -6,11 +6,8 @@ package process;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.net.URL;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 import activity.ControllVolume;
 import activity.LoadFavoriteSong;
@@ -18,14 +15,17 @@ import activity.LoadSong;
 import activity.LoadSongList;
 import activity.Pause;
 import activity.Play;
+import activity.Refresh;
 import design.FunctionDock;
 import design.MusicController;
 import design.SongInfo;
+import design.SongList;
 @SuppressWarnings("serial")
 final public class MusicPlayer extends JFrame {
 	public static SongInfo info_panel;
 	public static MusicController ctr_panel;
 	public static FunctionDock dock_panel;
+	public static SongList songlist;
 	public MusicPlayer() {
 		super("LimE");
 		setLayout(new BorderLayout());
@@ -40,6 +40,7 @@ final public class MusicPlayer extends JFrame {
 		int screenCenter_x = screenSize.width / 2 - windowSize.width / 2;
 		int screenCenter_y = screenSize.height / 2 - windowSize.height / 2;
 		setLocation(screenCenter_x, screenCenter_y);
+		songlist = new SongList();
 	}
 	
 	private void applyDesign() {
@@ -56,6 +57,7 @@ final public class MusicPlayer extends JFrame {
 		dock_panel.getAction(new LoadSong(), new LoadSongList(),
 				new LoadFavoriteSong(), new ControllVolume());
 		dock_panel.loadDock();
+		songlist.getAction(new Refresh());
 			/* add */
 			this.add(info_panel, BorderLayout.NORTH);
 			this.add(ctr_panel, BorderLayout.CENTER);
