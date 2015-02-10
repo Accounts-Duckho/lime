@@ -4,13 +4,11 @@
 package design;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 
 @SuppressWarnings("serial")
 public class SongInfo extends JPanel {
@@ -18,9 +16,11 @@ public class SongInfo extends JPanel {
 	private JLabel showsong;
 	private String singer;
 	private String songname;
-	private JProgressBar bar;
 	public SongInfo() {
 		setLayout(new GridLayout(3, 1));
+		loadInfoPanel(false);
+		setBackground(new Color(0, 0, 0, 0));
+		setOpaque(false);
 	}
 	public void getSongInfo(String singer, String songname) {
 		this.singer=singer;
@@ -30,37 +30,28 @@ public class SongInfo extends JPanel {
 		showsinger = createLabel(singer);
 		showsong = createLabel(songname);		
 	}
-	private void makeProgressBar() {
-		bar=createBar(0, 100);
-		bar.setValue(0);
-		bar.setStringPainted(true);
-		Dimension prefSize = bar.getPreferredSize();
-		prefSize.height = 10;
-		bar.setPreferredSize(prefSize);
-	}
 	private void applyFeature() {
-
+		/* RGB Color site : http://www.rapidtables.com/web/color/RGB_Color.htm */
 		/* Singer */
 		showsinger.setFont(new Font("Apple Casual", Font.PLAIN, 12));
-		showsinger.setForeground(Color.darkGray); // text color
+		showsinger.setForeground(new Color(85,107,47)); // text color
 		showsinger.setHorizontalAlignment(JLabel.CENTER);
 
 		/* Song */
 		showsong.setFont(new Font("Apple Casual", Font.PLAIN, 13));
+		showsong.setForeground(new Color(255,69,0));
 		showsong.setHorizontalAlignment(JLabel.CENTER);
 	}
 	
     private void addToPanel() {
     	this.add(showsinger);
     	this.add(showsong);
-    	this.add(bar); 
     }
     
 	public void loadInfoPanel(boolean music_loaded) {
 		if(!music_loaded)
 		getSongInfo("Singer", "SongName");
 		makeLabel();
-		makeProgressBar();
 		applyFeature();
 		addToPanel();
 	}
@@ -69,8 +60,5 @@ public class SongInfo extends JPanel {
 		JLabel label = new JLabel(s);
 		return label;
 	}
-	private JProgressBar createBar(int start, int endline) {
-		JProgressBar bar = new JProgressBar(start, endline);
-		return bar;
-	}
+
 }

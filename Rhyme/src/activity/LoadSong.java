@@ -21,8 +21,8 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 
-import process.MusicPlayer;
 import process.Update;
+import design.FunctionDock;
 
 public class LoadSong implements ActionListener {
 	private JFileChooser browser;
@@ -73,7 +73,7 @@ public class LoadSong implements ActionListener {
 			Update.SongInfo(singer, songname);
 			e1.printStackTrace();
 		}
-		MusicPlayer.songlist.addtolist(tag.getFirst(FieldKey.TITLE));
+		FunctionDock.demand_list.addtolist(tag.getFirst(FieldKey.TITLE));
 	}
 
 	private JFileChooser createFileChooser() {

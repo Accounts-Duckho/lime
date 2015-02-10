@@ -1,5 +1,7 @@
 package process;
 
+import design.FunctionDock;
+
 public class Update {
   public static void SongInfo(String singer, String songname) {
     MusicPlayer.info_panel.removeAll();
@@ -8,6 +10,6 @@ public class Update {
     MusicPlayer.info_panel.updateUI();
   }
   public static void SongList() {
-		MusicPlayer.songlist.refresh();
+		FunctionDock.demand_list.refresh();
   }
 }
