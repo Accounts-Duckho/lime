@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -30,6 +32,13 @@ public class LoadSong implements ActionListener {
 	File music;
 	Tag tag;
 	public void actionPerformed(ActionEvent e) {
+		try{
+			UIManager.setLookAndFeel(
+					"com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			
+		} catch (Exception ex) {
+			System.out.println("failed to load windows look and feel");
+		}  
 		browser = createFileChooser();
 		songFilter = createSongFilter();
 		browser.addChoosableFileFilter(songFilter);
@@ -38,7 +47,21 @@ public class LoadSong implements ActionListener {
 		if (value == JFileChooser.APPROVE_OPTION) {
 			music = browser.getSelectedFile(); // file link
 		}
-		
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
+		} catch (ClassNotFoundException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (InstantiationException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (IllegalAccessException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 		/* load songinfo */
 		AudioFile audioFile;
 		try {
