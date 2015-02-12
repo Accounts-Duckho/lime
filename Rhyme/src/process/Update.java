@@ -1,5 +1,9 @@
 package process;
 
+import java.awt.Image;
+
+import design.FunctionDock;
+
 public class Update {
   public static void SongInfo(String singer, String songname) {
     MusicPlayer.info_panel.removeAll();
@@ -8,6 +12,9 @@ public class Update {
     MusicPlayer.info_panel.updateUI();
   }
   public static void SongList() {
-		MusicPlayer.songlist.refresh();
+		FunctionDock.demand_list.refresh();
+  }
+  public static void Background(Image img) {
+	  MusicPlayer.background.changeBg(img);
   }
 }

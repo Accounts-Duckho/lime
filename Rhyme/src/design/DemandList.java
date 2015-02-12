@@ -9,13 +9,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import activity.Refresh;
+
 @SuppressWarnings("serial")
-final public class SongList extends JFrame {
+final public class DemandList extends JFrame {
 	private ArrayList<String> songlist;
 	private JPanel listPanel;
 	private JButton[] song;
 	private JButton refresh;
-	public SongList() {
+	public DemandList() {
 		super("SongList");
 		setSize(300,500);
 		setVisible(false);
@@ -27,6 +29,7 @@ final public class SongList extends JFrame {
 		listPanel.setLayout(new GridLayout(songlist.size(),1));
 		add(listPanel, BorderLayout.CENTER);
 		refresh = new JButton("Refresh");
+		assignAct(refresh, new Refresh());
 		add(refresh, BorderLayout.SOUTH);
 	}
 	public void addtolist(String songname) {
@@ -50,9 +53,7 @@ final public class SongList extends JFrame {
 	public void refresh() {
 		showList();
 	}
-	public void getAction(ActionListener act) {
-		assignAct(refresh, act);
-	}
+	
 	private void assignAct(JButton btn, ActionListener act) {
 		btn.addActionListener(act);
 	}
