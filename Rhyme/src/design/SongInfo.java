@@ -6,8 +6,9 @@ package design;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.InputStreamReader;
+import java.io.StringBufferInputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,13 +28,12 @@ public class SongInfo extends JPanel {
 	public void getSongInfo(String singer, String songname) {
 
 			try {
-				this.singer=new String(singer.getBytes("iso-8859-1"), "euc-kr");
-			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
-				this.songname=new String(songname.getBytes("iso-8859-1"), "euc-kr");
+				StringBufferInputStream buf_singer = new StringBufferInputStream(singer);
+				StringBufferInputStream buf_songname = new StringBufferInputStream(songname);
+				InputStreamReader enc_singer = new InputStreamReader(buf_singer);
+				InputStreamReader enc_songname = new InputStreamReader(buf_songname);
+				this.singer=new String(singer.getBytes(enc_singer.getEncoding()), "euc-kr");
+				this.songname=new String(songname.getBytes(enc_songname.getEncoding()), "euc-kr");
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -18,20 +18,22 @@ import javax.swing.JPanel;
 import activity.LoadDemandList;
 import activity.LoadFavoriteSong;
 import activity.LoadSong;
+import activity.Repeat;
 
 @SuppressWarnings("serial")
 public class FunctionDock extends JPanel {
 	private JButton load_btn;
 	private JButton list_btn;
 	private JButton favorite_btn;
+	private JButton repeat_btn;
 	public JLabel volume_icon;
 	public static DemandList demand_list;
 	
 	public FunctionDock() {
-		setLayout(new GridLayout(1,4));
+		setLayout(new GridLayout(1,5));
 		makeContents();
 		getAction(new LoadSong(), new LoadDemandList(),
-				new LoadFavoriteSong());
+				new LoadFavoriteSong(), new Repeat());
 		loadDock();
 		setOpaque(false);
 		setBackground(new Color(255,255,255,128));
@@ -46,6 +48,7 @@ public class FunctionDock extends JPanel {
 		load_btn = createButton(new ImageIcon(icon_load));// load song
 		list_btn = createButton(new ImageIcon(icon_demand_list));// play list
 		favorite_btn = createButton(new ImageIcon(icon_favorite_list));// most_played songs
+		repeat_btn = createButton(null);
 		volume_icon = new JLabel(new ImageIcon(icon_volume_bar));// open volume control	
 		demand_list = new DemandList();
 	}
@@ -67,16 +70,20 @@ public class FunctionDock extends JPanel {
 		favorite_btn.setContentAreaFilled(false);
 
 		/* Volume button */
-
 		volume_icon.setBorder(null);
 		volume_icon.setFocusable(false);
+		
+		/* favorite button */
+		repeat_btn.setBorder(null);
+		repeat_btn.setFocusable(false);
 	}
 
 	public void getAction(ActionListener song, ActionListener list,
-			ActionListener favorite) {	
+			ActionListener favorite, ActionListener repeat) {	
 		assignAct(load_btn, song);
 		assignAct(list_btn, list);
 		assignAct(favorite_btn, favorite);	
+		assignAct(repeat_btn, repeat);
 	}
 	
 	private void assignAct(JButton btn, ActionListener act) {
@@ -84,6 +91,7 @@ public class FunctionDock extends JPanel {
 	}
 	
 	private void addButtons() {
+		this.add(repeat_btn);
 		this.add(load_btn);
 		this.add(list_btn);
 		this.add(favorite_btn);
