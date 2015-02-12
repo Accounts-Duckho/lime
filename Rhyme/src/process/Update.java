@@ -1,5 +1,7 @@
 package process;
 
+import java.awt.Image;
+
 import design.FunctionDock;
 
 public class Update {
@@ -11,5 +13,8 @@ public class Update {
   }
   public static void SongList() {
 		FunctionDock.demand_list.refresh();
+  }
+  public static void Background(Image img) {
+	  MusicPlayer.background.changeBg(img);
   }
 }

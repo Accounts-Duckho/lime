@@ -6,6 +6,8 @@ package design;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,8 +25,19 @@ public class SongInfo extends JPanel {
 		setOpaque(false);
 	}
 	public void getSongInfo(String singer, String songname) {
-		this.singer=singer;
-		this.songname=songname;
+
+			try {
+				this.singer=new String(singer.getBytes("iso-8859-1"), "euc-kr");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				this.songname=new String(songname.getBytes("iso-8859-1"), "euc-kr");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	private void makeLabel() {	
 		showsinger = createLabel(singer);
@@ -33,12 +46,12 @@ public class SongInfo extends JPanel {
 	private void applyFeature() {
 		/* RGB Color site : http://www.rapidtables.com/web/color/RGB_Color.htm */
 		/* Singer */
-		showsinger.setFont(new Font("Apple Casual", Font.PLAIN, 12));
+		showsinger.setFont(new Font("NANUM", Font.PLAIN, 12));
 		showsinger.setForeground(new Color(85,107,47)); // text color
 		showsinger.setHorizontalAlignment(JLabel.CENTER);
 
 		/* Song */
-		showsong.setFont(new Font("Apple Casual", Font.PLAIN, 13));
+		showsong.setFont(new Font("NANUM", Font.PLAIN, 13));
 		showsong.setForeground(new Color(255,69,0));
 		showsong.setHorizontalAlignment(JLabel.CENTER);
 	}

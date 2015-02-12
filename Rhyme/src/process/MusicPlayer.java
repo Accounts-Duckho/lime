@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -14,11 +15,13 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.Painter;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import design.Background;
 import design.FunctionDock;
 import design.MusicController;
 import design.SongInfo;
@@ -30,7 +33,8 @@ final public class MusicPlayer extends JFrame {
 	public static MusicController ctr_panel;
 	public static FunctionDock dock_panel;
 	public static VolumeBar volume_bar;
-	private JLabel background;
+	public static Background background;
+	public static Image bg;
 	private JProgressBar bar;
 
 	public MusicPlayer() {
@@ -52,6 +56,7 @@ final public class MusicPlayer extends JFrame {
 		ctr_panel = new MusicController();
 		dock_panel = new FunctionDock();
 		volume_bar=new VolumeBar();
+		background=new Background();
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (ClassNotFoundException e) {
@@ -76,8 +81,6 @@ final public class MusicPlayer extends JFrame {
 //		bar.setIndeterminate(true); 
 		
 		/* Background label*/
-        final URL path = getClass().getResource("/images/background/pi1.png");
-		background = new JLabel(new ImageIcon(path));
 	}
 
 	private JComponent buildContentPane() {
@@ -90,8 +93,9 @@ final public class MusicPlayer extends JFrame {
 		dock_panel.setBounds(70,180,100,50);		
 		volume_bar.setBounds(170,200,70,10);
 		background.setBounds(0, 0, 250, 250);
-		
-		
+		JPanel filter = new JPanel();
+		filter.setBackground(new Color(0,0,0,125));
+		filter.setBounds(0,0,250,250);
 		/* 4th -> 3th -> 2th -> 1th */
 		/* but I don't know exactly about the number */
 		pane.add(info_panel, 1);
@@ -99,6 +103,7 @@ final public class MusicPlayer extends JFrame {
 		pane.add(ctr_panel, 3);
 		pane.add(dock_panel, 4);
 		pane.add(volume_bar, 5);
+		pane.add(filter, 7);
 		pane.add(background, 6);
 		return pane;
 	}

@@ -3,12 +3,20 @@
  */
 package activity;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
@@ -22,6 +30,7 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.tag.datatype.Artwork;
 
 import process.Update;
 import design.FunctionDock;
@@ -70,6 +79,7 @@ public class LoadSong implements ActionListener {
 			String singer = tag.getFirst(FieldKey.ARTIST);
 			String songname = tag.getFirst(FieldKey.TITLE); /* example */
 			Update.SongInfo(singer, songname);
+			Update.Background(getImage());
 		} catch (CannotReadException e1) {
 			// TODO Auto-generated catch block
 			String singer = "can't load", songname = "can't load";
@@ -98,7 +108,16 @@ public class LoadSong implements ActionListener {
 		}
 		FunctionDock.demand_list.addtolist(tag.getFirst(FieldKey.TITLE));
 	}
-
+    public Image getImage() {
+    	try{
+    		final List<Artwork> artworkList = tag.getArtworkList();
+	        if (artworkList.size() > 0) {
+	            InputStream in = new ByteArrayInputStream(tag.getFirstArtwork().getBinaryData());
+	            return ImageIO.read(in);
+	        }
+    	}catch (Exception e) {}
+    	return null;       
+    }
 	private JFileChooser createFileChooser() {
 		JFileChooser chooser = new JFileChooser();
 		return chooser;

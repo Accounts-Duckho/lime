@@ -33,8 +33,8 @@ public class FunctionDock extends JPanel {
 		getAction(new LoadSong(), new LoadDemandList(),
 				new LoadFavoriteSong());
 		loadDock();
-		setBackground(new Color(0,0,0,0));
 		setOpaque(false);
+		setBackground(new Color(255,255,255,128));
 	}
 	
 	private void makeContents() {
