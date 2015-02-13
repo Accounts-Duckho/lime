@@ -57,6 +57,9 @@ public class LoadSong implements ActionListener {
 		int value = browser.showOpenDialog(null);
 		if (value == JFileChooser.APPROVE_OPTION) {
 			music = browser.getSelectedFile(); // file link
+			if(e==null){
+				Mp3 mp3=new Mp3(music);
+			}
 		}
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
