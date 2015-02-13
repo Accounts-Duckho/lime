@@ -28,6 +28,7 @@ public class FunctionDock extends JPanel {
 	private JButton repeat_btn;
 	public JLabel volume_icon;
 	public static DemandList demand_list;
+	public static PlayList play_list;
 	
 	public FunctionDock() {
 		setLayout(new GridLayout(1,5));
@@ -52,6 +53,7 @@ public class FunctionDock extends JPanel {
 		repeat_btn = createButton(new ImageIcon(icon_repeat));
 		volume_icon = new JLabel(new ImageIcon(icon_volume_bar));// open volume control	
 		demand_list = new DemandList();
+		play_list = new PlayList();
 	}
 	
 	private void applyFeature() {
