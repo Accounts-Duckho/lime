@@ -8,12 +8,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.net.URL;
 
-import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -21,6 +19,7 @@ import javax.swing.Painter;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import activity.ReEncoder;
 import design.Background;
 import design.FunctionDock;
 import design.MusicController;
@@ -34,6 +33,7 @@ final public class MusicPlayer extends JFrame {
 	public static FunctionDock dock_panel;
 	public static VolumeBar volume_bar;
 	public static Background background;
+	private JButton fix_btn;
 	public static Image bg;
 	private JProgressBar bar;
 
@@ -57,6 +57,8 @@ final public class MusicPlayer extends JFrame {
 		dock_panel = new FunctionDock();
 		volume_bar=new VolumeBar();
 		background=new Background();
+		fix_btn = new JButton();
+		fix_btn.addActionListener(new ReEncoder());
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
 		} catch (ClassNotFoundException e) {
@@ -88,23 +90,25 @@ final public class MusicPlayer extends JFrame {
 		pane.setOpaque(false);
 		makeContents();
 		info_panel.setBounds(0,5,250,45);
+		fix_btn.setBounds(200,5,30,30);
 		bar.setBounds(25,40,200,15);
 		ctr_panel.setBounds(0,60,250,130);
-		dock_panel.setBounds(70,180,100,50);		
-		volume_bar.setBounds(170,200,70,10);
+		dock_panel.setBounds(55,180,120,50);		
+		volume_bar.setBounds(175,200,70,10);
 		background.setBounds(0, 0, 250, 250);
 		JPanel filter = new JPanel();
-		filter.setBackground(new Color(0,0,0,125));
+		filter.setBackground(new Color(255,255,255,150));
 		filter.setBounds(0,0,250,250);
 		/* 4th -> 3th -> 2th -> 1th */
 		/* but I don't know exactly about the number */
 		pane.add(info_panel, 1);
-		pane.add(bar, 2);
-		pane.add(ctr_panel, 3);
-		pane.add(dock_panel, 4);
-		pane.add(volume_bar, 5);
+		pane.add(fix_btn, 2);
+		pane.add(bar, 3);
+		pane.add(ctr_panel, 4);
+		pane.add(dock_panel, 5);
+		pane.add(volume_bar, 6);
 		pane.add(filter, 7);
-		pane.add(background, 6);
+		pane.add(background, 8);
 		return pane;
 	}
 	public static void main(String[] args) {

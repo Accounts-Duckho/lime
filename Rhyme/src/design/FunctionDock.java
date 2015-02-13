@@ -45,10 +45,11 @@ public class FunctionDock extends JPanel {
 		final URL icon_demand_list = getClass().getResource("/images/icons/demand_list.png");
 		final URL icon_favorite_list = getClass().getResource("/images/icons/favorite_list.png");
 		final URL icon_volume_bar = getClass().getResource("/images/icons/volume.png");
+		final URL icon_repeat = getClass().getResource("/images/icons/repeat.png");
 		load_btn = createButton(new ImageIcon(icon_load));// load song
 		list_btn = createButton(new ImageIcon(icon_demand_list));// play list
 		favorite_btn = createButton(new ImageIcon(icon_favorite_list));// most_played songs
-		repeat_btn = createButton(null);
+		repeat_btn = createButton(new ImageIcon(icon_repeat));
 		volume_icon = new JLabel(new ImageIcon(icon_volume_bar));// open volume control	
 		demand_list = new DemandList();
 	}
@@ -76,6 +77,7 @@ public class FunctionDock extends JPanel {
 		/* favorite button */
 		repeat_btn.setBorder(null);
 		repeat_btn.setFocusable(false);
+		repeat_btn.setContentAreaFilled(false);
 	}
 
 	public void getAction(ActionListener song, ActionListener list,
@@ -91,10 +93,10 @@ public class FunctionDock extends JPanel {
 	}
 	
 	private void addButtons() {
-		this.add(repeat_btn);
 		this.add(load_btn);
 		this.add(list_btn);
 		this.add(favorite_btn);
+		this.add(repeat_btn);
 		this.add(volume_icon);
 	}
 	
