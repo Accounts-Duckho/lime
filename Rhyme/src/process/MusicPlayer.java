@@ -90,7 +90,7 @@ final public class MusicPlayer extends JFrame {
 		pane.setOpaque(false);
 		makeContents();
 		info_panel.setBounds(0,5,250,45);
-		fix_btn.setBounds(200,5,30,30);
+		fix_btn.setBounds(200,5,20,20);
 		bar.setBounds(25,40,200,15);
 		ctr_panel.setBounds(0,60,250,130);
 		dock_panel.setBounds(55,180,120,50);		
