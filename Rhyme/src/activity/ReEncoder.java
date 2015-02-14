@@ -27,7 +27,7 @@ public class ReEncoder implements ActionListener {
 				singer = new String(singer.getBytes("ksc5601"), "euc-kr");
 				songname = new String(songname.getBytes("ksc5601"), "euc-kr");
 				Update.SongInfo(singer, songname);
-				
+				Update.Charset(songname);
 				MusicPlayer.info_panel.singer=temp_singer;
 				MusicPlayer.info_panel.songname=temp_songname;
 				clicked=true;
@@ -40,7 +40,7 @@ public class ReEncoder implements ActionListener {
 				songname = new String(songname.getBytes("iso-8859-1"),
 						"euc-kr");
 				Update.SongInfo(singer, songname);
-				
+				Update.Charset(songname);
 				MusicPlayer.info_panel.singer=temp_singer;
 				MusicPlayer.info_panel.songname=temp_songname;
 				clicked=false;
