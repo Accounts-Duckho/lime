@@ -1,3 +1,6 @@
+/*
+ *  Authors : JungSang, DuckHo
+ */
 package design;
 
 import java.awt.BorderLayout;

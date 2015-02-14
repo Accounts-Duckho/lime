@@ -6,18 +6,19 @@ package process;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.Painter;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import activity.ReEncoder;
 import design.Background;
@@ -33,109 +34,106 @@ final public class MusicPlayer extends JFrame {
 	public static FunctionDock dock_panel;
 	public static VolumeBar volume_bar;
 	public static Background background;
-	private JButton fix_btn;
-	public static Image bg;
-	private JProgressBar bar;
+	public static JProgressBar progress_bar;
+	public static JFileChooser browser;
+	private JButton fix_btn; // It fixes hangul encode error 
+	private JPanel filter;
 
 	public MusicPlayer() {
 		super("LimE");
 		setLayout(new BorderLayout());
 		setSize(250, 250);
-		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		setUndecorated(true); //-> It disables window frame 
 		/* Exit_on_close = exit all jframe , Dispose_on_close = exit only this */
 
+		setResizable(false);
 		setLocationRelativeTo(null); /* make the frame locate center */
-		add(buildContentPane()); /* set Contents */
+		add(buildContentPane()); /* load Contents */
 	}
 
 	private void makeContents() {
+		/* Volume Bar */
+		volume_bar=new VolumeBar();
+		
 		/* Panel */
 		info_panel = new SongInfo();
 		ctr_panel = new MusicController();
 		dock_panel = new FunctionDock();
-		volume_bar=new VolumeBar();
-		background=new Background();
-		fix_btn = new JButton();
-		fix_btn.addActionListener(new ReEncoder());
+		
+		/* UI envset for Progress Bar */
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		UIManager.getLookAndFeelDefaults().put("defaultFont",  new Font(Font.SANS_SERIF, 0, 10));
-		bar = new JProgressBar(0,100);
-		bar.setValue(78);
-		bar.setStringPainted(true);
-		bar.setString("3:14"); // sample string
-		bar.setFocusable(false);
-//		bar.setIndeterminate(true); 
+			UIManager.getLookAndFeelDefaults().put("defaultFont",  new Font(Font.SANS_SERIF, 0, 10));
+		} catch (Exception e) { e.printStackTrace(); }
 		
-		/* Background label*/
-	}
-
-	private JComponent buildContentPane() {
-		JLayeredPane pane = new JLayeredPane();
-		pane.setOpaque(false);
-		makeContents();
-		info_panel.setBounds(0,5,250,45);
-		fix_btn.setBounds(200,5,20,20);
-		bar.setBounds(25,40,200,15);
-		ctr_panel.setBounds(0,60,250,130);
-		dock_panel.setBounds(55,180,120,50);		
-		volume_bar.setBounds(175,200,70,10);
-		background.setBounds(0, 0, 250, 250);
-		JPanel filter = new JPanel();
-		filter.setBackground(new Color(255,255,255,150));
-		filter.setBounds(0,0,250,250);
-		/* 4th -> 3th -> 2th -> 1th */
-		/* but I don't know exactly about the number */
-		pane.add(info_panel, 1);
-		pane.add(fix_btn, 2);
-		pane.add(bar, 3);
-		pane.add(ctr_panel, 4);
-		pane.add(dock_panel, 5);
-		pane.add(volume_bar, 6);
-		pane.add(filter, 7);
-		pane.add(background, 8);
-		return pane;
-	}
-	public static void main(String[] args) {
-        try{
+		
+		/* Progress Bar */
+		progress_bar = new JProgressBar(0,100); // (first, end); endline will be changed to music length
+		progress_bar.setValue(30); // start position
+		progress_bar.setStringPainted(true);
+		progress_bar.setString("3:14"); // sample string
+		progress_bar.setFocusable(false);
+		
+		/* UI change for File Browser */
+        try {
         UIManager.setLookAndFeel(
        		    "com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         
-        } catch (Exception e) {
-          System.out.println("failed to load windows look and feel");
-          }  
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				new MusicPlayer().setVisible(true);
-			}
-		});
+        } catch (Exception e) { }  
+		
+		/* and so on */
+		background=new Background();
+		
+		final URL icon_refresh = getClass().getResource("/images/icons/refresh.png");
+		fix_btn = new JButton(new ImageIcon(icon_refresh));
+		fix_btn.addActionListener(new ReEncoder());
+		fix_btn.setBorder(null);
+		fix_btn.setFocusable(false);
+		fix_btn.setContentAreaFilled(false);
+		
+		filter = new JPanel();
+		filter.setBackground(new Color(255,255,255,150));
+		
+		/* File Browser Setting */
+		browser = new JFileChooser();
+		FileFilter songFilter = new FileNameExtensionFilter("Music File", "mp3",
+					"wav", "m4a"); // 'showing name' , 'extensions .... ' ,,,, 
+		browser.addChoosableFileFilter(songFilter);
+		browser.setFileFilter(songFilter); // make own filter to default		
 	}
-}
-class MyPainter implements Painter<JProgressBar> {
 
-    private final Color color;
-
-    public MyPainter(Color c1) {
-        this.color = c1;
-    }
-    @Override
-    public void paint(Graphics2D gd, JProgressBar t, int width, int height) {
-        gd.setColor(color);
-        gd.fillRect(0, 0, width, height);
-    }
+	private JComponent buildContentPane() {
+		JLayeredPane combo = new JLayeredPane();
+		makeContents();
+		/* Set	position & size (x, y ,width, height) */
+		info_panel.setBounds(0,5,250,30);
+		fix_btn.setBounds(180,75,20,20);
+		progress_bar.setBounds(25,40,200,15);
+		ctr_panel.setBounds(0,75,250,100);
+		dock_panel.setBounds(55,180,120,50);		
+		volume_bar.setBounds(175,200,70,10);
+		background.setBounds(0, 0, 250, 250);
+		filter.setBounds(0,0,250,250);
+		/* Lower loading is top , Higher is bottom */
+		/* but I don't know exactly about the number */
+		combo.add(info_panel, 1);
+		combo.add(fix_btn, 2);
+		combo.add(progress_bar, 3);
+		combo.add(ctr_panel, 4);
+		combo.add(dock_panel, 5);
+		combo.add(volume_bar, 6);
+		combo.add(filter, 7);
+		combo.add(background, 8);
+		return combo;
+	}
+	
+	public static void main(String[] args) {
+		/* Default UI is windows */
+        try {
+        UIManager.setLookAndFeel(
+       		    "com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        
+        } catch (Exception e) { }  
+        new MusicPlayer().setVisible(true);
+	}
 }

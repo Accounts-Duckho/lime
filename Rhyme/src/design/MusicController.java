@@ -36,12 +36,11 @@ public class MusicController extends JPanel {
 	}
 
 	private void makeButtons() {
-		final URL icon_previous = getClass().getResource(
-				"/images/icons/previous.png");
+		final URL icon_previous = getClass().getResource("/images/icons/previous.png");
 		final URL icon_next = getClass().getResource("/images/icons/next.png");
 		final URL icon_play = getClass().getResource("/images/icons/play.png");
-		final URL icon_pause = getClass()
-				.getResource("/images/icons/pause.png");
+		final URL icon_pause = getClass().getResource("/images/icons/pause.png");
+		
 		previous_btn = createButton(new ImageIcon(icon_previous));
 		next_btn = createButton(new ImageIcon(icon_next));
 		play_btn = createButton(new ImageIcon(icon_play));

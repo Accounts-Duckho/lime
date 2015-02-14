@@ -6,10 +6,6 @@ package design;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,14 +17,13 @@ public class SongInfo extends JPanel {
 	public String singer="Singer";
 	public String songname="SongName";
 	public SongInfo() {
-		setLayout(new GridLayout(3, 1));
-		loadInfoPanel(false);
-		setBackground(new Color(0, 0, 0, 0));
+		setLayout(new GridLayout(2, 1));
+		loadInfoPanel();
 		setOpaque(false);
 	}
 	public void getSongInfo(String singer, String songname) {
-					this.singer=singer;
-					this.songname=songname;
+		this.singer=singer;
+		this.songname=songname;
 	}
 	private void makeLabel() {	
 		showsinger = createLabel(singer);
@@ -36,6 +31,7 @@ public class SongInfo extends JPanel {
 	}
 	private void applyFeature() {
 		/* RGB Color site : http://www.rapidtables.com/web/color/RGB_Color.htm */
+		
 		/* Singer */
 		showsinger.setFont(new Font("NANUM", Font.PLAIN, 12));
 		showsinger.setForeground(new Color(0,128,128)); // text color
@@ -52,9 +48,7 @@ public class SongInfo extends JPanel {
     	this.add(showsong);
     }
     
-	public void loadInfoPanel(boolean music_loaded) {
-//		if(!music_loaded)
-//		getSongInfo("Singer", "SongName");
+	public void loadInfoPanel() {
 		makeLabel();
 		applyFeature();
 		addToPanel();
@@ -64,7 +58,4 @@ public class SongInfo extends JPanel {
 		JLabel label = new JLabel(s);
 		return label;
 	}
-//	private String encoder(String str) {
-//
-//	}
 }

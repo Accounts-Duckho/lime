@@ -4,7 +4,6 @@
  */
 package design;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.net.URL;
@@ -36,22 +35,25 @@ public class FunctionDock extends JPanel {
 		getAction(new LoadSong(), new LoadDemandList(),
 				new LoadFavoriteSong(), new Repeat());
 		loadDock();
-		setOpaque(false);
-		setBackground(new Color(255,255,255,128));
+		setOpaque(false); // transparent option : false is actually true of transparent 
 	}
 	
 	private void makeContents() {
-		final URL icon_load = getClass()
-				.getResource("/images/icons/load.png");
+		/* Icon Load */
+		final URL icon_load = getClass().getResource("/images/icons/load.png");
 		final URL icon_demand_list = getClass().getResource("/images/icons/demand_list.png");
 		final URL icon_favorite_list = getClass().getResource("/images/icons/favorite_list.png");
 		final URL icon_volume_bar = getClass().getResource("/images/icons/volume.png");
 		final URL icon_repeat = getClass().getResource("/images/icons/repeat.png");
-		load_btn = createButton(new ImageIcon(icon_load));// load song
-		list_btn = createButton(new ImageIcon(icon_demand_list));// play list
-		favorite_btn = createButton(new ImageIcon(icon_favorite_list));// most_played songs
+		
+		/* Make Button with Icon */
+		load_btn = createButton(new ImageIcon(icon_load));
+		list_btn = createButton(new ImageIcon(icon_demand_list));
+		favorite_btn = createButton(new ImageIcon(icon_favorite_list));
 		repeat_btn = createButton(new ImageIcon(icon_repeat));
-		volume_icon = new JLabel(new ImageIcon(icon_volume_bar));// open volume control	
+		volume_icon = new JLabel(new ImageIcon(icon_volume_bar));
+		
+		/* Load List Once */
 		demand_list = new DemandList();
 		play_list = new PlayList();
 	}
