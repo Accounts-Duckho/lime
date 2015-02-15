@@ -28,6 +28,7 @@ public class LoadSong implements ActionListener {
 	private File[] music;
 	private File musicdir;
 	private Tag tag;
+	private boolean error;
 	public static AudioFile audioFile;
 
 	public void actionPerformed(ActionEvent e) {
@@ -54,13 +55,15 @@ public class LoadSong implements ActionListener {
 					String songname = tag.getFirst(FieldKey.TITLE);
 					Update.SongInfo(singer, songname);
 					Update.Background(getImage());
+					error=false;
 				} catch (Exception e1) {
 					e1.printStackTrace();
+					error=true;
 				}
-
+				if(error==false) {
 				FunctionDock.demand_list.addtolist(
 						tag.getFirst(FieldKey.TITLE),
-						tag.getFirst(FieldKey.ARTIST));
+						tag.getFirst(FieldKey.ARTIST)); }
 			}
 		}
 	}
