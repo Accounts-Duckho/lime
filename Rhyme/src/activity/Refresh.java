@@ -7,6 +7,11 @@ import process.Update;
 
 public class Refresh implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-		Update.SongList();
+		try {
+			Update.SongList();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 }

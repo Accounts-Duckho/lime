@@ -74,7 +74,7 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 		subpanel.setVisible(true);
 		this.setVisible(true);
 	}
-	public void refresh() {
+	public void refresh() throws Exception {
 		showList();
 	}
 	

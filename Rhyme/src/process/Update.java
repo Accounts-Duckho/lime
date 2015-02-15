@@ -11,7 +11,7 @@ public class Update {
     MusicPlayer.info_panel.loadInfoPanel();
     MusicPlayer.info_panel.updateUI();
   }
-  public static void SongList() {
+  public static void SongList() throws Exception {
 		FunctionDock.demand_list.refresh();
   }
   public static void Background(Image img) {

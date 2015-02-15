@@ -55,6 +55,7 @@ public class LoadSong implements ActionListener {
 					String songname = tag.getFirst(FieldKey.TITLE);
 					Update.SongInfo(singer, songname);
 					Update.Background(getImage());
+					ListAdmin.getList(songname, music[i].getPath());
 					error=false;
 				} catch (Exception e1) {
 					e1.printStackTrace();

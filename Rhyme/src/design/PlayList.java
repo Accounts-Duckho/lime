@@ -4,6 +4,8 @@
 package design;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -19,7 +21,7 @@ public class PlayList extends JFrame {
 	public PlayList()
 	{
 		super("Favorite List");
-		setSize(100, 400);
+		setSize(200, 300);
 		setVisible(false);
 		setResizable(false);
 		playlist=new ArrayList<String>();
@@ -28,6 +30,11 @@ public class PlayList extends JFrame {
 		add_btn = new JButton("add");
 		add_btn.addActionListener(new AddList());
 		add(add_btn, BorderLayout.NORTH);
+		Dimension windowSize = this.getSize();
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		// Make screen position next to main
+		this.setLocation(screenSize.width/2 + windowSize.width,
+						screenSize.height / 2 - windowSize.height / 2);
 	}
 	public void showList() {
 		super.setVisible(true);
