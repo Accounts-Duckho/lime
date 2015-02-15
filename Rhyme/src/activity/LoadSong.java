@@ -29,40 +29,54 @@ public class LoadSong implements ActionListener {
 	private File musicdir;
 	private Tag tag;
 	public static AudioFile audioFile;
+
 	public void actionPerformed(ActionEvent e) {
-		int value = MusicPlayer.browser.showOpenDialog(null); // open browser and notice chose or cancel 
+		int value = MusicPlayer.browser.showOpenDialog(null); // open browser
+																// and notice
+																// chose or
+																// cancel
 		if (value == JFileChooser.APPROVE_OPTION) {
-			if(MusicPlayer.browser.getSelectedFile().isFile())
-			music = MusicPlayer.browser.getSelectedFiles(); // file link
+			if (MusicPlayer.browser.getSelectedFile().isFile())
+				music = MusicPlayer.browser.getSelectedFiles(); // file link
 			else {
-			musicdir= MusicPlayer.browser.getSelectedFile();
-			music = musicdir.listFiles(); }		
+				musicdir = MusicPlayer.browser.getSelectedFile();
+				music = musicdir.listFiles();
+			}
 		}
-		
+
 		/* load songinfo */
-		try {
-			audioFile = AudioFileIO.read(music[0]);
-	        tag = audioFile.getTag();
-			String singer = tag.getFirst(FieldKey.ARTIST);
-			String songname = tag.getFirst(FieldKey.TITLE);		
-			Update.SongInfo(singer, songname);
-			Update.Background(getImage());
-		} catch (Exception e1) {
-			String singer = "can't load", songname = "can't load";
-			Update.SongInfo(singer, songname);
-			e1.printStackTrace(); }
-		
-		FunctionDock.demand_list.addtolist(tag.getFirst(FieldKey.TITLE),tag.getFirst(FieldKey.ARTIST));
+		if (music.length < 50) {
+			for (int i = 0; i < music.length; i++) {
+				try {
+					audioFile = AudioFileIO.read(music[i]);
+					tag = audioFile.getTag();
+					String singer = tag.getFirst(FieldKey.ARTIST);
+					String songname = tag.getFirst(FieldKey.TITLE);
+					Update.SongInfo(singer, songname);
+					Update.Background(getImage());
+				} catch (Exception e1) {
+					String singer = "can't load", songname = "can't load";
+					Update.SongInfo(singer, songname);
+					e1.printStackTrace();
+				}
+
+				FunctionDock.demand_list.addtolist(
+						tag.getFirst(FieldKey.TITLE),
+						tag.getFirst(FieldKey.ARTIST));
+			}
+		}
 	}
-	
-    public Image getImage() {
-    	try{
-    		final List<Artwork> artworkList = tag.getArtworkList(); // load
-	        if (artworkList.size() > 0) { // If exist
-	            InputStream in = new ByteArrayInputStream(tag.getFirstArtwork().getBinaryData());
-	            return ImageIO.read(in);
-	        }
-    	} catch (Exception e) {}
-    	return null;       
-    }
+
+	public Image getImage() {
+		try {
+			final List<Artwork> artworkList = tag.getArtworkList(); // load
+			if (artworkList.size() > 0) { // If exist
+				InputStream in = new ByteArrayInputStream(tag.getFirstArtwork()
+						.getBinaryData());
+				return ImageIO.read(in);
+			}
+		} catch (Exception e) {
+		}
+		return null;
+	}
 }
