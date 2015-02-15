@@ -55,8 +55,6 @@ public class LoadSong implements ActionListener {
 					Update.SongInfo(singer, songname);
 					Update.Background(getImage());
 				} catch (Exception e1) {
-					String singer = "can't load", songname = "can't load";
-					Update.SongInfo(singer, songname);
 					e1.printStackTrace();
 				}
 
