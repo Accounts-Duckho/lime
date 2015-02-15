@@ -16,21 +16,22 @@ public class ReEncoder implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		singer=MusicPlayer.info_panel.singer;
 		songname=MusicPlayer.info_panel.songname;
+		
+		/* BackUp before Encoding */
 		temp_singer=singer;
 		temp_songname=songname;
-		
-		
+				
 		/* Repeat */
 		if (clicked == false) {
 			try {
 				singer = new String(singer.getBytes("ksc5601"), "euc-kr");
 				songname = new String(songname.getBytes("ksc5601"), "euc-kr");
 				Update.SongInfo(singer, songname);
+				Update.Charset(songname, singer);
 				MusicPlayer.info_panel.singer=temp_singer;
 				MusicPlayer.info_panel.songname=temp_songname;
 				clicked=true;
 			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		} else {
@@ -39,11 +40,11 @@ public class ReEncoder implements ActionListener {
 				songname = new String(songname.getBytes("iso-8859-1"),
 						"euc-kr");
 				Update.SongInfo(singer, songname);
+				Update.Charset(songname, singer);
 				MusicPlayer.info_panel.singer=temp_singer;
 				MusicPlayer.info_panel.songname=temp_songname;
 				clicked=false;
 			} catch (UnsupportedEncodingException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
