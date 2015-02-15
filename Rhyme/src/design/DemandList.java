@@ -47,8 +47,8 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 		subpanel.setVisible(false);
 		add(subpanel, BorderLayout.CENTER);
 	}
-	public void addtolist(String songname) {
-		songlist.add(songname);
+	public void addtolist(String songname, String singer) {
+		songlist.add(songname+" - "+singer);
 	}
 	public JComponent load() {
 		JLayeredPane list = new JLayeredPane();
@@ -84,7 +84,7 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		
 	}
-	public void fix(String songname) {
-		songlist.set(songlist.size()-1, songname);
+	public void fix(String songname, String singer) {
+		songlist.set(songlist.size()-1, songname+" - "+singer);
 	}
 }

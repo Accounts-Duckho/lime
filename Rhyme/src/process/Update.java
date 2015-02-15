@@ -17,7 +17,7 @@ public class Update {
   public static void Background(Image img) {
 	  MusicPlayer.background.changeBg(img);
   }
-  public static void Charset(String songname) {
-	  FunctionDock.demand_list.fix(songname);
+  public static void Charset(String songname, String singer) {
+	  FunctionDock.demand_list.fix(songname, singer);
   }
 }

@@ -100,6 +100,8 @@ final public class MusicPlayer extends JFrame {
 					"wav", "m4a"); // 'showing name' , 'extensions .... ' ,,,, 
 		browser.addChoosableFileFilter(songFilter);
 		browser.setFileFilter(songFilter); // make own filter to default		
+		browser.setMultiSelectionEnabled(true);
+		browser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 	}
 
 	private JComponent buildContentPane() {

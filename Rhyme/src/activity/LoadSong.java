@@ -25,18 +25,23 @@ import process.Update;
 import design.FunctionDock;
 
 public class LoadSong implements ActionListener {
-	private File music;
+	private File[] music;
+	private File musicdir;
 	private Tag tag;
 	public static AudioFile audioFile;
 	public void actionPerformed(ActionEvent e) {
 		int value = MusicPlayer.browser.showOpenDialog(null); // open browser and notice chose or cancel 
 		if (value == JFileChooser.APPROVE_OPTION) {
-			music = MusicPlayer.browser.getSelectedFile(); // file link
+			if(MusicPlayer.browser.getSelectedFile().isFile())
+			music = MusicPlayer.browser.getSelectedFiles(); // file link
+			else {
+			musicdir= MusicPlayer.browser.getSelectedFile();
+			music = musicdir.listFiles(); }		
 		}
 		
 		/* load songinfo */
 		try {
-			audioFile = AudioFileIO.read(music);
+			audioFile = AudioFileIO.read(music[0]);
 	        tag = audioFile.getTag();
 			String singer = tag.getFirst(FieldKey.ARTIST);
 			String songname = tag.getFirst(FieldKey.TITLE);		
@@ -47,7 +52,7 @@ public class LoadSong implements ActionListener {
 			Update.SongInfo(singer, songname);
 			e1.printStackTrace(); }
 		
-		FunctionDock.demand_list.addtolist(tag.getFirst(FieldKey.TITLE));
+		FunctionDock.demand_list.addtolist(tag.getFirst(FieldKey.TITLE),tag.getFirst(FieldKey.ARTIST));
 	}
 	
     public Image getImage() {
