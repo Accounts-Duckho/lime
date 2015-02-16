@@ -48,4 +48,7 @@ public class ListAdmin {
 		readsongs.close();
 		readdirs.close();
 	}
+	public static String loaddir(int n) {
+		return dirs.get(n);
+	}
 }

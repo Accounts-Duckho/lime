@@ -20,6 +20,7 @@ import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import activity.Mp3Player;
 import activity.ReEncoder;
 import design.Background;
 import design.FunctionDock;
@@ -36,6 +37,7 @@ final public class MusicPlayer extends JFrame {
 	public static Background background;
 	public static JProgressBar progress_bar;
 	public static JFileChooser browser;
+	public static Mp3Player mp3play;
 	private JButton fix_btn; // It fixes hangul encode error 
 	private JPanel filter;
 
@@ -102,6 +104,9 @@ final public class MusicPlayer extends JFrame {
 		browser.setFileFilter(songFilter); // make own filter to default		
 		browser.setMultiSelectionEnabled(true);
 		browser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		
+		/* '*.Mp3' player */
+		mp3play = new Mp3Player();
 	}
 
 	private JComponent buildContentPane() {
@@ -137,5 +142,5 @@ final public class MusicPlayer extends JFrame {
         
         } catch (Exception e) { }  
         new MusicPlayer().setVisible(true);
-	}
+	} 
 }
