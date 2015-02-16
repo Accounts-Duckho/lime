@@ -4,54 +4,92 @@
  */
 package design;
 
-import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import activity.LoadDemandList;
+import activity.LoadFavoriteSong;
+import activity.LoadSong;
+import activity.Repeat;
 
 @SuppressWarnings("serial")
 public class FunctionDock extends JPanel {
 	private JButton load_btn;
 	private JButton list_btn;
 	private JButton favorite_btn;
-	private JButton volume_btn;
+	private JButton repeat_btn;
+	public JLabel volume_icon;
+	public static DemandList demand_list;
+	public static PlayList play_list;
 	
 	public FunctionDock() {
-		makeButtons();
+		setLayout(new GridLayout(1,5));
+		makeContents();
+		getAction(new LoadSong(), new LoadDemandList(),
+				new LoadFavoriteSong(), new Repeat());
+		loadDock();
+		setOpaque(false); // transparent option : false is actually true of transparent 
 	}
 	
-	private void makeButtons() {
-		load_btn = createButton("+");// load song
-		list_btn = createButton("L");// play list
-		favorite_btn = createButton("F");// most_played songs
-		volume_btn = createButton("V");// open volume control	
+	private void makeContents() {
+		/* Icon Load */
+		final URL icon_load = getClass().getResource("/images/icons/load.png");
+		final URL icon_demand_list = getClass().getResource("/images/icons/demand_list.png");
+		final URL icon_favorite_list = getClass().getResource("/images/icons/favorite_list.png");
+		final URL icon_volume_bar = getClass().getResource("/images/icons/volume.png");
+		final URL icon_repeat = getClass().getResource("/images/icons/repeat.png");
+		
+		/* Make Button with Icon */
+		load_btn = createButton(new ImageIcon(icon_load));
+		list_btn = createButton(new ImageIcon(icon_demand_list));
+		favorite_btn = createButton(new ImageIcon(icon_favorite_list));
+		repeat_btn = createButton(new ImageIcon(icon_repeat));
+		volume_icon = new JLabel(new ImageIcon(icon_volume_bar));
+		
+		/* Load List Once */
+		demand_list = new DemandList();
+		play_list = new PlayList();
 	}
 	
 	private void applyFeature() {
 		/* load button */
-		load_btn.setBackground(Color.WHITE);
-		load_btn.setForeground(Color.BLACK);
+		load_btn.setBorder(null);
+		load_btn.setFocusable(false);
+		load_btn.setContentAreaFilled(false);
 		
 		/* list button */
-		list_btn.setBackground(Color.WHITE);
-		list_btn.setForeground(Color.BLACK);
+		list_btn.setBorder(null);
+		list_btn.setFocusable(false);
+		list_btn.setContentAreaFilled(false);
 
 		/* favorite button */
-		favorite_btn.setBackground(Color.WHITE);
-		favorite_btn.setForeground(Color.BLACK);
+		favorite_btn.setBorder(null);
+		favorite_btn.setFocusable(false);
+		favorite_btn.setContentAreaFilled(false);
 
 		/* Volume button */
-		volume_btn.setBackground(Color.WHITE);
-		volume_btn.setForeground(Color.BLACK);
+		volume_icon.setBorder(null);
+		volume_icon.setFocusable(false);
+		
+		/* favorite button */
+		repeat_btn.setBorder(null);
+		repeat_btn.setFocusable(false);
+		repeat_btn.setContentAreaFilled(false);
 	}
 
 	public void getAction(ActionListener song, ActionListener list,
-			ActionListener favorite, ActionListener volume_bar) {	
+			ActionListener favorite, ActionListener repeat) {	
 		assignAct(load_btn, song);
 		assignAct(list_btn, list);
-		assignAct(favorite_btn, favorite);
-		assignAct(volume_btn, volume_bar);		
+		assignAct(favorite_btn, favorite);	
+		assignAct(repeat_btn, repeat);
 	}
 	
 	private void assignAct(JButton btn, ActionListener act) {
@@ -62,7 +100,8 @@ public class FunctionDock extends JPanel {
 		this.add(load_btn);
 		this.add(list_btn);
 		this.add(favorite_btn);
-		this.add(volume_btn);
+		this.add(repeat_btn);
+		this.add(volume_icon);
 	}
 	
 	public void loadDock() {
@@ -70,8 +109,8 @@ public class FunctionDock extends JPanel {
 		addButtons();
 	}
 
-	private JButton createButton(String s) {
-		JButton button = new JButton(s);
+	private JButton createButton(Icon icon) {
+		JButton button = new JButton(icon);
 		return button;
 	}
 }

@@ -15,62 +15,51 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import activity.OnOff;
+
 @SuppressWarnings("serial")
 public class MusicController extends JPanel {
+
 	private JButton previous_btn;
 	private JButton next_btn;
-	private JButton play_btn;
-	private JButton pause_btn;
-
-
+	private JButton onoff_btn;
+	final URL icon_previous = getClass().getResource("/images/icons/previous.png");
+	final URL icon_next = getClass().getResource("/images/icons/next.png");
+	final URL icon_play = getClass().getResource("/images/icons/play.png");
+	final URL icon_pause = getClass().getResource("/images/icons/pause.png");
 	public MusicController() {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		makeButtons();
+		getAction(null, null, new OnOff());
+		loadCtrPanel();
+		setBackground(new Color(0, 0, 0, 0));
+		setOpaque(false);
 	}
 
-	private void makeButtons() {
-		final URL icon_previous = getClass().getResource("/images/icons/previous.png");
-		final URL icon_next = getClass().getResource("/images/icons/next.png");
-		final URL icon_play = getClass().getResource("/images/icons/play.png");
-		final URL icon_pause = getClass().getResource("/images/icons/pause.png");
+	private void makeButtons() {		
 		previous_btn = createButton(new ImageIcon(icon_previous));
 		next_btn = createButton(new ImageIcon(icon_next));
-		play_btn = createButton(new ImageIcon(icon_play));
-		pause_btn = createButton(new ImageIcon(icon_pause));
+		onoff_btn = createButton(new ImageIcon(icon_play));
 	}
+
 	private void applyFeature() {
 
 		/* previous */
 		previous_btn.setBorder(null);
 		previous_btn.setFocusable(false);
 		previous_btn.setContentAreaFilled(false);
-		previous_btn.setBackground(Color.WHITE);
-		previous_btn.setForeground(Color.BLACK);
 		previous_btn.setMaximumSize(new Dimension(30, 30));
-		
+
 		/* play & pause */
-		play_btn.setBorder(null);
-		play_btn.setFocusable(false);
-		play_btn.setContentAreaFilled(false);
-		play_btn.setBackground(Color.WHITE);
-		play_btn.setForeground(Color.BLACK);
-		play_btn.setMaximumSize(new Dimension(150, 150));
-//		play_btn.setText("Play");
-		
-		pause_btn.setBorder(null);
-		pause_btn.setFocusable(false);
-		pause_btn.setContentAreaFilled(false);
-		pause_btn.setBackground(Color.WHITE);
-		pause_btn.setForeground(Color.BLACK);
-		pause_btn.setMaximumSize(new Dimension(150, 150));
-//		pause_btn.setText("Pause"); 
+		onoff_btn.setBorder(null);
+		onoff_btn.setFocusable(false);
+		onoff_btn.setContentAreaFilled(false);
+		onoff_btn.setMaximumSize(new Dimension(150, 150));
 
 		/* next */
 		next_btn.setBorder(null);
 		next_btn.setFocusable(false);
 		next_btn.setContentAreaFilled(false);
-		next_btn.setBackground(Color.WHITE);
-		next_btn.setForeground(Color.BLACK);
 		next_btn.setMaximumSize(new Dimension(30, 30));
 
 	}
@@ -78,21 +67,25 @@ public class MusicController extends JPanel {
 	private void addButtons() {
 		this.add(previous_btn);
 		this.add(Box.createRigidArea(new Dimension(17, 0))); /* empty block */
-		this.add(play_btn);
-		this.add(pause_btn);
+		this.add(onoff_btn);
 		this.add(Box.createRigidArea(new Dimension(17, 0))); /* empty block */
 		this.add(next_btn);
 	}
+
 	public void switch_btn(boolean playing) {
-		play_btn.setVisible(!playing);
-		pause_btn.setVisible(playing);
+		if(playing) {
+			onoff_btn.setIcon(new ImageIcon(icon_pause));
+		}
+		else {
+			onoff_btn.setIcon(new ImageIcon(icon_play));
+		}
 	}
+
 	public void getAction(ActionListener previous, ActionListener next,
-			ActionListener play, ActionListener pause) {
+			ActionListener onoff) {
 		assignAct(previous_btn, previous);
 		assignAct(next_btn, next);
-		assignAct(play_btn, play);
-		assignAct(pause_btn, pause);
+		assignAct(onoff_btn, onoff);
 	}
 
 	private void assignAct(JButton btn, ActionListener act) {
@@ -104,6 +97,7 @@ public class MusicController extends JPanel {
 		switch_btn(false);
 		addButtons();
 	}
+
 	private JButton createButton(Icon icon) {
 		JButton button = new JButton(icon);
 		return button;

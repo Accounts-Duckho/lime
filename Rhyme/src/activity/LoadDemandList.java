@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 
 import design.FunctionDock;
 
-public class LoadFavoriteSong implements ActionListener {
+public class LoadDemandList implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-		/* Favorite Song lists */
-		FunctionDock.play_list.showList();
+		/* List of songs */
+		FunctionDock.demand_list.showList();
 	}
 }

@@ -4,23 +4,22 @@
 package design;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 
 @SuppressWarnings("serial")
 public class SongInfo extends JPanel {
 	private JLabel showsinger;
 	private JLabel showsong;
-	private String singer;
-	private String songname;
-	private JProgressBar bar;
+	public String singer="Singer";
+	public String songname="SongName";
 	public SongInfo() {
-		setLayout(new GridLayout(3, 1));
+		setLayout(new GridLayout(2, 1));
+		loadInfoPanel();
+		setOpaque(false);
 	}
 	public void getSongInfo(String singer, String songname) {
 		this.singer=singer;
@@ -30,37 +29,27 @@ public class SongInfo extends JPanel {
 		showsinger = createLabel(singer);
 		showsong = createLabel(songname);		
 	}
-	private void makeProgressBar() {
-		bar=createBar(0, 100);
-		bar.setValue(0);
-		bar.setStringPainted(true);
-		Dimension prefSize = bar.getPreferredSize();
-		prefSize.height = 10;
-		bar.setPreferredSize(prefSize);
-	}
 	private void applyFeature() {
-
+		/* RGB Color site : http://www.rapidtables.com/web/color/RGB_Color.htm */
+		
 		/* Singer */
-		showsinger.setFont(new Font("Apple Casual", Font.PLAIN, 12));
-		showsinger.setForeground(Color.darkGray); // text color
+		showsinger.setFont(new Font("NANUM", Font.PLAIN, 12));
+		showsinger.setForeground(new Color(0,128,128)); // text color
 		showsinger.setHorizontalAlignment(JLabel.CENTER);
 
 		/* Song */
-		showsong.setFont(new Font("Apple Casual", Font.PLAIN, 13));
+		showsong.setFont(new Font("NANUM", Font.PLAIN, 13));
+		showsong.setForeground(new Color(65,105,225));
 		showsong.setHorizontalAlignment(JLabel.CENTER);
 	}
 	
     private void addToPanel() {
     	this.add(showsinger);
     	this.add(showsong);
-    	this.add(bar); 
     }
     
-	public void loadInfoPanel(boolean music_loaded) {
-		if(!music_loaded)
-		getSongInfo("Singer", "SongName");
+	public void loadInfoPanel() {
 		makeLabel();
-		makeProgressBar();
 		applyFeature();
 		addToPanel();
 	}
@@ -68,9 +57,5 @@ public class SongInfo extends JPanel {
 	private JLabel createLabel(String s) {
 		JLabel label = new JLabel(s);
 		return label;
-	}
-	private JProgressBar createBar(int start, int endline) {
-		JProgressBar bar = new JProgressBar(start, endline);
-		return bar;
 	}
 }
