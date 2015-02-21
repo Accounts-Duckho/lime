@@ -15,7 +15,9 @@ import activity.AddList;
 
 @SuppressWarnings("serial")
 public class PlayList extends JFrame {
+	@SuppressWarnings("unused")
 	private ArrayList<String> playlist;
+	@SuppressWarnings("unused")
 	private JButton delete;
 	private JButton add_btn;
 	public PlayList()

@@ -17,10 +17,10 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import activity.Refresh;
-
 @SuppressWarnings("serial")
 final public class DemandList extends JFrame implements MouseWheelListener {
-	public static ArrayList<String> songlist;
+	public ArrayList<String> songinfo;
+	public ArrayList<String> singerinfo;
 	private JButton[] song;
 	private JButton refresh;
 	private JPanel subpanel=new JPanel();
@@ -32,7 +32,8 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLayout(new BorderLayout());
 		addMouseWheelListener(this);
-		songlist = new ArrayList<String>();
+		songinfo = new ArrayList<String>();
+		singerinfo = new ArrayList<String>();
 		song = new JButton[49]; //limit 50 song
 			
 		refresh = new JButton("Refresh");
@@ -47,14 +48,15 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 		subpanel.setVisible(false);
 		add(subpanel, BorderLayout.CENTER);
 	}
-	public void addtolist(String songname, String singer) {
-		songlist.add(songname+" - "+singer);
+	public void addtolist(String songname, String singer) {		
+		songinfo.add(songname);
+		singerinfo.add(singer);
 	}
 	public JComponent load() {
 		JLayeredPane list = new JLayeredPane();
-		if(songlist.size()<=50) {
-		for(int i=0; i<songlist.size(); i++) {
-			song[i]=new JButton(songlist.get(i));
+		if(songinfo.size()<=50 && songinfo.size()==singerinfo.size()) {
+		for(int i=0; i<songinfo.size(); i++) {
+			song[i]=new JButton(songinfo.get(i)+" - "+singerinfo.get(i));
 			song[i].setFont(new Font("GODIC", Font.PLAIN, 15));
 			song[i].setHorizontalAlignment(JLabel.LEFT);
 			song[i].setBorder(null);
@@ -70,12 +72,14 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 	public void showList() {
 		subpanel.removeAll();
 		subpanel.add(load());
-		this.add(subpanel);
-		subpanel.setVisible(true);
 		this.setVisible(true);
+		subpanel.setVisible(true);
 	}
-	public void refresh() throws Exception {
-		showList();
+	public void refresh() {
+		subpanel.setVisible(false);
+		subpanel.removeAll();
+		subpanel.add(load());
+		subpanel.setVisible(true);
 	}
 	
 	private void assignAct(JButton btn, ActionListener act) {
@@ -85,6 +89,7 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 		
 	}
 	public void fix(String songname, String singer) {
-		songlist.set(songlist.size()-1, songname+" - "+singer);
+		songinfo.set(songinfo.size()-1, songname);
+		singerinfo.set(singerinfo.size()-1, singer);
 	}
 }

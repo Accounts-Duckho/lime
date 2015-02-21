@@ -51,4 +51,7 @@ public class ListAdmin {
 	public static String loaddir(int n) {
 		return dirs.get(n);
 	}
+	public static int getCount() {
+		return count;
+	}
 }

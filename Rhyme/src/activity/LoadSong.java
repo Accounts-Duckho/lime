@@ -3,82 +3,54 @@
  */
 package activity;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
-import java.util.List;
+import java.io.FilenameFilter;
+import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
-
-import org.jaudiotagger.audio.AudioFile;
-import org.jaudiotagger.audio.AudioFileIO;
-import org.jaudiotagger.tag.FieldKey;
-import org.jaudiotagger.tag.Tag;
-import org.jaudiotagger.tag.images.Artwork;
 
 import process.MusicPlayer;
 import process.Update;
-import design.FunctionDock;
-
 public class LoadSong implements ActionListener {
 	private File[] music;
 	private File musicdir;
-	private Tag tag;
-	private boolean error;
-	public static AudioFile audioFile;
-
+	MetaData songdata = new MetaData();
 	public void actionPerformed(ActionEvent e) {
-		int value = MusicPlayer.browser.showOpenDialog(null); // open browser
-																// and notice
-																// chose or
-																// cancel
+		int value = MusicPlayer.browser.showOpenDialog(null); // get Info whether user has selected or not
 		if (value == JFileChooser.APPROVE_OPTION) {
 			if (MusicPlayer.browser.getSelectedFile().isFile())
 				music = MusicPlayer.browser.getSelectedFiles(); // file link
 			else {
 				musicdir = MusicPlayer.browser.getSelectedFile();
-				music = musicdir.listFiles();
+				music = musicdir.listFiles(new SongFilter());
 			}
 		}
 
 		/* load songinfo */
 		if (music.length < 50) {
 			for (int i = 0; i < music.length; i++) {
+				songdata.load(music[i]);
+				songdata.extractInfo();
+				MusicPlayer.background.setAlbumArt(i, songdata.getAlbumArt());
 				try {
-					audioFile = AudioFileIO.read(music[i]);
-					tag = audioFile.getTag();
-					String singer = tag.getFirst(FieldKey.ARTIST);
-					String songname = tag.getFirst(FieldKey.TITLE);
-					Update.SongInfo(singer, songname);
-					Update.Background(getImage());
-					ListAdmin.getList(songname, music[i].getPath());
-					error=false;
-				} catch (Exception e1) {
+					ListAdmin.getList(songdata.getSongName(), music[i].getPath());
+				} catch (IOException e1) {
 					e1.printStackTrace();
-					error=true;
 				}
-				if(error==false) {
-				FunctionDock.demand_list.addtolist(
-						tag.getFirst(FieldKey.TITLE),
-						tag.getFirst(FieldKey.ARTIST)); }
+				MusicPlayer.demand_list.addtolist(songdata.getSinger(), songdata.getSongName());
+				}
+			Update.Background(0);
+			Update.SongInfo(0);
 			}
 		}
 	}
-
-	public Image getImage() {
-		try {
-			final List<Artwork> artworkList = tag.getArtworkList(); // load
-			if (artworkList.size() > 0) { // If exist
-				InputStream in = new ByteArrayInputStream(tag.getFirstArtwork()
-						.getBinaryData());
-				return ImageIO.read(in);
-			}
-		} catch (Exception e) {
-		}
-		return null;
+class SongFilter implements FilenameFilter {
+	public boolean accept(File dir, String name) {
+		if(name.toLowerCase().endsWith(".mp3") | name.toLowerCase().endsWith(".wav"))
+			return true;
+		else
+			return false;
 	}
 }

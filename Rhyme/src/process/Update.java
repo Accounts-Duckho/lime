@@ -1,10 +1,14 @@
 package process;
 
-import java.awt.Image;
-
-import design.FunctionDock;
-
 public class Update {
+  public static void SongInfo(int n) {
+	String singer = MusicPlayer.demand_list.singerinfo.get(n);
+	String songname = MusicPlayer.demand_list.songinfo.get(n);
+    MusicPlayer.info_panel.removeAll();
+    MusicPlayer.info_panel.getSongInfo(singer, songname);
+    MusicPlayer.info_panel.loadInfoPanel();
+    MusicPlayer.info_panel.updateUI();
+  }
   public static void SongInfo(String singer, String songname) {
     MusicPlayer.info_panel.removeAll();
     MusicPlayer.info_panel.getSongInfo(singer, songname);
@@ -12,12 +16,12 @@ public class Update {
     MusicPlayer.info_panel.updateUI();
   }
   public static void SongList() throws Exception {
-		FunctionDock.demand_list.refresh();
+		MusicPlayer.demand_list.refresh();
   }
-  public static void Background(Image img) {
-	  MusicPlayer.background.changeBg(img);
+  public static void Background(int i) {
+	  MusicPlayer.background.changeBg(i);
   }
   public static void Charset(String songname, String singer) {
-	  FunctionDock.demand_list.fix(songname, singer);
+	  MusicPlayer.demand_list.fix(songname, singer);
   }
 }
