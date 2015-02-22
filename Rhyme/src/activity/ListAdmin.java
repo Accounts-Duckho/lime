@@ -49,7 +49,10 @@ public class ListAdmin {
 		readdirs.close();
 	}
 	public static String loaddir(int n) {
+		if(dirs!=null)
 		return dirs.get(n);
+		else
+			return null;
 	}
 	public static int getCount() {
 		return count;

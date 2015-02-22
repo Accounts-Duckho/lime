@@ -131,9 +131,7 @@ final public class MusicPlayer extends JFrame {
 		browser.setFileFilter(songFilter); // make own filter to default
 		browser.setMultiSelectionEnabled(true);
 		browser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-
-		/* '*.Mp3' player */
-		mp3play = new Mp3Player();
+		
 	}
 
 	private JComponent buildContentPane() {

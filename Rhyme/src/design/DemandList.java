@@ -7,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -16,6 +17,8 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import activity.ListAdmin;
+import activity.PlayInList;
 import activity.Refresh;
 @SuppressWarnings("serial")
 final public class DemandList extends JFrame implements MouseWheelListener {
@@ -26,7 +29,7 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 	private JPanel subpanel=new JPanel();
 	public DemandList() {
 		super("SongList");
-		setSize(200,300);
+		setSize(200,700);
 		setVisible(false);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -54,15 +57,16 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 	}
 	public JComponent load() {
 		JLayeredPane list = new JLayeredPane();
-		if(songinfo.size()<=50 && songinfo.size()==singerinfo.size()) {
-		for(int i=0; i<songinfo.size(); i++) {
-			song[i]=new JButton(songinfo.get(i)+" - "+singerinfo.get(i));
+		if(ListAdmin.getCount()<=50) {
+		for(int i=0; i<ListAdmin.getCount(); i++) {
+			song[i]=new JButton(new File(ListAdmin.loaddir(i)).getName());
 			song[i].setFont(new Font("GODIC", Font.PLAIN, 15));
 			song[i].setHorizontalAlignment(JLabel.LEFT);
 			song[i].setBorder(null);
 			song[i].setFocusable(false);
 			song[i].setContentAreaFilled(false);
-			song[i].setBounds(0,10+16*i,200,15);
+			song[i].addActionListener(new PlayInList(i));
+			song[i].setBounds(0,10+19*i,200,15);
 			list.add(song[i]);
 			}
 		}
