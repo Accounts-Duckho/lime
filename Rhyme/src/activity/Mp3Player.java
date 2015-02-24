@@ -2,6 +2,7 @@ package activity;
 
 import java.io.InputStream;
 
+import process.MusicPlayer;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.AudioDevice;
 import javazoom.jl.player.Player;
@@ -15,6 +16,9 @@ public class Mp3Player {
 	private final Player player;
 	
 	private final Object playerLock = new Object();
+	
+	private boolean next_clicked=false;
+	private boolean pre_clicked=false;
 	
 	private int playerStatus = NOTSTARTED;
 	
@@ -68,6 +72,7 @@ public class Mp3Player {
 	}
 	public void stop() {
 		synchronized(playerLock) {
+			MusicPlayer.ctr_panel.switch_btn(false);
 			playerStatus = FINISHED;
 			playerLock.notifyAll();
 		}
@@ -75,7 +80,7 @@ public class Mp3Player {
 	private void playInternal() {
 		while(playerStatus != FINISHED) {
 			try {
-				if(!player.play(1)) {
+				if(!player.play(1)|| next_clicked == true || pre_clicked == true) {
 					break;
 				}
 			} catch (final JavaLayerException e) {
@@ -96,6 +101,7 @@ public class Mp3Player {
 	public void close() {
 		synchronized(playerLock) {
 			playerStatus = FINISHED;
+			MusicPlayer.ctr_panel.switch_btn(false);
 		}
 		try {
 			player.close();
@@ -105,5 +111,11 @@ public class Mp3Player {
 	}
 	public int getStatus() {
 		return playerStatus;
+	}
+	public void ifnext(boolean clicked) {
+		next_clicked=clicked;
+	}
+	public void ifpre(boolean clicked) {
+		pre_clicked=clicked;
 	}
 }

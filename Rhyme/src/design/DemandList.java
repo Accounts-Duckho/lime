@@ -65,7 +65,7 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 			song[i].setBorder(null);
 			song[i].setFocusable(false);
 			song[i].setContentAreaFilled(false);
-			song[i].addActionListener(new PlayInList(i));
+			song[i].addMouseListener(new PlayInList(i));
 			song[i].setBounds(0,10+19*i,200,15);
 			list.add(song[i]);
 			}

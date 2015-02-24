@@ -40,6 +40,7 @@ public class LoadSong implements ActionListener {
 					e1.printStackTrace();
 				}
 				MusicPlayer.demand_list.addtolist(songdata.getSinger(), songdata.getSongName());
+				music[i]=null;
 				}
 			Update.Background(0);
 			Update.SongInfo(0);
@@ -48,7 +49,7 @@ public class LoadSong implements ActionListener {
 	}
 class SongFilter implements FilenameFilter {
 	public boolean accept(File dir, String name) {
-		if(name.toLowerCase().endsWith(".mp3") | name.toLowerCase().endsWith(".wav"))
+		if(name.toLowerCase().endsWith(".mp3") || name.toLowerCase().endsWith(".wav"))
 			return true;
 		else
 			return false;

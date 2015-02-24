@@ -20,7 +20,9 @@ import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import javazoom.jl.decoder.JavaLayerException;
 import activity.Mp3Player;
+import activity.OnOff;
 import activity.ReEncoder;
 import activity.Repeat;
 import design.Background;
@@ -131,7 +133,7 @@ final public class MusicPlayer extends JFrame {
 		browser.setFileFilter(songFilter); // make own filter to default
 		browser.setMultiSelectionEnabled(true);
 		browser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		
+
 	}
 
 	private JComponent buildContentPane() {

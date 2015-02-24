@@ -15,6 +15,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import activity.GoNext;
+import activity.GoPrevious;
 import activity.OnOff;
 
 @SuppressWarnings("serial")
@@ -30,7 +32,7 @@ public class MusicController extends JPanel {
 	public MusicController() {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		makeButtons();
-		getAction(null, null, new OnOff());
+		getAction(new GoPrevious(), new GoNext(), new OnOff());
 		loadCtrPanel();
 		setBackground(new Color(0, 0, 0, 0));
 		setOpaque(false);
