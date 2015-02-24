@@ -12,6 +12,7 @@ public class Background extends JLabel {
 	public Image[] albumArt= new Image[49]; // limit
 	final URL img_url = getClass().getResource("/images/background/Pi.png"); // Default Bg
 	private ImageIcon defaultBg = new ImageIcon(img_url);
+	private int count=0;
 	public Background() {
 		this.setIcon(defaultBg); 
 	}
@@ -28,5 +29,11 @@ public class Background extends JLabel {
 	}
 	public Image getBackground(int num) {
 		return albumArt[num];
+	}
+	public void setCount(int n) {
+		count = n;
+	}
+	public int getCount() {
+		return count;
 	}
 }

@@ -6,6 +6,7 @@ package process;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.io.FileInputStream;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
@@ -133,7 +134,13 @@ final public class MusicPlayer extends JFrame {
 		browser.setFileFilter(songFilter); // make own filter to default
 		browser.setMultiSelectionEnabled(true);
 		browser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-
+		try {
+			FileInputStream input = new FileInputStream(System.getProperty("user.dir")+"\\src\\sample.mp3");
+			mp3play=new Mp3Player(input);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private JComponent buildContentPane() {

@@ -17,6 +17,7 @@ public class LoadSong implements ActionListener {
 	private File[] music;
 	private File musicdir;
 	MetaData songdata = new MetaData();
+	public int count=0;
 	public void actionPerformed(ActionEvent e) {
 		int value = MusicPlayer.browser.showOpenDialog(null); // get Info whether user has selected or not
 		if (value == JFileChooser.APPROVE_OPTION) {
@@ -33,7 +34,7 @@ public class LoadSong implements ActionListener {
 			for (int i = 0; i < music.length; i++) {
 				songdata.load(music[i]);
 				songdata.extractInfo();
-				MusicPlayer.background.setAlbumArt(i, songdata.getAlbumArt());
+				MusicPlayer.background.setAlbumArt(i+MusicPlayer.background.getCount(), songdata.getAlbumArt());
 				try {
 					ListAdmin.getList(songdata.getSongName(), music[i].getPath());
 				} catch (IOException e1) {
@@ -41,9 +42,12 @@ public class LoadSong implements ActionListener {
 				}
 				MusicPlayer.demand_list.addtolist(songdata.getSinger(), songdata.getSongName());
 				music[i]=null;
+				count++;
 				}
 			Update.Background(0);
 			Update.SongInfo(0);
+			MusicPlayer.background.setCount(count+MusicPlayer.background.getCount());
+			count=0;
 			}
 		}
 	}

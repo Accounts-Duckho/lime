@@ -21,7 +21,6 @@ public class Mp3Player {
 	private boolean pre_clicked=false;
 	
 	private int playerStatus = NOTSTARTED;
-	
 	public Mp3Player(final InputStream inputStream) throws JavaLayerException {
 		this.player = new Player(inputStream);
 	}
