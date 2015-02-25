@@ -6,6 +6,7 @@ package activity;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
@@ -17,8 +18,13 @@ public class LoadSong implements ActionListener {
 	private File[] music;
 	private File musicdir;
 	MetaData songdata = new MetaData();
-	public int count=0;
+	private boolean checked=false;
 	public void actionPerformed(ActionEvent e) {
+		getSong();
+		if(checked) 
+		loadSong();
+		}
+	public void getSong() {
 		int value = MusicPlayer.browser.showOpenDialog(null); // get Info whether user has selected or not
 		if (value == JFileChooser.APPROVE_OPTION) {
 			if (MusicPlayer.browser.getSelectedFile().isFile())
@@ -27,10 +33,11 @@ public class LoadSong implements ActionListener {
 				musicdir = MusicPlayer.browser.getSelectedFile();
 				music = musicdir.listFiles(new SongFilter());
 			}
+			checked=true;
 		}
-
-		/* load songinfo */
-		if (music.length < 50) {
+	}
+	public void loadSong() {
+		if (MusicPlayer.background.getCount()+music.length < 50) {
 			for (int i = 0; i < music.length; i++) {
 				songdata.load(music[i]);
 				songdata.extractInfo();
@@ -42,18 +49,26 @@ public class LoadSong implements ActionListener {
 				}
 				MusicPlayer.demand_list.addtolist(songdata.getSinger(), songdata.getSongName());
 				music[i]=null;
-				count++;
-				}
+			}
+			if(MusicPlayer.mp3play==null) {
 			Update.Background(0);
 			Update.SongInfo(0);
-			MusicPlayer.background.setCount(count+MusicPlayer.background.getCount());
-			count=0;
+			FileInputStream firstInit;
+			try {
+				firstInit = new FileInputStream(ListAdmin.loaddir(0));
+				MusicPlayer.mp3play=new Mp3Player(firstInit);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} }
+			MusicPlayer.background.setCount(music.length+MusicPlayer.background.getCount());
 			}
-		}
+		else System.out.println("Limited to 50 song");
+	}
 	}
 class SongFilter implements FilenameFilter {
 	public boolean accept(File dir, String name) {
-		if(name.toLowerCase().endsWith(".mp3") || name.toLowerCase().endsWith(".wav"))
+		if(name.toLowerCase().endsWith(".mp3") || name.toLowerCase().endsWith(".wav") || name.toLowerCase().endsWith(".m4a"))
 			return true;
 		else
 			return false;

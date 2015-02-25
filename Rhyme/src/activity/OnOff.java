@@ -19,7 +19,8 @@ public class OnOff implements ActionListener {
 	private static int change_cnt = 0;
 
 	public void actionPerformed(ActionEvent e) {
-		try {
+		if (ListAdmin.loaddir(0) != null) {
+			try {
 				if (!loaded) {
 					input = new FileInputStream(ListAdmin.loaddir(count));
 					count++;
@@ -42,22 +43,29 @@ public class OnOff implements ActionListener {
 				case 3:
 					input = new FileInputStream(ListAdmin.loaddir(count));
 					Update.SongInfo(count);
-					Update.Background(count);	
+					Update.Background(count);
 					count++;
 					change_cnt++;
 					MusicPlayer.mp3play = new Mp3Player(input);
 					MusicPlayer.mp3play.play();
 					break;
 				}
-		} catch (final Exception ex) {
-			throw new RuntimeException(ex);
+			} catch (final Exception ex) {
+				throw new RuntimeException(ex);
+			}
+		} else {
+			LoadSong loader = new LoadSong();
+			loader.getSong();
+			loader.loadSong();
 		}
 	}
-public static int getCount() {
-	return change_cnt;
-}
-public static void setCount(int n) {
-	change_cnt=n;
-	count=change_cnt;
-}
+
+	public static int getCount() {
+		return change_cnt;
+	}
+
+	public static void setCount(int n) {
+		change_cnt = n;
+		count = change_cnt;
+	}
 }
