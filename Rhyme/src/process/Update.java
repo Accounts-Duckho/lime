@@ -15,6 +15,12 @@ public class Update {
     MusicPlayer.info_panel.loadInfoPanel();
     MusicPlayer.info_panel.updateUI();
   }
+  public static void SongInfo(String name) {
+	    MusicPlayer.info_panel.removeAll();
+	    MusicPlayer.info_panel.getSongInfo(name);
+	    MusicPlayer.info_panel.loadInfoPanel();
+	    MusicPlayer.info_panel.updateUI();
+	  }
   public static void SongList() throws Exception {
 		MusicPlayer.demand_list.refresh();
   }

@@ -52,21 +52,21 @@ public class Mp3Player {
 			}
 		}
 	}
-	public boolean pause() {
+	public void pause() {
 		synchronized(playerLock) {
 			if(playerStatus == PLAYING) {
 				playerStatus = PAUSED;
 			}
-			return playerStatus == PLAYING;
+//			return playerStatus == PLAYING;
 		}
 	}
-	public boolean resume() {
+	public void resume() {
 		synchronized(playerLock) {
 			if(playerStatus == PAUSED) {
 				playerStatus = PLAYING;
 				playerLock.notifyAll();
 			}
-			return playerStatus == PLAYING;
+//			return playerStatus == PLAYING;
 		}
 	}
 	public void stop() {

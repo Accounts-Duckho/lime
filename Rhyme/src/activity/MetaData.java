@@ -45,6 +45,7 @@ public class MetaData {
 				albumArt=null; }
 		} catch (Exception e) {
 			System.out.println("AlbumArt loading Error");
+			albumArt=null;
 		}
 	}
 	public String getSinger() {

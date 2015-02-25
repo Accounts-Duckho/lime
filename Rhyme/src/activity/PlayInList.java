@@ -20,10 +20,6 @@ public class PlayInList implements MouseListener {
 			e.printStackTrace();
 		}
 	}
-	public void mouseEntered(MouseEvent e1) { }
-	public void mouseExited(MouseEvent e2) { }
-	public void mouseReleased(MouseEvent e3) { }
-	public void mousePressed(MouseEvent e4) { }
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {
 			try {
@@ -36,4 +32,8 @@ public class PlayInList implements MouseListener {
 			}
 		}
 	}
+	public void mouseEntered(MouseEvent e1) { }
+	public void mouseExited(MouseEvent e2) { }
+	public void mouseReleased(MouseEvent e3) { }
+	public void mousePressed(MouseEvent e4) { }
 }

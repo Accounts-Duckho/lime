@@ -17,7 +17,6 @@ public class OnOff implements ActionListener {
 	public static boolean repeat = false;
 	private static int count = 0;
 	private static int change_cnt = 0;
-
 	public void actionPerformed(ActionEvent e) {
 		if (ListAdmin.loaddir(0) != null) {
 			try {
@@ -27,6 +26,12 @@ public class OnOff implements ActionListener {
 					MusicPlayer.mp3play = new Mp3Player(input);
 					loaded = true;
 				}
+				
+//	 NOTSTARTED = 0;
+//	 PLAYING = 1;
+//	 PAUSED = 2;
+//	 FINISHED = 3;
+
 				switch (MusicPlayer.mp3play.getStatus()) {
 				case 0:
 					MusicPlayer.ctr_panel.switch_btn(true);

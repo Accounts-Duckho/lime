@@ -18,10 +18,10 @@ public class LoadSong implements ActionListener {
 	private File[] music;
 	private File musicdir;
 	MetaData songdata = new MetaData();
-	private boolean checked=false;
+	private boolean selected=false;
 	public void actionPerformed(ActionEvent e) {
 		getSong();
-		if(checked) 
+		if(selected) 
 		loadSong();
 		}
 	public void getSong() {
@@ -33,15 +33,16 @@ public class LoadSong implements ActionListener {
 				musicdir = MusicPlayer.browser.getSelectedFile();
 				music = musicdir.listFiles(new SongFilter());
 			}
-			checked=true;
+			selected=true;
 		}
 	}
 	public void loadSong() {
-		if (MusicPlayer.background.getCount()+music.length < 50) {
+		int pre_count=MusicPlayer.background.getAlbumArtLength();
+		if (pre_count+music.length < 50) {
 			for (int i = 0; i < music.length; i++) {
 				songdata.load(music[i]);
 				songdata.extractInfo();
-				MusicPlayer.background.setAlbumArt(i+MusicPlayer.background.getCount(), songdata.getAlbumArt());
+				MusicPlayer.background.setAlbumArt(pre_count+i, songdata.getAlbumArt());
 				try {
 					ListAdmin.getList(songdata.getSongName(), music[i].getPath());
 				} catch (IOException e1) {
@@ -52,16 +53,21 @@ public class LoadSong implements ActionListener {
 			}
 			if(MusicPlayer.mp3play==null) {
 			Update.Background(0);
+			
+			if(MusicPlayer.demand_list.songinfo.get(0) != MusicPlayer.demand_list.singerinfo.get(0))
 			Update.SongInfo(0);
+			else
+			Update.SongInfo(new File(ListAdmin.loaddir(0)).getName());
+			
 			FileInputStream firstInit;
 			try {
 				firstInit = new FileInputStream(ListAdmin.loaddir(0));
 				MusicPlayer.mp3play=new Mp3Player(firstInit);
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			} }
-			MusicPlayer.background.setCount(music.length+MusicPlayer.background.getCount());
+			} 
+		}			
+			MusicPlayer.background.setAlbumArtLength(pre_count+music.length);
 			}
 		else System.out.println("Limited to 50 song");
 	}
