@@ -21,8 +21,6 @@ public class OnOff implements ActionListener {
 		if (ListAdmin.loaddir(0) != null) {
 			try {
 				if (!loaded) {
-					ActiveProgress active=new ActiveProgress();
-					active.Progress(ListAdmin.loaddir(count));
 					input = new FileInputStream(ListAdmin.loaddir(count));
 					count++;
 					MusicPlayer.mp3play = new Mp3Player(input);

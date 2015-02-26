@@ -28,7 +28,6 @@ import design.DemandList;
 import design.FunctionDock;
 import design.MusicController;
 import design.PlayList;
-import design.ProgressBar;
 import design.SongInfo;
 import design.VolumeBar;
 
@@ -91,10 +90,13 @@ final public class MusicPlayer extends JFrame {
 		}
 
 		/* Progress Bar */
-		progress_bar = new JProgressBar(); // (first, end); endline will
-
-			new ProgressBar(progress_bar);
-
+		progress_bar = new JProgressBar(0, 100); // (first, end); endline will
+													// be changed to music
+													// length
+		progress_bar.setValue(30); // start position
+		progress_bar.setStringPainted(true);
+		progress_bar.setString("3:14"); // sample string
+		progress_bar.setFocusable(false);
 
 		/* UI change for File Browser */
 		try {
