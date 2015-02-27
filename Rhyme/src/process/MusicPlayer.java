@@ -44,6 +44,8 @@ final public class MusicPlayer extends JFrame {
 	public static Mp3Player mp3play;
 	public static DemandList demand_list;
 	public static PlayList play_list;
+	public static int queue;
+	public static boolean changed=false;
 	private JButton fix_btn; // It fixes hangul encode error
 	private JButton repeat_btn;
 	private JPanel filter;
