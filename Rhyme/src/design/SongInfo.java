@@ -25,7 +25,7 @@ public class SongInfo extends JPanel {
 		loadInfoPanel();
 		setOpaque(false);
 	}
-	public void getSongInfo(String songname, String singer) {
+	public void getSongInfo(String singer, String songname) {
 		try {
 			this.singer = new String(singer.getBytes("iso-8859-1"), "euc-kr");
 			this.songname = new String(songname.getBytes("iso-8859-1"),

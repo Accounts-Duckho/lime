@@ -51,7 +51,7 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 		subpanel.setVisible(false);
 		add(subpanel, BorderLayout.CENTER);
 	}
-	public void addtolist(String songname, String singer) {		
+	public void addtolist(String singer, String songname) {		
 		songinfo.add(songname);
 		singerinfo.add(singer);
 	}
