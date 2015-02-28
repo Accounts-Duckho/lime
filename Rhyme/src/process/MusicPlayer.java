@@ -6,9 +6,13 @@ package process;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.net.URL;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -21,8 +25,6 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import activity.Mp3Player;
-import activity.ReEncoder;
-import activity.Repeat;
 import design.Background;
 import design.DemandList;
 import design.FunctionDock;
@@ -44,31 +46,53 @@ final public class MusicPlayer extends JFrame {
 	public static Mp3Player mp3play;
 	public static DemandList demand_list;
 	public static PlayList play_list;
+	private JButton minimiseBtn;
+	private JButton closeBtn;
 	public static int queue;
 	public static boolean changed=false;
-	private JButton fix_btn; // It fixes hangul encode error
-	private JButton repeat_btn;
-	private JPanel filter;
+	static Point mouseDownCompCoords;
+
+	private JPanel filter_w;
+	private JPanel filter_g;
 
 	public MusicPlayer() {
 		// super("L. I. M. E"); decide title name
+		mouseDownCompCoords = null;
 		setLayout(new BorderLayout());
-		setSize(250, 250);
+		setSize(350, 172);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		/* Exit_on_close = exit all jframe , Dispose_on_close = exit only this */
 
 		setResizable(false);
+		setUndecorated(true);
 		setLocationRelativeTo(null); /* make the frame locate center */
 		add(buildContentPane()); /* load Contents */
+		addMouseListener(new MouseListener(){
+            public void mouseReleased(MouseEvent e) {
+                mouseDownCompCoords = null;
+            }
+            public void mousePressed(MouseEvent e) {
+                mouseDownCompCoords = e.getPoint();
+            }
+            public void mouseExited(MouseEvent e) {
+            }
+            public void mouseEntered(MouseEvent e) {
+            }
+            public void mouseClicked(MouseEvent e) {
+            }
+        });
+		addMouseMotionListener(new MouseMotionListener(){
+            public void mouseMoved(MouseEvent e) {
+            }
+
+            public void mouseDragged(MouseEvent e) {
+                Point currCoords = e.getLocationOnScreen();
+                setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
+            }
+        });
 	}
 	private void makeContents() {
-		/* repeat button */
-		final URL icon_repeat = getClass().getResource("/images/icons/repeat.png");
-		repeat_btn = new JButton(new ImageIcon(icon_repeat));
-		repeat_btn.addActionListener(new Repeat());
-		repeat_btn.setBorder(null);
-		repeat_btn.setFocusable(false);
-		repeat_btn.setContentAreaFilled(false);
+
 		
 		/* Load List Once */
 		demand_list = new DemandList();
@@ -109,18 +133,11 @@ final public class MusicPlayer extends JFrame {
 		/* Background */
 		background = new Background();
 
-		/* Encoding Fixer */
-		final URL icon_refresh = getClass().getResource(
-				"/images/icons/refresh.png");
-		fix_btn = new JButton(new ImageIcon(icon_refresh));
-		fix_btn.addActionListener(new ReEncoder());
-		fix_btn.setBorder(null);
-		fix_btn.setFocusable(false);
-		fix_btn.setContentAreaFilled(false);
-
 		/* Filter */
-		filter = new JPanel();
-		filter.setBackground(new Color(255, 255, 255, 150));
+		filter_w = new JPanel();
+		filter_w.setBackground(new Color(255, 255, 255));
+		filter_g = new JPanel();
+		filter_g.setBackground(new Color(128, 128, 128));
 
 		/* File Browser Setting */
 		browser = new JFileChooser();
@@ -131,33 +148,44 @@ final public class MusicPlayer extends JFrame {
 		browser.setFileFilter(songFilter); // make own filter to default
 		browser.setMultiSelectionEnabled(true);
 		browser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-
+		
+		minimiseBtn = new JButton();
+		minimiseBtn.addActionListener(new MinimizeAction());
+		
+		closeBtn = new JButton();
+		closeBtn.addActionListener(new CloseAction());
 	}
 
 	private JComponent buildContentPane() {
 		JLayeredPane combo = new JLayeredPane();
 		makeContents();
 		/* Set position & size (x, y ,width, height) */
-		info_panel.setBounds(0, 5, 250, 30);
-		repeat_btn.setBounds(180,75,20,20);
-		fix_btn.setBounds(180, 105, 20, 20);
-		progress_bar.setBounds(25, 40, 200, 15);
-		ctr_panel.setBounds(0, 75, 250, 100);
-		dock_panel.setBounds(55, 180, 120, 50);
-		volume_bar.setBounds(175, 200, 70, 10);
-		filter.setBounds(0, 0, 250, 250);
-		background.setBounds(0, 0, 250, 250);
+		background.setBounds(1, 1, 170, 170);
+		info_panel.setBounds(172, 31, 168, 35);
+		minimiseBtn.setBounds(310,0,20,20);
+		closeBtn.setBounds(330,0,20,20);
+		ctr_panel.setBounds(172, 81, 168, 70);
+		dock_panel.setBounds(172, 151, 168, 20);
+		volume_bar.setBounds(339, 22, 10, 149);
+//		repeat_btn.setBounds(180,75,20,20);
+//		fix_btn.setBounds(180, 105, 20, 20);
+//		progress_bar.setBounds(15, 40, 200, 15);
+		filter_g.setBounds(0, 0, 350, 172);
+		filter_w.setBounds(1, 1, 348, 170);
 		/* Lower loading is top , Higher is bottom */
 		/* but I don't know exactly about the number */
-		combo.add(info_panel, 1);
-		combo.add(repeat_btn, 2);
-		combo.add(fix_btn, 3);
-		combo.add(progress_bar, 4);
+		combo.add(background, 1);
+		combo.add(info_panel, 2);
+		combo.add(minimiseBtn, 3);
+		combo.add(closeBtn, 4);
+//		combo.add(repeat_btn, 2);
+//		combo.add(fix_btn, 3);
+//		combo.add(progress_bar, 4);
 		combo.add(ctr_panel, 5);
 		combo.add(dock_panel, 6);
 		combo.add(volume_bar, 7);
-		combo.add(filter, 8);
-		combo.add(background, 9);
+		combo.add(filter_w, 8);
+		combo.add(filter_g, 9);
 		return combo;
 	}
 
@@ -171,4 +199,18 @@ final public class MusicPlayer extends JFrame {
 		}
 		new MusicPlayer().setVisible(true);
 	}
+    class MinimizeAction implements ActionListener {
+    	@Override
+        public void actionPerformed(ActionEvent e) {
+    		setExtendedState(ICONIFIED);
+    	}
+    }
+    class CloseAction implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+        	if(mp3play!=null) {
+        		mp3play.exit(); }
+            dispose();
+        }
+    }
 }

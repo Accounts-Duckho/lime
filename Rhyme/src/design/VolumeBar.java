@@ -16,13 +16,13 @@ import activity.VolumeControl;
 public class VolumeBar extends JSlider {
 	VolumeControl vc=new VolumeControl();
 	public VolumeBar() {
-		setOrientation(JSlider.HORIZONTAL);
+		setOrientation(JSlider.VERTICAL);
 		setMinimum(0);
-		setMaximum(10);
+		setMaximum(100);
 		setValue(1);
 		setFocusable(false);
 		setOpaque(false);
-		setPreferredSize(new Dimension(100, 10));
+		setPreferredSize(new Dimension(10, 170));
 		setVisible(true);
 		addChangeListener(new ChangeListener() {
 			@Override
