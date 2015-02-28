@@ -6,7 +6,6 @@ package design;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.io.UnsupportedEncodingException;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,13 +25,8 @@ public class SongInfo extends JPanel {
 		setOpaque(false);
 	}
 	public void getSongInfo(String singer, String songname) {
-		try {
-			this.singer = new String(singer.getBytes("iso-8859-1"), "euc-kr");
-			this.songname = new String(songname.getBytes("iso-8859-1"),
-					"euc-kr");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+			this.singer = singer;
+			this.songname = songname;
 		showonlyname=false;
 	}
 	public void getSongInfo(String name) {

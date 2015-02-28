@@ -35,6 +35,9 @@ public class MetaData {
 		singer = infoTag.getFirst(FieldKey.ALBUM_ARTIST);
 		songname = infoTag.getFirst(FieldKey.TITLE);
 		try {
+			singer = new String(singer.getBytes("iso-8859-1"), "euc-kr");
+			songname = new String(songname.getBytes("iso-8859-1"),
+					"euc-kr");
 			final List<Artwork> artworkList = infoTag.getArtworkList(); // load
 			if (artworkList.size() > 0) { // If exist
 				InputStream in = new ByteArrayInputStream(infoTag.getFirstArtwork()
