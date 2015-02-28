@@ -137,7 +137,7 @@ final public class MusicPlayer extends JFrame {
 		filter_w = new JPanel();
 		filter_w.setBackground(new Color(255, 255, 255));
 		filter_g = new JPanel();
-		filter_g.setBackground(new Color(128, 128, 128));
+		filter_g.setBackground(new Color(179, 179, 179));
 
 		/* File Browser Setting */
 		browser = new JFileChooser();
