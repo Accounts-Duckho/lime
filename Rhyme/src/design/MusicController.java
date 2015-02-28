@@ -67,11 +67,13 @@ public class MusicController extends JPanel {
 	}
 
 	private void addButtons() {
+		this.add(Box.createRigidArea(new Dimension(24, 0))); /* empty block */
 		this.add(previous_btn);
-		this.add(Box.createRigidArea(new Dimension(17, 0))); /* empty block */
+		this.add(Box.createRigidArea(new Dimension(1, 0))); /* empty block */
 		this.add(onoff_btn);
-		this.add(Box.createRigidArea(new Dimension(17, 0))); /* empty block */
+		this.add(Box.createRigidArea(new Dimension(1, 0))); /* empty block */
 		this.add(next_btn);
+		this.add(Box.createRigidArea(new Dimension(24, 0))); /* empty block */
 	}
 
 	public void switch_btn(boolean playing) {

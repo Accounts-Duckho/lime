@@ -1,24 +1,23 @@
 package activity;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
-import process.MusicPlayer;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.AudioDevice;
 import javazoom.jl.player.Player;
+import process.MusicPlayer;
+import process.Update;
 
 public class Mp3Player {
 	private final static int NOTSTARTED = 0;
 	private final static int PLAYING = 1;
 	private final static int PAUSED = 2;
 	private final static int FINISHED = 3;
-	
 	private final Player player;
 	
 	private final Object playerLock = new Object();
-	
-	private boolean next_clicked=false;
-	private boolean pre_clicked=false;
 	
 	private int playerStatus = NOTSTARTED;
 	public Mp3Player(final InputStream inputStream) throws JavaLayerException {
@@ -33,6 +32,7 @@ public class Mp3Player {
 		synchronized(playerLock) {
 			switch(playerStatus) {
 			case NOTSTARTED:
+				MusicPlayer.ctr_panel.switch_btn(true);
 				final Runnable r = new Runnable() {
 					public void run() {
 						playInternal();
@@ -45,6 +45,7 @@ public class Mp3Player {
 				t.start();
 				break;
 			case PAUSED:
+				MusicPlayer.ctr_panel.switch_btn(true);
 				resume();
 				break;
 			default:
@@ -79,7 +80,7 @@ public class Mp3Player {
 	private void playInternal() {
 		while(playerStatus != FINISHED) {
 			try {
-				if(!player.play(1)|| next_clicked == true || pre_clicked == true) {
+				if(!player.play(1)) {
 					break;
 				}
 			} catch (final JavaLayerException e) {
@@ -95,26 +96,45 @@ public class Mp3Player {
 				}
 			}
 		}
-		close();
+		if(MusicPlayer.changed || ListAdmin.loaddir(MusicPlayer.queue+1)==null) {
+		player.close();
+		MusicPlayer.changed=false; }
+		else
+			close();
 	}
 	public void close() {
 		synchronized(playerLock) {
 			playerStatus = FINISHED;
-			MusicPlayer.ctr_panel.switch_btn(false);
-		}
+			FileInputStream input;
+			try {
+				exit();
+				MusicPlayer.queue++;  
+				input = new FileInputStream(ListAdmin.loaddir(MusicPlayer.queue));
+				MusicPlayer.mp3play=new Mp3Player(input);
+				if (MusicPlayer.demand_list.songinfo.get(MusicPlayer.queue) != MusicPlayer.demand_list.singerinfo.get(MusicPlayer.queue))
+					Update.SongInfo(MusicPlayer.queue);
+				else
+					Update.SongInfo(new File(ListAdmin.loaddir(MusicPlayer.queue)).getName());
+				Update.Background(MusicPlayer.queue);
+				MusicPlayer.mp3play.play(); 
+			} catch (Exception e) {
+				e.printStackTrace();
+				}
+			}
+//		try {
+//			player.close();
+//		} catch (final Exception e) {
+//			e.printStackTrace();
+//		}
+	}
+	public int getStatus() {
+		return playerStatus;
+	}
+	public void exit() {
 		try {
 			player.close();
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
-	}
-	public int getStatus() {
-		return playerStatus;
-	}
-	public void ifnext(boolean clicked) {
-		next_clicked=clicked;
-	}
-	public void ifpre(boolean clicked) {
-		pre_clicked=clicked;
 	}
 }

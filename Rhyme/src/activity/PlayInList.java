@@ -6,28 +6,26 @@ import java.io.FileInputStream;
 
 import process.MusicPlayer;
 import process.Update;
-import javazoom.jl.decoder.JavaLayerException;
 
 public class PlayInList implements MouseListener {
 	private FileInputStream input;
 	private int count;
 	public PlayInList(int n) {
 		count=n;
-		String songdir = ListAdmin.loaddir(n);
-		try {
-			input = new FileInputStream(songdir);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {
 			try {
+				MusicPlayer.changed=true;
+				MusicPlayer.mp3play.exit();
+				MusicPlayer.queue=count;
+				String songdir = ListAdmin.loaddir(count);			
+				input = new FileInputStream(songdir);
 				MusicPlayer.mp3play = new Mp3Player(input);
-				Update.SongInfo(count);
-				Update.Background(count);
-				OnOff.setCount(count);
-			} catch (JavaLayerException e1) {
+				Update.SongInfo(MusicPlayer.queue);
+				Update.Background(MusicPlayer.queue);
+				MusicPlayer.mp3play.play();
+			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 		}

@@ -18,7 +18,7 @@ public class Background extends JLabel {
 	}
 	public void changeBg(int n) {
 		if(albumArt[n]!=null) {
-		this.bg=albumArt[n].getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+		this.bg=albumArt[n].getScaledInstance(170, 170, Image.SCALE_SMOOTH);
 		this.setIcon(new ImageIcon(bg)); }
 		else 
 			this.setIcon(defaultBg);

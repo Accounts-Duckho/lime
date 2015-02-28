@@ -6,6 +6,7 @@ package design;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,9 +25,14 @@ public class SongInfo extends JPanel {
 		loadInfoPanel();
 		setOpaque(false);
 	}
-	public void getSongInfo(String singer, String songname) {
-		this.singer=singer;
-		this.songname=songname;
+	public void getSongInfo(String songname, String singer) {
+		try {
+			this.singer = new String(singer.getBytes("iso-8859-1"), "euc-kr");
+			this.songname = new String(songname.getBytes("iso-8859-1"),
+					"euc-kr");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		showonlyname=false;
 	}
 	public void getSongInfo(String name) {
@@ -49,26 +55,27 @@ public class SongInfo extends JPanel {
 		/* RGB Color site : http://www.rapidtables.com/web/color/RGB_Color.htm */
 		
 		/* Singer */
-		showsinger.setFont(new Font("NANUM", Font.PLAIN, 12));
-		showsinger.setForeground(new Color(0,128,128)); // text color
+		showsinger.setFont(new Font("Malgun Gothic", Font.PLAIN, 15));
+		showsinger.setForeground(Color.GRAY); // text color
 		showsinger.setHorizontalAlignment(JLabel.CENTER);
 
 		/* Song */
-		showsong.setFont(new Font("NANUM", Font.PLAIN, 13));
-		showsong.setForeground(new Color(65,105,225));
+		showsong.setFont(new Font("Malgun Gothic", Font.PLAIN, 19));
+		showsong.setForeground(Color.BLACK);
 		showsong.setHorizontalAlignment(JLabel.CENTER); }
 		else {
 			/* Name */
-			showname.setFont(new Font("NANUM", Font.PLAIN, 12));
-			showname.setForeground(new Color(0,128,128)); // text color
+			showname.setFont(new Font("Malgun Gothic", Font.PLAIN, 15));
+			showname.setForeground(Color.BLACK); // text color
 			showname.setHorizontalAlignment(JLabel.CENTER);
 		}
 	}
 	
     private void addToPanel() {
     	if(!showonlyname) {
+    	this.add(showsong);
     	this.add(showsinger);
-    	this.add(showsong); }
+    	}
     	else {
     		this.add(showname);
     	}
