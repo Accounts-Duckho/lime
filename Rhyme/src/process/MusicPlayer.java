@@ -12,7 +12,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.net.URL;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -148,12 +150,19 @@ final public class MusicPlayer extends JFrame {
 		browser.setFileFilter(songFilter); // make own filter to default
 		browser.setMultiSelectionEnabled(true);
 		browser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		
-		minimiseBtn = new JButton();
+		final URL icon_mini = getClass().getResource("/images/icons/mini.png");
+		minimiseBtn = new JButton(new ImageIcon(icon_mini));
 		minimiseBtn.addActionListener(new MinimizeAction());
+		minimiseBtn.setBorder(null);
+		minimiseBtn.setFocusable(false);
+		minimiseBtn.setContentAreaFilled(false);
 		
-		closeBtn = new JButton();
+		final URL icon_close = getClass().getResource("/images/icons/close.png");
+		closeBtn = new JButton(new ImageIcon(icon_close));
 		closeBtn.addActionListener(new CloseAction());
+		closeBtn.setBorder(null);
+		closeBtn.setFocusable(false);
+		closeBtn.setContentAreaFilled(false);
 	}
 
 	private JComponent buildContentPane() {
@@ -171,7 +180,7 @@ final public class MusicPlayer extends JFrame {
 //		fix_btn.setBounds(180, 105, 20, 20);
 //		progress_bar.setBounds(15, 40, 200, 15);
 		filter_g.setBounds(0, 0, 350, 172);
-		filter_w.setBounds(1, 1, 348, 170);
+		filter_w.setBounds(172, 1, 177, 170);
 		/* Lower loading is top , Higher is bottom */
 		/* but I don't know exactly about the number */
 		combo.add(background, 1);
