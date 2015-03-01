@@ -170,7 +170,7 @@ final public class MusicPlayer extends JFrame {
 		makeContents();
 		/* Set position & size (x, y ,width, height) */
 		background.setBounds(1, 1, 170, 170);
-		info_panel.setBounds(172, 31, 168, 35);
+		info_panel.setBounds(172, 31, 168, 50);
 		minimiseBtn.setBounds(310,0,20,20);
 		closeBtn.setBounds(330,0,20,20);
 		ctr_panel.setBounds(172, 81, 168, 70);

@@ -49,7 +49,7 @@ public class SongInfo extends JPanel {
 		/* RGB Color site : http://www.rapidtables.com/web/color/RGB_Color.htm */
 		
 		/* Singer */
-		showsinger.setFont(new Font("Malgun Gothic", Font.PLAIN, 15));
+		showsinger.setFont(new Font("Malgun Gothic", Font.PLAIN, 12));
 		showsinger.setForeground(Color.GRAY); // text color
 		showsinger.setHorizontalAlignment(JLabel.CENTER);
 

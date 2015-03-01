@@ -97,7 +97,8 @@ public class Mp3Player {
 			}
 		}
 		if(MusicPlayer.changed || ListAdmin.loaddir(MusicPlayer.queue+1)==null) {
-		player.close();
+			MusicPlayer.ctr_panel.switch_btn(false);
+			player.close();
 		MusicPlayer.changed=false; }
 		else
 			close();
@@ -121,11 +122,6 @@ public class Mp3Player {
 				e.printStackTrace();
 				}
 			}
-//		try {
-//			player.close();
-//		} catch (final Exception e) {
-//			e.printStackTrace();
-//		}
 	}
 	public int getStatus() {
 		return playerStatus;
