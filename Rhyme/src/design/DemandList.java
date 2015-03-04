@@ -37,7 +37,7 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 		addMouseWheelListener(this);
 		songinfo = new ArrayList<String>();
 		singerinfo = new ArrayList<String>();
-		song = new JButton[49]; //limit 50 song
+		song = new JButton[99]; //limit 100 song
 			
 		refresh = new JButton("Refresh");
 		assignAct(refresh, new Refresh());
@@ -57,7 +57,7 @@ final public class DemandList extends JFrame implements MouseWheelListener {
 	}
 	public JComponent load() {
 		JLayeredPane list = new JLayeredPane();
-		if(ListAdmin.getCount()<=50) {
+		if(ListAdmin.getCount()<=100) {
 		for(int i=0; i<ListAdmin.getCount(); i++) {
 			song[i]=new JButton(new File(ListAdmin.loaddir(i)).getName());
 			song[i].setFont(new Font("GODIC", Font.PLAIN, 15));

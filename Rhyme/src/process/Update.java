@@ -25,7 +25,7 @@ public class Update {
 		MusicPlayer.demand_list.refresh();
   }
   public static void Background(int i) {
-	  MusicPlayer.background.changeBg(i);
+	  MusicPlayer.albumArt.changeBg(i);
   }
   public static void Charset(String songname, String singer) {
 	  MusicPlayer.demand_list.fix(songname, singer);

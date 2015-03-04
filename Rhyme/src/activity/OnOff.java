@@ -21,16 +21,16 @@ public class OnOff implements ActionListener {
 //	 FINISHED = 3; auto play mod : so that doesn't showing 
 
 					try {
-						switch (MusicPlayer.mp3play.getStatus()) {
+						switch (MusicPlayer.play_mp3.getStatus()) {
 						case 0:
-						MusicPlayer.mp3play.play();
+						MusicPlayer.play_mp3.play();
 						break;
 						case 1:
 							MusicPlayer.ctr_panel.switch_btn(false);
-							MusicPlayer.mp3play.pause();
+							MusicPlayer.play_mp3.pause();
 							break;
 						case 2:
-							MusicPlayer.mp3play.play();
+							MusicPlayer.play_mp3.play();
 							break;
 						}
 					} catch (JavaLayerException e1) {

@@ -7,13 +7,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
-public class Background extends JLabel {
+public class AlbumArt extends JLabel {
 	private Image bg;
-	public Image[] albumArt= new Image[49]; // limit
+	public Image[] albumArt= new Image[99]; // limit
 	final URL img_url = getClass().getResource("/images/background/Pi.png"); // Default Bg
 	private ImageIcon defaultBg = new ImageIcon(img_url);
 	private int albumArt_length=0;
-	public Background() {
+	public AlbumArt() {
 		this.setIcon(defaultBg); 
 	}
 	public void changeBg(int n) {

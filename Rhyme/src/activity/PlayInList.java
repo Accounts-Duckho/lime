@@ -17,14 +17,14 @@ public class PlayInList implements MouseListener {
 		if (e.getClickCount() == 2) {
 			try {
 				MusicPlayer.changed=true;
-				MusicPlayer.mp3play.exit();
+				MusicPlayer.play_mp3.exit();
 				MusicPlayer.queue=count;
 				String songdir = ListAdmin.loaddir(count);			
 				input = new FileInputStream(songdir);
-				MusicPlayer.mp3play = new Mp3Player(input);
+				MusicPlayer.play_mp3 = new Mp3Player(input);
 				Update.SongInfo(MusicPlayer.queue);
 				Update.Background(MusicPlayer.queue);
-				MusicPlayer.mp3play.play();
+				MusicPlayer.play_mp3.play();
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
