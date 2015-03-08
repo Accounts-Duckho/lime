@@ -8,32 +8,16 @@ import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class AlbumArt extends JLabel {
-	private Image bg;
-	public Image[] albumArt= new Image[99]; // limit
-	final URL img_url = getClass().getResource("/images/background/Pi.png"); // Default Bg
-	private ImageIcon defaultBg = new ImageIcon(img_url);
-	private int albumArt_length=0;
+	final URL default_img = getClass().getResource("/images/background/Pi.png"); // Default Bg
+	private ImageIcon defaultBg = new ImageIcon(default_img);
 	public AlbumArt() {
 		this.setIcon(defaultBg); 
 	}
-	public void changeBg(int n) {
-		if(albumArt[n]!=null) {
-		this.bg=albumArt[n].getScaledInstance(170, 170, Image.SCALE_SMOOTH);
-		this.setIcon(new ImageIcon(bg)); }
-		else 
-			this.setIcon(defaultBg);
-		repaint(); // Update
-	}
-	public void setAlbumArt(int num, Image img) {
-		albumArt[num]=img;
-	}
-	public Image getBackground(int num) {
-		return albumArt[num];
-	}
-	public void setAlbumArtLength(int n) {
-		albumArt_length = n;
-	}
-	public int getAlbumArtLength() {
-		return albumArt_length;
+	public void changeBg(Image img) {
+		if(img!=null) {
+		img=img.getScaledInstance(170, 170, Image.SCALE_SMOOTH);
+		this.setIcon(new ImageIcon(img));
+		repaint(); 
+		}
 	}
 }

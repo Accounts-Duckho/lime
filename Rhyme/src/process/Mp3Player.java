@@ -1,14 +1,11 @@
-package activity;
+package process;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.AudioDevice;
 import javazoom.jl.player.Player;
-import process.MusicPlayer;
-import process.Update;
+import action.PlaySong;
 
 public class Mp3Player {
 	private final static int NOTSTARTED = 0;
@@ -26,7 +23,7 @@ public class Mp3Player {
 	public Mp3Player(final InputStream inputStream, final AudioDevice audioDevice) throws JavaLayerException {
 		this.player = new Player(inputStream, audioDevice);
 	}
-	
+	PlaySong playAction = new PlaySong();
 	// Starts playback (resumes if paused)
 	public void play() throws JavaLayerException {
 		synchronized(playerLock) {
@@ -96,28 +93,19 @@ public class Mp3Player {
 				}
 			}
 		}
-		if(MusicPlayer.changed || ListAdmin.loaddir(MusicPlayer.queue+1)==null) {
+		if(MusicPlayer.changed || MusicPlayer.queue==MusicPlayer.list.size()) {
 			MusicPlayer.ctr_panel.switch_btn(false);
 			player.close();
-		MusicPlayer.changed=false; }
+			MusicPlayer.changed=false; 
+		}
 		else
 			close();
 	}
 	public void close() {
 		synchronized(playerLock) {
 			playerStatus = FINISHED;
-			FileInputStream input;
 			try {
-				exit();
-				MusicPlayer.queue++;  
-				input = new FileInputStream(ListAdmin.loaddir(MusicPlayer.queue));
-				MusicPlayer.play_mp3=new Mp3Player(input);
-				if (MusicPlayer.demand_list.songinfo.get(MusicPlayer.queue) != MusicPlayer.demand_list.singerinfo.get(MusicPlayer.queue))
-					Update.SongInfo(MusicPlayer.queue);
-				else
-					Update.SongInfo(new File(ListAdmin.loaddir(MusicPlayer.queue)).getName());
-				Update.Background(MusicPlayer.queue);
-				MusicPlayer.play_mp3.play(); 
+				playAction.playNext();				
 			} catch (Exception e) {
 				e.printStackTrace();
 				}

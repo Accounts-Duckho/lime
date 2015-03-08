@@ -6,83 +6,67 @@ package design;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.File;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import process.MusicPlayer;
+
 @SuppressWarnings("serial")
 public class SongInfo extends JPanel {
-	private JLabel showsinger;
-	private JLabel showsong;
-	private JLabel showname;
-	public String singer="Singer";
-	public String songname="SongName";
-	public String filename;
-	private boolean showonlyname=false;
+	private JLabel singerInfo;
+	private JLabel songNameInfo;
+	private JLabel fileNameInfo;
+	public String singerName;
+	public String songName;
+	public String fileName;
+	private boolean showFileName=false;
+	
 	public SongInfo() {
 		setLayout(new GridLayout(2, 1));
-		loadInfoPanel();
 		setOpaque(false);
+		getSongInfo("", "");
+		loadInfoPanel();
 	}
-	public void getSongInfo(String singer, String songname) {
-			this.singer = singer;
-			this.songname = songname;
-		showonlyname=false;
-	}
-	public void getSongInfo(String name) {
-		this.singer="";
-		this.songname="";
-		this.filename=name;
-		showonlyname=true;
+	public void getSongInfo(String songName, String singerName) {
+		if(songName !=null & singerName !=null) {
+			this.singerName = singerName;
+			this.songName = songName;
+			showFileName=false;
+		}
+		else {
+			this.fileName=new File(MusicPlayer.list.get(MusicPlayer.queue)).getName();
+			showFileName=true;
+		}
 	}
 	private void makeLabel() {	
-		if(!showonlyname) {
-		showsinger = createLabel(singer);
-		showsong = createLabel(songname); }
-		else 
-		{ 
-			showname = createLabel(filename);
-		}
-	}
-	private void applyFeature() {
-		if(!showonlyname) {
-		/* RGB Color site : http://www.rapidtables.com/web/color/RGB_Color.htm */
-		
-		/* Singer */
-		showsinger.setFont(new Font("Malgun Gothic", Font.PLAIN, 12));
-		showsinger.setForeground(Color.GRAY); // text color
-		showsinger.setHorizontalAlignment(JLabel.CENTER);
-
-		/* Song */
-		showsong.setFont(new Font("Malgun Gothic", Font.PLAIN, 19));
-		showsong.setForeground(Color.BLACK);
-		showsong.setHorizontalAlignment(JLabel.CENTER); }
+//			Foreground = text color
+		if(showFileName) {
+			fileNameInfo = new JLabel(fileName);
+			fileNameInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 15));
+			fileNameInfo.setForeground(Color.BLACK); // text color
+			fileNameInfo.setHorizontalAlignment(JLabel.CENTER);
+			}
 		else {
-			/* Name */
-			showname.setFont(new Font("Malgun Gothic", Font.PLAIN, 15));
-			showname.setForeground(Color.BLACK); // text color
-			showname.setHorizontalAlignment(JLabel.CENTER);
+			singerInfo = new JLabel(singerName);
+			singerInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 12));
+			singerInfo.setForeground(Color.GRAY); 
+			singerInfo.setHorizontalAlignment(JLabel.CENTER);
+			
+			songNameInfo = new JLabel(songName); 
+			songNameInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 19));
+			songNameInfo.setForeground(Color.BLACK);
+			songNameInfo.setHorizontalAlignment(JLabel.CENTER); 
 		}
-	}
-	
-    private void addToPanel() {
-    	if(!showonlyname) {
-    	this.add(showsong);
-    	this.add(showsinger);
-    	}
-    	else {
-    		this.add(showname);
-    	}
-    }
-    
+	}    
 	public void loadInfoPanel() {
 		makeLabel();
-		applyFeature();
-		addToPanel();
-	}
-
-	private JLabel createLabel(String s) {
-		JLabel label = new JLabel(s);
-		return label;
+		if(showFileName)
+			this.add(fileNameInfo);
+		else {
+			this.add(songNameInfo);
+			this.add(singerInfo);
+		}
 	}
 }

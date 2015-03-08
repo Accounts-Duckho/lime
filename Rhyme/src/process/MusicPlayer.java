@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.net.URL;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,12 +25,7 @@ import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import activity.Mp3Player;
 import design.AlbumArt;
-import design.DemandList;
-import design.FunctionDock;
-import design.MusicController;
-import design.PlayList;
 import design.SongInfo;
 import design.VolumeBar;
 
@@ -45,9 +41,10 @@ final public class MusicPlayer extends JFrame {
 	public static Mp3Player play_mp3; // Play Instance for mp3 extension
 	public static DemandList demand_list; // When Opened this player , create , Until Exit, saved at ram
 	public static PlayList play_list; // When Opened this player , load data , When Exit, save data
+	public static ArrayList<String> list = new ArrayList<String>();
 	private JButton minimiseBtn; // remove screen still playing
 	private JButton closeBtn; // Exit This Program
-	public static int queue; // Songs Order , 0~N ( N < 100 ) limited to 100 songs
+	public static int queue=0; // Songs Order , 0~N ( N < 100 ) limited to 100 songs
 	public static boolean changed=false; // When GoNext , GoPrevious or Play at demand list , false -> true , to notify no need to changing 
 	static Point mouseDownCompCoords; // I don't know , but It tracks mouse
 
@@ -98,11 +95,11 @@ final public class MusicPlayer extends JFrame {
 
 		/* Panel */
 		info_panel = new SongInfo();
-		ctr_panel = new MusicController();
+		ctr_panel = new MusicController();	
 		dock_panel = new FunctionDock();
 		
 		/* Lists */
-		demand_list = new DemandList();
+		demand_list = new DemandList(100);
 		play_list = new PlayList();
 
 		/* Album Art */
@@ -145,6 +142,7 @@ final public class MusicPlayer extends JFrame {
 
 	private JComponent buildContentPane() {
 		JLayeredPane combo = new JLayeredPane();
+		/* Actually build process is almost done at this */
 		makeContents();
 		
 		/* Set position & size (x, y, width, height) */
