@@ -63,7 +63,8 @@ public class Get {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (singer != null && songname != null) {
+		if (singer != null && songname != null && checkString(singer)
+				&& checkString(songname)) {
 			// Encode iso-8859-1 to euc-kr
 			try {
 				singer = new String(singer.getBytes("iso-8859-1"), "euc-kr");
@@ -94,6 +95,28 @@ public class Get {
 
 	public boolean fileSelected() {
 		return fileSelected;
+	}
+
+	public static boolean checkString(String str) {
+
+		for (int i = 0; i < str.length(); i++) {
+
+			char c = str.charAt(i);
+
+			// ¿µ¹®
+
+			if ((c >= 0x61 && c <= 0x7A) || (c >= 0x41 && c <= 0x5A)) {
+
+			} else {
+
+				return true;
+
+			}
+
+		}
+
+		return false;
+
 	}
 }
 

@@ -56,7 +56,7 @@ public class Mp3Player {
 				playerStatus = PAUSED;
 			}
 //			return playerStatus == PLAYING;
-		}
+		} 
 	}
 	public void resume() {
 		synchronized(playerLock) {
