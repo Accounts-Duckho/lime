@@ -19,5 +19,10 @@ public class AlbumArt extends JLabel {
 		this.setIcon(new ImageIcon(img));
 		repaint(); 
 		}
+		else {
+			this.setIcon(defaultBg);
+			repaint(); 
+		}
+			
 	}
 }

@@ -49,5 +49,12 @@ public class PlaySong {
 		update.songInfo();
 		playSong();
 		}
+		else {
+			MusicPlayer.queue=0;
+			MusicPlayer.changed=true;
+			readySong();
+			update.songInfo();
+			playSong();
+		}
 	}
 }

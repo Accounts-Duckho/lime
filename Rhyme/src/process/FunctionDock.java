@@ -19,8 +19,6 @@ import action.Set;
 @SuppressWarnings("serial")
 public class FunctionDock extends JPanel {
 	private JButton loadBtn;
-	private JButton demandListBtn;
-	private JButton playListBtn;
 	private JButton fixBtn; 
 	private JButton repeatBtn;
 
@@ -33,10 +31,10 @@ public class FunctionDock extends JPanel {
 	private void makePanel() {
 		/* Icon Load */
 		final URL icon_load = getClass().getResource("/images/icons/load.png");
-		final URL icon_demandList = getClass().getResource(
-				"/images/icons/demand_list.png");
-		final URL icon_playList = getClass().getResource(
-				"/images/icons/favorite_list.png");
+//		final URL icon_demandList = getClass().getResource(
+//				"/images/icons/demand_list.png");
+//		final URL icon_playList = getClass().getResource(
+//				"/images/icons/favorite_list.png");
 		final URL icon_repeat = getClass().getResource(
 				"/images/icons/repeat.png");
 		final URL icon_refresh = getClass().getResource(
@@ -49,17 +47,17 @@ public class FunctionDock extends JPanel {
 		loadBtn.setContentAreaFilled(false);
 		loadBtn.addActionListener(new LoadBtnAction());
 
-		demandListBtn = new JButton(new ImageIcon(icon_demandList));
-		demandListBtn.setBorder(null);
-		demandListBtn.setFocusable(false);
-		demandListBtn.setContentAreaFilled(false);
-		demandListBtn.addActionListener(new DemandListBtnAction());
-		
-		playListBtn = new JButton(new ImageIcon(icon_playList));
-		playListBtn.setBorder(null);
-		playListBtn.setFocusable(false);
-		playListBtn.setContentAreaFilled(false);
-		playListBtn.addActionListener(new PlayListBtnAction());
+//		demandListBtn = new JButton(new ImageIcon(icon_demandList));
+//		demandListBtn.setBorder(null);
+//		demandListBtn.setFocusable(false);
+//		demandListBtn.setContentAreaFilled(false);
+//		demandListBtn.addActionListener(new DemandListBtnAction());
+//		
+//		playListBtn = new JButton(new ImageIcon(icon_playList));
+//		playListBtn.setBorder(null);
+//		playListBtn.setFocusable(false);
+//		playListBtn.setContentAreaFilled(false);
+//		playListBtn.addActionListener(new PlayListBtnAction());
 		
 		repeatBtn = new JButton(new ImageIcon(icon_repeat));
 		repeatBtn.setBorder(null);
@@ -72,11 +70,11 @@ public class FunctionDock extends JPanel {
 		fixBtn.setFocusable(false);
 		fixBtn.setContentAreaFilled(false);
 		
-		this.add(loadBtn);
-		this.add(demandListBtn);
-		this.add(playListBtn);
+//		this.add(demandListBtn);
+//		this.add(playListBtn);
 		this.add(repeatBtn);
 		this.add(fixBtn);
+		this.add(loadBtn);
 	}
 	
 	class LoadBtnAction implements ActionListener {
@@ -85,30 +83,27 @@ public class FunctionDock extends JPanel {
 			get.song();
 			Set set = new Set();
 			set.song(get);
+			MusicPlayer.list_panel.refreshList();
 		}
 	}
-	class DemandListBtnAction implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			MusicPlayer.demand_list.showList();
-		}
-	}
-
-	class PlayListBtnAction implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			MusicPlayer.play_list.showList();
-		}
-	}
+//	class DemandListBtnAction implements ActionListener {
+//		public void actionPerformed(ActionEvent e) {
+//			MusicPlayer.demand_list.showList();
+//		}
+//	}
+//
+//	class PlayListBtnAction implements ActionListener {
+//		public void actionPerformed(ActionEvent e) {
+//			MusicPlayer.play_list.showList();
+//		}
+//	}
 
 	class FixBtnAction implements ActionListener {
-		private boolean encodeChanged = false;
-
 		public void actionPerformed(ActionEvent e) {
-			if (!encodeChanged) {
 				Get get = new Get();
+				get.metaData(false);
 				Set set = new Set();
 				set.fixEncode(get.songName(), get.singerName());
-				encodeChanged = true;
-			}
 		}
 	}
 	

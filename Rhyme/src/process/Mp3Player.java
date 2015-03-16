@@ -93,7 +93,7 @@ public class Mp3Player {
 				}
 			}
 		}
-		if(MusicPlayer.changed || MusicPlayer.queue==MusicPlayer.list.size()) {
+		if(MusicPlayer.changed || MusicPlayer.queue+1==MusicPlayer.list.size()) {
 			MusicPlayer.ctr_panel.switch_btn(false);
 			player.close();
 			MusicPlayer.changed=false; 

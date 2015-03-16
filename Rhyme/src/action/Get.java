@@ -41,7 +41,7 @@ public class Get {
 			fileSelected = false;
 	}
 
-	public void metaData() {
+	public void metaData(boolean encoding) {
 		File currentSong = new File(MusicPlayer.list.get(MusicPlayer.queue));
 		AudioFile music;
 		try {
@@ -64,7 +64,7 @@ public class Get {
 			e.printStackTrace();
 		}
 		if (singer != null && songname != null && checkString(singer)
-				&& checkString(songname)) {
+				&& checkString(songname) && encoding) {
 			// Encode iso-8859-1 to euc-kr
 			try {
 				singer = new String(singer.getBytes("iso-8859-1"), "euc-kr");

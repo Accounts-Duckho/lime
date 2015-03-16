@@ -123,6 +123,9 @@ public class MusicController extends JPanel {
 					case 2:
 						MusicPlayer.play_mp3.play();
 						break;
+					case 3:
+						MusicPlayer.play_mp3.play();
+						break;
 					}
 				} catch (JavaLayerException e1) {
 					e1.printStackTrace();
