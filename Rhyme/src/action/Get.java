@@ -24,6 +24,7 @@ public class Get {
 	private File filedir;
 	private String singer;
 	private String songname;
+	private String genre;
 	private Image albumArt;
 	private boolean fileSelected;
 
@@ -50,7 +51,8 @@ public class Get {
 
 			singer = infoTag.getFirst(FieldKey.ALBUM_ARTIST);
 			songname = infoTag.getFirst(FieldKey.TITLE);
-
+			genre = infoTag.getFirst(FieldKey.GENRE);
+			System.out.println(genre);
 			final List<Artwork> artworkList = infoTag.getArtworkList();
 
 			if (artworkList.size() > 0) {
@@ -65,6 +67,41 @@ public class Get {
 		}
 		if (singer != null && songname != null && checkString(singer)
 				&& checkString(songname) && encoding) {
+			// Encode iso-8859-1 to euc-kr
+			try {
+				singer = new String(singer.getBytes("iso-8859-1"), "euc-kr");
+				songname = new String(songname.getBytes("iso-8859-1"), "euc-kr");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void metaData(int n) {
+		File currentSong = new File(MusicPlayer.list.get(n));
+		AudioFile music;
+		try {
+			music = AudioFileIO.read(currentSong);
+			Tag infoTag = music.getTag();
+
+			singer = infoTag.getFirst(FieldKey.ALBUM_ARTIST);
+			songname = infoTag.getFirst(FieldKey.TITLE);
+			genre = infoTag.getFirst(FieldKey.GENRE);
+			System.out.println(genre);
+			final List<Artwork> artworkList = infoTag.getArtworkList();
+
+			if (artworkList.size() > 0) {
+				InputStream scraps = new ByteArrayInputStream(infoTag
+						.getFirstArtwork().getBinaryData());
+				albumArt = ImageIO.read(scraps);
+			} else
+				albumArt = null;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (singer != null && songname != null && checkString(singer)
+				&& checkString(songname)) {
 			// Encode iso-8859-1 to euc-kr
 			try {
 				singer = new String(singer.getBytes("iso-8859-1"), "euc-kr");
@@ -92,7 +129,9 @@ public class Get {
 	public Image albumArt() {
 		return albumArt;
 	}
-
+	public String genre() {
+		return genre;
+	}
 	public boolean fileSelected() {
 		return fileSelected;
 	}

@@ -32,14 +32,14 @@ import design.VolumeBar;
 @SuppressWarnings("serial")
 final public class MusicPlayer extends JFrame {
 	// Resources
+	public static MusicPlayer rhyme;
 	public static SongInfo info_panel; // Notify SongInfo to user
 	public static MusicController ctr_panel; // Music Contoroller -> Previous,
 												// Play, Pause, Resume, Next
 	public static FunctionDock dock_panel; // Items Dock as Add Item, Two Lists,
 											// and so on
 	public static ListPanel list_panel;
-	public static VolumeBar volume_bar; // Volume Slider which position will be
-										// sound level
+
 	public static AlbumArt albumArt; // Get , Set AlbumArt from Music
 	public static JFileChooser browser; // File Browser
 	public static Mp3Player play_mp3; // Play Instance for mp3 extension
@@ -50,7 +50,9 @@ final public class MusicPlayer extends JFrame {
 	public static ArrayList<String> list = new ArrayList<String>();
 	private JButton minimiseBtn; // remove screen still playing
 	private JButton closeBtn; // Exit This Program
-	private JButton resizeBtn;
+	private JButton minimodeBtn;
+	
+	private JPanel dragArea=new JPanel();
 	public static int queue = 0; // Songs Order , 0~N ( N < 100 ) limited to 100
 									// songs
 	public static boolean changed = false; // When GoNext , GoPrevious or Play
@@ -61,8 +63,12 @@ final public class MusicPlayer extends JFrame {
 	private JPanel paint_w; // White Square to painting
 	private JPanel paint_w2;
 	private JPanel paint_w3;
+	private JPanel paint_w4;
+	private JPanel paint_w5;
 	private JPanel paint_g; // Grey Square to painting
-
+	
+	protected URL icon_minimode;
+	protected URL icon_expand;
 	public MusicPlayer() {
 		mouseDownCompCoords = null;
 		setLayout(new BorderLayout());
@@ -73,10 +79,9 @@ final public class MusicPlayer extends JFrame {
 		setResizable(false); // Not allow to spoil Design
 		setUndecorated(true); // Do not show OS specific frame
 		setLocationRelativeTo(null); /* make it locate center */
-		add(buildContentPane()); /* load Contents */
 
 		// Enabling Mouse Button Tracking
-		addMouseListener(new MouseListener() {
+		dragArea.addMouseListener(new MouseListener() {
 			public void mouseReleased(MouseEvent e) {
 				mouseDownCompCoords = null;
 			}
@@ -95,22 +100,20 @@ final public class MusicPlayer extends JFrame {
 			}
 		});
 		// Enabling Draging Position Tracking
-		addMouseMotionListener(new MouseMotionListener() {
+		dragArea.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseMoved(MouseEvent e) {
 			}
 
 			public void mouseDragged(MouseEvent e) {
 				Point currCoords = e.getLocationOnScreen();
-				setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y
+				rhyme.setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y
 						- mouseDownCompCoords.y);
 			}
 		});
+		add(buildContentPane()); /* load Contents */
 	}
 
 	private void makeContents() {
-
-		/* Volume Bar */
-		volume_bar = new VolumeBar();
 
 		/* Panel */
 		info_panel = new SongInfo();
@@ -118,8 +121,6 @@ final public class MusicPlayer extends JFrame {
 		dock_panel = new FunctionDock();
 
 		/* Lists */
-		// demand_list = new DemandList(100);
-		// play_list = new PlayList();
 		list_panel = new ListPanel();
 
 		/* Album Art */
@@ -129,6 +130,8 @@ final public class MusicPlayer extends JFrame {
 		paint_w = paint(new Color(255,255,255));
 		paint_w2 = paint(new Color(255,255,255));
 		paint_w3 = paint(new Color(255,255,255));
+		paint_w4 = paint(new Color(255,255,255));
+		paint_w5 = paint(new Color(255,255,255));
 		paint_g = paint(new Color(179, 179, 179));
 
 		/* File Browser Setting */
@@ -162,6 +165,14 @@ final public class MusicPlayer extends JFrame {
 		closeBtn.setBorder(null);
 		closeBtn.setFocusable(false);
 		closeBtn.setContentAreaFilled(false);
+		
+		icon_minimode = getClass().getResource("/images/icons/minimode.png");
+		icon_expand = getClass().getResource("/images/icons/expand.png");
+		minimodeBtn = new JButton(new ImageIcon(icon_minimode));
+		minimodeBtn.setBorder(null);
+		minimodeBtn.setFocusable(false);
+		minimodeBtn.setContentAreaFilled(false);
+		minimodeBtn.addActionListener(new minimodeBtnAction());
 	}
 
 	private JComponent buildContentPane() {
@@ -170,36 +181,77 @@ final public class MusicPlayer extends JFrame {
 		makeContents();
 
 		/* Set position & size (x, y, width, height) */
-		albumArt.setBounds(1, 1, 170, 170);
-		info_panel.setBounds(172, 31, 168, 50);
-		minimiseBtn.setBounds(310, 0, 20, 20);
-		closeBtn.setBounds(330, 0, 20, 20);
-		ctr_panel.setBounds(172, 101, 168, 70);
-		// dock_panel.setBounds(172, 151, 168, 20);
-		dock_panel.setBounds(1, 172, 348, 19);
-		list_panel.setBounds(1, 190, 348, 209);
-		volume_bar.setBounds(339, 22, 10, 149);
+		dragArea.setBounds(1,1,348,25);
+		minimiseBtn.setBounds(286, 3, 21, 21);
+		minimodeBtn.setBounds(307,3,21,21);
+		closeBtn.setBounds(328, 3, 21, 21);
+		albumArt.setBounds(1, 27, 124, 124);
+		info_panel.setBounds(126, 42, 223, 60);
+		ctr_panel.setBounds(126, 117, 223, 30);
+		dock_panel.setBounds(1, 152, 348, 40);
+		list_panel.setBounds(1, 193, 323, 206);
+
 		paint_g.setBounds(0, 0, 350, 400);
-		paint_w.setBounds(172, 1, 177, 170);
-		paint_w2.setBounds(1, 172, 348, 17);
-		paint_w3.setBounds(1, 190, 348, 209);
+		paint_w.setBounds(1,1,348,25);
+		paint_w2.setBounds(126, 27, 223, 125);
+		paint_w3.setBounds(1, 152, 348, 40);
+		paint_w4.setBounds(1,193,324,206);
+		paint_w5.setBounds(324,193,25,168);
 
 		/*
 		 * Lower loading is top , Higher is bottom but I don't know exactly
 		 * about the number
 		 */
-		combo.add(list_panel, 1);
-		combo.add(albumArt, 2);
-		combo.add(info_panel, 3);
-		combo.add(minimiseBtn, 4);
-		combo.add(closeBtn, 5);
-		combo.add(ctr_panel, 6);
-		combo.add(dock_panel, 7);
-		combo.add(volume_bar, 8);
-		combo.add(paint_w3, 9);
-		combo.add(paint_w2, 10);
-		combo.add(paint_w, 11);
-		combo.add(paint_g, 12);
+		combo.add(minimiseBtn, 1);
+		combo.add(minimodeBtn, 2);
+		combo.add(closeBtn, 3);
+		combo.add(dragArea,4);
+		combo.add(paint_w, 10);
+		combo.add(albumArt, 5);
+		combo.add(info_panel, 6);
+		combo.add(ctr_panel, 7);
+		combo.add(paint_w2, 11);
+		combo.add(dock_panel, 8);
+		combo.add(paint_w3, 12);
+		combo.add(list_panel, 9);
+		combo.add(paint_w4, 13);
+		combo.add(paint_w5, 14);
+		combo.add(paint_g, 15);
+		return combo;
+	}
+	
+	private JComponent buildMiniMode() {
+		JLayeredPane combo = new JLayeredPane();
+		/* Actually build process is almost done at this */
+		makeContents();
+
+		/* Set position & size (x, y, width, height) */
+		dragArea.setBounds(1,1,218,68);
+		minimiseBtn.setBounds(170, 1, 16, 16);
+		minimodeBtn.setBounds(186,1,16,16);
+		closeBtn.setBounds(202, 1, 16, 16);
+		paint_w.setBounds(1,1,218,68);
+		paint_g.setBounds(0, 0, 220, 70);
+
+		/*
+		 * Lower loading is top , Higher is bottom but I don't know exactly
+		 * about the number
+		 */
+		combo.add(minimiseBtn, 1);
+		combo.add(minimodeBtn, 2);
+		combo.add(closeBtn, 3);
+		combo.add(dragArea,4);
+		combo.add(paint_w,11);
+		combo.add(albumArt, 5);
+		combo.add(info_panel, 6);
+		combo.add(ctr_panel, 7);
+		combo.add(paint_w2, 12);
+		combo.add(dock_panel, 8);
+		combo.add(paint_w3, 13);
+		combo.add(list_panel, 9);
+		combo.add(paint_w4, 14);
+		combo.add(paint_w5, 15);
+		combo.add(paint_g, 16);
 		return combo;
 	}
 
@@ -208,7 +260,8 @@ final public class MusicPlayer extends JFrame {
 		UIManager
 				.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		// make and visible
-		new MusicPlayer().setVisible(true);
+		rhyme = new MusicPlayer();
+		rhyme.setVisible(true);
 	}
 
 	public JPanel paint(Color c) {
@@ -229,6 +282,18 @@ final public class MusicPlayer extends JFrame {
 				play_mp3.exit();
 			}
 			dispose();
+		}
+	}
+	class minimodeBtnAction implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if(MusicPlayer.rhyme.getHeight()==192) {
+				MusicPlayer.rhyme.setSize(350,400);
+				minimodeBtn.setIcon(new ImageIcon(icon_expand));
+			}
+			else {
+				MusicPlayer.rhyme.setSize(220,70);
+				minimodeBtn.setIcon(new ImageIcon(icon_minimode));
+			}
 		}
 	}
 }

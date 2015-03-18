@@ -4,10 +4,12 @@
 package design;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.io.File;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -24,8 +26,9 @@ public class SongInfo extends JPanel {
 	private boolean showFileName=false;
 	
 	public SongInfo() {
-		setLayout(new GridLayout(2, 1));
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setOpaque(false);
+		setSize(223, 60);
 		getSongInfo("", "");
 		loadInfoPanel();
 	}
@@ -44,29 +47,33 @@ public class SongInfo extends JPanel {
 //			Foreground = text color
 		if(showFileName) {
 			fileNameInfo = new JLabel(fileName);
-			fileNameInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 15));
+			fileNameInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 20));
 			fileNameInfo.setForeground(Color.BLACK); // text color
-			fileNameInfo.setHorizontalAlignment(JLabel.CENTER);
+			fileNameInfo.setAlignmentX(CENTER_ALIGNMENT);
 			}
 		else {
 			singerInfo = new JLabel(singerName);
-			singerInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 12));
+			singerInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 10));
 			singerInfo.setForeground(Color.GRAY); 
-			singerInfo.setHorizontalAlignment(JLabel.CENTER);
+			singerInfo.setAlignmentX(CENTER_ALIGNMENT);
 			
 			songNameInfo = new JLabel(songName); 
-			songNameInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 19));
+			songNameInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 30));
 			songNameInfo.setForeground(Color.BLACK);
-			songNameInfo.setHorizontalAlignment(JLabel.CENTER); 
+			songNameInfo.setAlignmentX(CENTER_ALIGNMENT); 
 		}
 	}    
 	public void loadInfoPanel() {
 		makeLabel();
-		if(showFileName)
+		if(showFileName) {
+			this.add(Box.createRigidArea(new Dimension(19, 0))); /* empty block */
 			this.add(fileNameInfo);
-		else {
+			this.add(Box.createRigidArea(new Dimension(19, 0))); /* empty block */
+		} else {
 			this.add(songNameInfo);
+			this.add(Box.createRigidArea(new Dimension(3, 0))); /* empty block */
 			this.add(singerInfo);
+			this.add(Box.createRigidArea(new Dimension(15, 0))); /* empty block */
 		}
 	}
 }

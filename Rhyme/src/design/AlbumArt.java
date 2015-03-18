@@ -15,7 +15,7 @@ public class AlbumArt extends JLabel {
 	}
 	public void changeBg(Image img) {
 		if(img!=null) {
-		img=img.getScaledInstance(170, 170, Image.SCALE_SMOOTH);
+		img=img.getScaledInstance(124, 124, Image.SCALE_SMOOTH);
 		this.setIcon(new ImageIcon(img));
 		repaint(); 
 		}

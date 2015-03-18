@@ -4,6 +4,7 @@
  */
 package design;
 
+import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.sound.sampled.AudioSystem;
@@ -19,12 +20,14 @@ public class VolumeBar extends JSlider {
 	VolumeControl ctr_vol = new VolumeControl();
 
 	public VolumeBar() {
-		setOrientation(JSlider.VERTICAL);
+		setOrientation(JSlider.HORIZONTAL);
 		setMinimum(0);
 		setMaximum(100);
-		setPreferredSize(new Dimension(10, 170));
+		setPreferredSize(new Dimension(50, 10));
 		setFocusable(false);
-		setOpaque(false);
+		setOpaque(true);
+		setBackground(Color.BLACK);
+		setUI(new SliderUI(this));
 		setVisible(true);
 		addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
