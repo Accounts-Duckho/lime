@@ -7,13 +7,12 @@ import process.MusicPlayer;
 public class Set {
 	Update update = new Update();
 	PlaySong playAction = new PlaySong();
-	private boolean firstset = true;
 	public void setList(String dir) {
 		MusicPlayer.list.add(dir);
-		if(firstset) {
+		if(MusicPlayer.firstSet) {
+			MusicPlayer.firstSet=false;
 			update.songInfo();
 			playAction.readySong();
-			firstset=false;
 		}
 	}
 

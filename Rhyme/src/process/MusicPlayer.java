@@ -21,13 +21,14 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import design.AlbumArt;
 import design.SongInfo;
-import design.VolumeBar;
 
 @SuppressWarnings("serial")
 final public class MusicPlayer extends JFrame {
@@ -51,20 +52,20 @@ final public class MusicPlayer extends JFrame {
 	private JButton minimiseBtn; // remove screen still playing
 	private JButton closeBtn; // Exit This Program
 	private JButton minimodeBtn;
-	
+	public static JScrollPane scrollBar;
 	private JPanel dragArea=new JPanel();
 	public static int queue = 0; // Songs Order , 0~N ( N < 100 ) limited to 100
 									// songs
 	public static boolean changed = false; // When GoNext , GoPrevious or Play
 											// at demand list , false -> true ,
 											// to notify no need to changing
+	public static boolean repeat = false;
+	public static boolean firstSet = true;
 	static Point mouseDownCompCoords; // I don't know , but It tracks mouse
 
 	private JPanel paint_w; // White Square to painting
 	private JPanel paint_w2;
 	private JPanel paint_w3;
-	private JPanel paint_w4;
-	private JPanel paint_w5;
 	private JPanel paint_g; // Grey Square to painting
 	
 	protected URL icon_minimode;
@@ -130,8 +131,6 @@ final public class MusicPlayer extends JFrame {
 		paint_w = paint(new Color(255,255,255));
 		paint_w2 = paint(new Color(255,255,255));
 		paint_w3 = paint(new Color(255,255,255));
-		paint_w4 = paint(new Color(255,255,255));
-		paint_w5 = paint(new Color(255,255,255));
 		paint_g = paint(new Color(179, 179, 179));
 
 		/* File Browser Setting */
@@ -173,6 +172,10 @@ final public class MusicPlayer extends JFrame {
 		minimodeBtn.setFocusable(false);
 		minimodeBtn.setContentAreaFilled(false);
 		minimodeBtn.addActionListener(new minimodeBtnAction());
+		
+		// scroll Bar
+		scrollBar=new JScrollPane(list_panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		//		scrollBar.setViewportView(list_panel);
 	}
 
 	private JComponent buildContentPane() {
@@ -186,17 +189,15 @@ final public class MusicPlayer extends JFrame {
 		minimodeBtn.setBounds(307,3,21,21);
 		closeBtn.setBounds(328, 3, 21, 21);
 		albumArt.setBounds(1, 27, 124, 124);
-		info_panel.setBounds(126, 42, 223, 60);
-		ctr_panel.setBounds(126, 117, 223, 30);
+		info_panel.setBounds(126, 42, 223, 40);
+		ctr_panel.setBounds(126, 97, 223, 50);
 		dock_panel.setBounds(1, 152, 348, 40);
-		list_panel.setBounds(1, 193, 323, 206);
-
+		list_panel.setBounds(1, 193, 348, 206);
+		scrollBar.setBounds(1, 193, 348, 206);
 		paint_g.setBounds(0, 0, 350, 400);
 		paint_w.setBounds(1,1,348,25);
 		paint_w2.setBounds(126, 27, 223, 125);
 		paint_w3.setBounds(1, 152, 348, 40);
-		paint_w4.setBounds(1,193,324,206);
-		paint_w5.setBounds(324,193,25,168);
 
 		/*
 		 * Lower loading is top , Higher is bottom but I don't know exactly
@@ -206,42 +207,7 @@ final public class MusicPlayer extends JFrame {
 		combo.add(minimodeBtn, 2);
 		combo.add(closeBtn, 3);
 		combo.add(dragArea,4);
-		combo.add(paint_w, 10);
-		combo.add(albumArt, 5);
-		combo.add(info_panel, 6);
-		combo.add(ctr_panel, 7);
-		combo.add(paint_w2, 11);
-		combo.add(dock_panel, 8);
-		combo.add(paint_w3, 12);
-		combo.add(list_panel, 9);
-		combo.add(paint_w4, 13);
-		combo.add(paint_w5, 14);
-		combo.add(paint_g, 15);
-		return combo;
-	}
-	
-	private JComponent buildMiniMode() {
-		JLayeredPane combo = new JLayeredPane();
-		/* Actually build process is almost done at this */
-		makeContents();
-
-		/* Set position & size (x, y, width, height) */
-		dragArea.setBounds(1,1,218,68);
-		minimiseBtn.setBounds(170, 1, 16, 16);
-		minimodeBtn.setBounds(186,1,16,16);
-		closeBtn.setBounds(202, 1, 16, 16);
-		paint_w.setBounds(1,1,218,68);
-		paint_g.setBounds(0, 0, 220, 70);
-
-		/*
-		 * Lower loading is top , Higher is bottom but I don't know exactly
-		 * about the number
-		 */
-		combo.add(minimiseBtn, 1);
-		combo.add(minimodeBtn, 2);
-		combo.add(closeBtn, 3);
-		combo.add(dragArea,4);
-		combo.add(paint_w,11);
+		combo.add(paint_w, 11);
 		combo.add(albumArt, 5);
 		combo.add(info_panel, 6);
 		combo.add(ctr_panel, 7);
@@ -249,11 +215,10 @@ final public class MusicPlayer extends JFrame {
 		combo.add(dock_panel, 8);
 		combo.add(paint_w3, 13);
 		combo.add(list_panel, 9);
-		combo.add(paint_w4, 14);
-		combo.add(paint_w5, 15);
+		combo.add(scrollBar, 10);
 		combo.add(paint_g, 16);
 		return combo;
-	}
+	}	
 
 	public static void main(String[] args) throws Exception {
 		/* Default UI is windows */
@@ -291,7 +256,7 @@ final public class MusicPlayer extends JFrame {
 				minimodeBtn.setIcon(new ImageIcon(icon_expand));
 			}
 			else {
-				MusicPlayer.rhyme.setSize(220,70);
+				MusicPlayer.rhyme.setSize(350, 192);
 				minimodeBtn.setIcon(new ImageIcon(icon_minimode));
 			}
 		}

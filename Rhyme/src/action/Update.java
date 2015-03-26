@@ -25,4 +25,4 @@ class Update {
 		MusicPlayer.info_panel.loadInfoPanel();
 		MusicPlayer.info_panel.updateUI();
 	}
-}
+	}

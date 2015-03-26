@@ -13,21 +13,26 @@ public class Mp3Player {
 	private final static int PAUSED = 2;
 	private final static int FINISHED = 3;
 	private final Player player;
-	
+
 	private final Object playerLock = new Object();
-	
+
 	private int playerStatus = NOTSTARTED;
+
 	public Mp3Player(final InputStream inputStream) throws JavaLayerException {
 		this.player = new Player(inputStream);
 	}
-	public Mp3Player(final InputStream inputStream, final AudioDevice audioDevice) throws JavaLayerException {
+
+	public Mp3Player(final InputStream inputStream,
+			final AudioDevice audioDevice) throws JavaLayerException {
 		this.player = new Player(inputStream, audioDevice);
 	}
+
 	PlaySong playAction = new PlaySong();
+
 	// Starts playback (resumes if paused)
 	public void play() throws JavaLayerException {
-		synchronized(playerLock) {
-			switch(playerStatus) {
+		synchronized (playerLock) {
+			switch (playerStatus) {
 			case NOTSTARTED:
 				MusicPlayer.ctr_panel.switch_btn(true);
 				final Runnable r = new Runnable() {
@@ -50,41 +55,45 @@ public class Mp3Player {
 			}
 		}
 	}
+
 	public void pause() {
-		synchronized(playerLock) {
-			if(playerStatus == PLAYING) {
+		synchronized (playerLock) {
+			if (playerStatus == PLAYING) {
 				playerStatus = PAUSED;
 			}
-//			return playerStatus == PLAYING;
-		} 
+			// return playerStatus == PLAYING;
+		}
 	}
+
 	public void resume() {
-		synchronized(playerLock) {
-			if(playerStatus == PAUSED) {
+		synchronized (playerLock) {
+			if (playerStatus == PAUSED) {
 				playerStatus = PLAYING;
 				playerLock.notifyAll();
 			}
-//			return playerStatus == PLAYING;
+			// return playerStatus == PLAYING;
 		}
 	}
+
 	public void stop() {
-		synchronized(playerLock) {
+		synchronized (playerLock) {
 			MusicPlayer.ctr_panel.switch_btn(false);
 			playerStatus = FINISHED;
 			playerLock.notifyAll();
 		}
 	}
+
 	private void playInternal() {
-		while(playerStatus != FINISHED) {
+		while (playerStatus != FINISHED) {
 			try {
-				if(!player.play(1)) {
+				if (!player.play(1)) {
 					break;
 				}
 			} catch (final JavaLayerException e) {
 				break;
 			}
-			synchronized(playerLock) {
-				while(playerStatus == PAUSED) {
+			synchronized (playerLock) {
+				while (playerStatus == PAUSED) {
 					try {
 						playerLock.wait();
 					} catch (final InterruptedException e) {
@@ -93,27 +102,40 @@ public class Mp3Player {
 				}
 			}
 		}
-		if(MusicPlayer.changed || MusicPlayer.queue+1==MusicPlayer.list.size()) {
-			MusicPlayer.ctr_panel.switch_btn(false);
-			player.close();
-			MusicPlayer.changed=false; 
+		if (!MusicPlayer.repeat) {
+			if (MusicPlayer.changed
+					|| MusicPlayer.queue + 1 == MusicPlayer.list.size()) {
+				MusicPlayer.ctr_panel.switch_btn(false);
+				player.close();
+				MusicPlayer.changed = false;
+			} else
+				close();
 		}
-		else
-			close();
-	}
-	public void close() {
-		synchronized(playerLock) {
-			playerStatus = FINISHED;
+		else {
 			try {
-				playAction.playNext();				
+					playAction.readySong();
+					playAction.playSong();
 			} catch (Exception e) {
 				e.printStackTrace();
-				}
 			}
+		}
 	}
+
+	public void close() {
+		synchronized (playerLock) {
+			playerStatus = FINISHED;
+			try {
+					playAction.playNext();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public int getStatus() {
 		return playerStatus;
 	}
+
 	public void exit() {
 		try {
 			player.close();

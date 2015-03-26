@@ -25,11 +25,13 @@ public class MusicController extends JPanel {
 	private JButton previousBtn;
 	private JButton nextBtn;
 	private JButton onoffBtn;
+	private JButton stopBtn;
 	final URL icon_previous = getClass().getResource(
 			"/images/icons/previous.png");
 	final URL icon_next = getClass().getResource("/images/icons/next.png");
 	final URL icon_play = getClass().getResource("/images/icons/play.png");
 	final URL icon_pause = getClass().getResource("/images/icons/pause.png");
+	final URL icon_stop = getClass().getResource("/images/icons/stop.png");
 	PlaySong playAction = new PlaySong();
 
 	public MusicController() {
@@ -45,33 +47,42 @@ public class MusicController extends JPanel {
 		previousBtn.setBorder(null);
 		previousBtn.setFocusable(false);
 		previousBtn.setContentAreaFilled(false);
-		previousBtn.setMaximumSize(new Dimension(30, 30));
+		previousBtn.setMaximumSize(new Dimension(25, 25));
 		previousBtn.addActionListener(new previousBtnAction());
 
 		nextBtn = new JButton(new ImageIcon(icon_next));
 		nextBtn.setBorder(null);
 		nextBtn.setFocusable(false);
 		nextBtn.setContentAreaFilled(false);
-		nextBtn.setMaximumSize(new Dimension(30, 30));
+		nextBtn.setMaximumSize(new Dimension(25, 25));
 		nextBtn.addActionListener(new nextBtnAction());
 
 		onoffBtn = new JButton(new ImageIcon(icon_play));
 		onoffBtn.setBorder(null);
 		onoffBtn.setFocusable(false);
 		onoffBtn.setContentAreaFilled(false);
-		onoffBtn.setMaximumSize(new Dimension(150, 150));
+		onoffBtn.setMaximumSize(new Dimension(50, 50));
 		onoffBtn.addActionListener(new onoffBtnAction());
+		
+		stopBtn = new JButton(new ImageIcon(icon_stop));
+		stopBtn.setBorder(null);
+		stopBtn.setFocusable(false);
+		stopBtn.setContentAreaFilled(false);
+		stopBtn.setMaximumSize(new Dimension(50, 50));
+		stopBtn.addActionListener(new stopBtnAction());
 	}
 
 	private void buildPanel() {
 		makeButtons();
-		this.add(Box.createRigidArea(new Dimension(24, 0))); /* empty block */
+		this.add(Box.createRigidArea(new Dimension(18, 0))); /* empty block */
 		this.add(previousBtn);
-		this.add(Box.createRigidArea(new Dimension(1, 0))); /* empty block */
+		this.add(Box.createRigidArea(new Dimension(10, 0))); /* empty block */
+		this.add(stopBtn);
+		this.add(Box.createRigidArea(new Dimension(10, 0))); /* empty block */
 		this.add(onoffBtn);
-		this.add(Box.createRigidArea(new Dimension(1, 0))); /* empty block */
+		this.add(Box.createRigidArea(new Dimension(10, 0))); /* empty block */
 		this.add(nextBtn);
-		this.add(Box.createRigidArea(new Dimension(24, 0))); /* empty block */
+		this.add(Box.createRigidArea(new Dimension(18, 0))); /* empty block */
 	}
 
 	public void switch_btn(boolean playing) {
@@ -84,12 +95,14 @@ public class MusicController extends JPanel {
 
 	class previousBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			MusicPlayer.repeat=false;
 			playAction.playPrevious();
 		}
 	}
 
 	class nextBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			MusicPlayer.repeat=false;
 			playAction.playNext();
 		}
 	}
@@ -131,6 +144,13 @@ public class MusicController extends JPanel {
 					e1.printStackTrace();
 				}
 			}
+		}
+	}
+	
+	class stopBtnAction implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			MusicPlayer.play_mp3.stop();
+			playAction.readySong();
 		}
 	}
 	

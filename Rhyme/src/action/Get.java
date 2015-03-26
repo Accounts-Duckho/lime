@@ -25,6 +25,7 @@ public class Get {
 	private String singer;
 	private String songname;
 	private String genre;
+	private int duration;
 	private Image albumArt;
 	private boolean fileSelected;
 
@@ -52,6 +53,7 @@ public class Get {
 			singer = infoTag.getFirst(FieldKey.ALBUM_ARTIST);
 			songname = infoTag.getFirst(FieldKey.TITLE);
 			genre = infoTag.getFirst(FieldKey.GENRE);
+			duration= music.getAudioHeader().getTrackLength();
 			System.out.println(genre);
 			final List<Artwork> artworkList = infoTag.getArtworkList();
 
@@ -79,38 +81,39 @@ public class Get {
 	
 	public void metaData(int n) {
 		File currentSong = new File(MusicPlayer.list.get(n));
-		AudioFile music;
-		try {
-			music = AudioFileIO.read(currentSong);
-			Tag infoTag = music.getTag();
-
-			singer = infoTag.getFirst(FieldKey.ALBUM_ARTIST);
-			songname = infoTag.getFirst(FieldKey.TITLE);
-			genre = infoTag.getFirst(FieldKey.GENRE);
-			System.out.println(genre);
-			final List<Artwork> artworkList = infoTag.getArtworkList();
-
-			if (artworkList.size() > 0) {
-				InputStream scraps = new ByteArrayInputStream(infoTag
-						.getFirstArtwork().getBinaryData());
-				albumArt = ImageIO.read(scraps);
-			} else
-				albumArt = null;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if (singer != null && songname != null && checkString(singer)
-				&& checkString(songname)) {
-			// Encode iso-8859-1 to euc-kr
+			AudioFile music;
 			try {
-				singer = new String(singer.getBytes("iso-8859-1"), "euc-kr");
-				songname = new String(songname.getBytes("iso-8859-1"), "euc-kr");
-			} catch (UnsupportedEncodingException e) {
+				music = AudioFileIO.read(currentSong);
+				Tag infoTag = music.getTag();
+
+				singer = infoTag.getFirst(FieldKey.ALBUM_ARTIST);
+				songname = infoTag.getFirst(FieldKey.TITLE);
+				genre = infoTag.getFirst(FieldKey.GENRE);
+				duration= music.getAudioHeader().getTrackLength();
+				System.out.println(genre);
+				final List<Artwork> artworkList = infoTag.getArtworkList();
+
+				if (artworkList.size() > 0) {
+					InputStream scraps = new ByteArrayInputStream(infoTag
+							.getFirstArtwork().getBinaryData());
+					albumArt = ImageIO.read(scraps);
+				} else
+					albumArt = null;
+
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
+			if (singer != null && songname != null && checkString(singer)
+					&& checkString(songname)) {
+				// Encode iso-8859-1 to euc-kr
+				try {
+					singer = new String(singer.getBytes("iso-8859-1"), "euc-kr");
+					songname = new String(songname.getBytes("iso-8859-1"), "euc-kr");
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
 		}
-	}
 
 	public String singerName() {
 		if (singer == "")
@@ -126,6 +129,9 @@ public class Get {
 			return songname;
 	}
 
+	public int duration() {
+		return duration;
+	}
 	public Image albumArt() {
 		return albumArt;
 	}
