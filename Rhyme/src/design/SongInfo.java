@@ -54,18 +54,18 @@ public class SongInfo extends JPanel {
 		if (showFileName) {
 			fileNameInfo = new JLabel(fileName);
 			fileNameInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 15));
-			fileNameInfo.setForeground(Color.BLACK); // text color
+			fileNameInfo.setForeground(Color.WHITE); // text color
 			fileNameInfo.setAlignmentX(CENTER_ALIGNMENT);
 		} else {
 			singerInfo = new JLabel(singerName);
-			singerInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 10));
-			singerInfo.setForeground(Color.GRAY);
+			singerInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 9));
+			singerInfo.setForeground(Color.WHITE);
 			singerInfo.setAlignmentX(CENTER_ALIGNMENT);
 			singerInfo.addMouseListener(new EncodeAction());
 
 			songNameInfo = new JLabel(songName);
 			songNameInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 20));
-			songNameInfo.setForeground(Color.BLACK);
+			songNameInfo.setForeground(Color.WHITE);
 			songNameInfo.setAlignmentX(CENTER_ALIGNMENT);
 			songNameInfo.addMouseListener(new EncodeAction());
 

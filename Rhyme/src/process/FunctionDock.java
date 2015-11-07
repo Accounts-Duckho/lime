@@ -17,13 +17,11 @@ import javax.swing.JPanel;
 import action.Get;
 import action.PlaySong;
 import action.Set;
-import design.VolumeBar;
 
 @SuppressWarnings("serial")
 public class FunctionDock extends JPanel {
 	private JButton loadBtn;
 	private JButton repeatBtn;
-	public static VolumeBar volume_bar; // Volume Slider which position will be
 	// sound level
 	PlaySong playAction = new PlaySong();
 	public FunctionDock() {
@@ -55,12 +53,6 @@ public class FunctionDock extends JPanel {
 		repeatBtn.setMaximumSize(new Dimension(20, 20));
 		repeatBtn.addActionListener(new repeatBtnAction());
 		
-		
-		/* Volume Bar */
-		volume_bar = new VolumeBar();
-		volume_bar.setMaximumSize(new Dimension(50,10));
-		
-		this.add(volume_bar);
 		this.add(repeatBtn);
 		this.add(loadBtn);
 	}

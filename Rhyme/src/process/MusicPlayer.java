@@ -73,7 +73,7 @@ final public class MusicPlayer extends JFrame {
 	public MusicPlayer() {
 		mouseDownCompCoords = null;
 		setLayout(new BorderLayout());
-		setSize(350, 400); // ( width, height )
+		setSize(350, 193); // ( width, height )
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		/* Exit_on_close = exit all jframe , Dispose_on_close = exit only this */
 
@@ -128,10 +128,10 @@ final public class MusicPlayer extends JFrame {
 		albumArt = new AlbumArt();
 
 		/* Paints */
-		paint_w = paint(new Color(255,255,255));
-		paint_w2 = paint(new Color(255,255,255));
-		paint_w3 = paint(new Color(255,255,255));
-		paint_g = paint(new Color(179, 179, 179));
+		paint_w = paint(new Color(45,137,239));
+		paint_w2 = paint(new Color(45,137,239));
+		paint_w3 = paint(new Color(45,137,239));
+		paint_g = paint(new Color(255,255,255));
 
 		/* File Browser Setting */
 		browser = new JFileChooser();
@@ -176,6 +176,7 @@ final public class MusicPlayer extends JFrame {
 		// scroll Bar
 		scrollBar=new JScrollPane(list_panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		//		scrollBar.setViewportView(list_panel);
+		dragArea.setOpaque(false);
 	}
 
 	private JComponent buildContentPane() {
@@ -251,12 +252,12 @@ final public class MusicPlayer extends JFrame {
 	}
 	class minimodeBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(MusicPlayer.rhyme.getHeight()==192) {
+			if(MusicPlayer.rhyme.getHeight()==193) {
 				MusicPlayer.rhyme.setSize(350,400);
 				minimodeBtn.setIcon(new ImageIcon(icon_expand));
 			}
 			else {
-				MusicPlayer.rhyme.setSize(350, 192);
+				MusicPlayer.rhyme.setSize(350, 193);
 				minimodeBtn.setIcon(new ImageIcon(icon_minimode));
 			}
 		}

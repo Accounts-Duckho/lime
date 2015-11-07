@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class AlbumArt extends JLabel {
-	final URL default_img = getClass().getResource("/images/background/cherry-pie.png"); // Default Bg
+	final URL default_img = getClass().getResource("/images/background/pi_blue.png"); // Default Bg
 	private ImageIcon defaultBg = new ImageIcon(default_img);
 	public AlbumArt() {
 		this.setIcon(defaultBg); 
