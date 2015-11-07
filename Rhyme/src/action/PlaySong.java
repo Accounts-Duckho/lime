@@ -11,16 +11,16 @@ public class PlaySong {
 
 	public void readySong() {
 		// Remove Current Player if exist
-		if (MusicPlayer.play_mp3 != null) {
-			MusicPlayer.play_mp3.exit();
+		if (MusicPlayer.playInstance != null) {
+			MusicPlayer.playInstance.exit();
 		}
 
 		FileInputStream songStream;
 		String currentSongDir;
 		try {
-			currentSongDir = MusicPlayer.list.get(MusicPlayer.queue);
+			currentSongDir = MusicPlayer.songList.get(MusicPlayer.songQueue);
 			songStream = new FileInputStream(currentSongDir);
-			MusicPlayer.play_mp3 = new Mp3Player(songStream);
+			MusicPlayer.playInstance = new Mp3Player(songStream);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -29,16 +29,17 @@ public class PlaySong {
 	public void playSong() {
 		try {
 			update.songInfo();
-			MusicPlayer.play_mp3.play();
+			MusicPlayer.playInstance.play();
 		} catch (JavaLayerException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void playPrevious() {
-		if (MusicPlayer.queue > 0) {
-			MusicPlayer.queue--;
-			MusicPlayer.changed = true;
+		if (MusicPlayer.songQueue > 0) {
+			MusicPlayer.songQueue--;
+				MusicPlayer.isChanged = true;
+				MusicPlayer.skip=true;
 			readySong();
 			update.songInfo();
 			playSong();
@@ -46,15 +47,17 @@ public class PlaySong {
 	}
 
 	public void playNext() {
-		if (MusicPlayer.queue + 1 < MusicPlayer.list.size()) {
-			MusicPlayer.queue++;
-			MusicPlayer.changed = true;
+		if (MusicPlayer.songQueue + 1 < MusicPlayer.songList.size()) {
+			MusicPlayer.songQueue++;
+				MusicPlayer.isChanged = true;
+				MusicPlayer.skip=true;
 			readySong();
 			update.songInfo();
 			playSong();
 		} else {
-			MusicPlayer.queue = 0;
-			MusicPlayer.changed = true;
+			MusicPlayer.songQueue = 0;
+				MusicPlayer.isChanged = true;
+				MusicPlayer.skip=true;
 			readySong();
 			update.songInfo();
 			playSong();

@@ -13,7 +13,6 @@ public class Mp3Player {
 	private final static int PAUSED = 2;
 	private final static int FINISHED = 3;
 	private final Player player;
-
 	private final Object playerLock = new Object();
 
 	private int playerStatus = NOTSTARTED;
@@ -34,7 +33,6 @@ public class Mp3Player {
 		synchronized (playerLock) {
 			switch (playerStatus) {
 			case NOTSTARTED:
-				MusicPlayer.ctr_panel.switch_btn(true);
 				final Runnable r = new Runnable() {
 					public void run() {
 						playInternal();
@@ -47,7 +45,6 @@ public class Mp3Player {
 				t.start();
 				break;
 			case PAUSED:
-				MusicPlayer.ctr_panel.switch_btn(true);
 				resume();
 				break;
 			default:
@@ -77,7 +74,6 @@ public class Mp3Player {
 
 	public void stop() {
 		synchronized (playerLock) {
-			MusicPlayer.ctr_panel.switch_btn(false);
 			playerStatus = FINISHED;
 			playerLock.notifyAll();
 		}
@@ -102,12 +98,17 @@ public class Mp3Player {
 				}
 			}
 		}
-		if (!MusicPlayer.repeat) {
-			if (MusicPlayer.changed
-					|| MusicPlayer.queue + 1 == MusicPlayer.list.size()) {
-				MusicPlayer.ctr_panel.switch_btn(false);
+		if (!MusicPlayer.isRepeating) {
+			if (MusicPlayer.isChanged
+					|| MusicPlayer.songQueue + 1 == MusicPlayer.songList.size()) {
+				MusicPlayer.control_panel.isPlaying=true;
+				MusicPlayer.control_panel.switch_btn();
 				player.close();
-				MusicPlayer.changed = false;
+				if(MusicPlayer.isFlowing && !MusicPlayer.skip) {
+					if(MusicPlayer.songQueue + 1 != MusicPlayer.songList.size())
+				playAction.playNext();
+				}
+				MusicPlayer.isChanged = false;
 			} else
 				close();
 		}
@@ -125,7 +126,12 @@ public class Mp3Player {
 		synchronized (playerLock) {
 			playerStatus = FINISHED;
 			try {
+				if(MusicPlayer.allowChange)
 					playAction.playNext();
+				else {
+					MusicPlayer.allowChange=true;
+					player.close();
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

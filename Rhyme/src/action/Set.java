@@ -8,9 +8,9 @@ public class Set {
 	Update update = new Update();
 	PlaySong playAction = new PlaySong();
 	public void setList(String dir) {
-		MusicPlayer.list.add(dir);
-		if(MusicPlayer.firstSet) {
-			MusicPlayer.firstSet=false;
+		MusicPlayer.songList.add(dir);
+		if(!MusicPlayer.hasSongList) {
+			MusicPlayer.hasSongList=true;
 			update.songInfo();
 			playAction.readySong();
 		}

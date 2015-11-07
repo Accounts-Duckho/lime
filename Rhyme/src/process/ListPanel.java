@@ -30,13 +30,13 @@ public class ListPanel extends JPanel {
 	public JComponent loadWaitList() {
 		JLayeredPane list = new JLayeredPane();
 		Get get = new Get();
-		if (MusicPlayer.list.size() <= 150) {
-			for (int i = 0; i < MusicPlayer.list.size(); i++) {
+		if (MusicPlayer.songList.size() <= 150) {
+			for (int i = 0; i < MusicPlayer.songList.size(); i++) {
 				songBtn[i] = new JButton();
 				songBtn[i].setBorder(null);
 				songBtn[i].setFocusable(false);
 				songBtn[i].setContentAreaFilled(false);
-				String songname = new String (new File(MusicPlayer.list.get(i)).getName()).replaceFirst("[.][^.]+$", "");
+				String songname = new String (new File(MusicPlayer.songList.get(i)).getName()).replaceFirst("[.][^.]+$", "");
 				get.metaData(i);
 				int minute=get.duration()/60;
 				int second=get.duration()%60;
@@ -56,8 +56,8 @@ public class ListPanel extends JPanel {
 		setVisible(false);
 		removeAll();
 		add(loadWaitList());		
-		setPreferredSize(new Dimension(348, 10+17*MusicPlayer.list.size()));
-		MusicPlayer.scrollBar.getViewport().add(MusicPlayer.list_panel);
+		setPreferredSize(new Dimension(348, 10+17*MusicPlayer.songList.size()));
+		MusicPlayer.songList_scrollBar.getViewport().add(MusicPlayer.songList_panel);
 		setVisible(true);
 	}
 
@@ -72,8 +72,10 @@ public class ListPanel extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() == 2) {
 				try {
-					MusicPlayer.changed = true;
-					MusicPlayer.queue = count;
+					MusicPlayer.isChanged = true;
+					MusicPlayer.songQueue = count;
+					MusicPlayer.control_panel.isPlaying=true;
+					MusicPlayer.control_panel.switch_btn();
 					playAction.readySong();
 					playAction.playSong();
 				} catch (Exception e1) {

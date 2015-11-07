@@ -32,48 +32,41 @@ import design.SongInfo;
 
 @SuppressWarnings("serial")
 final public class MusicPlayer extends JFrame {
-	// Resources
 	public static MusicPlayer rhyme;
-	public static SongInfo info_panel; // Notify SongInfo to user
-	public static MusicController ctr_panel; // Music Contoroller -> Previous,
-												// Play, Pause, Resume, Next
-	public static FunctionDock dock_panel; // Items Dock as Add Item, Two Lists,
-											// and so on
-	public static ListPanel list_panel;
-
+	public static SongInfo songInfo_panel;
+	public static MusicController control_panel; // Previous, Play, Pause, Resume, Next
+	public static FunctionDock dock_panel; // Items Dock as Add Item, Repeat
+	public static ListPanel songList_panel;
 	public static AlbumArt albumArt; // Get , Set AlbumArt from Music
 	public static JFileChooser browser; // File Browser
-	public static Mp3Player play_mp3; // Play Instance for mp3 extension
-	// public static DemandList demand_list; // When Opened this player , create
-	// , Until Exit, saved at ram
-	// public static PlayList play_list; // When Opened this player , load data
-	// , When Exit, save data
-	public static ArrayList<String> list = new ArrayList<String>();
-	private JButton minimiseBtn; // remove screen still playing
-	private JButton closeBtn; // Exit This Program
-	private JButton minimodeBtn;
-	public static JScrollPane scrollBar;
+	public static Mp3Player playInstance; // Play Instance for mp3 extension
+	public static ArrayList<String> songList = new ArrayList<String>();
+	private JButton minimizeBtn; 
+	private JButton closeBtn;
+	private JButton expandBtn;
+	public static JScrollPane songList_scrollBar;
 	private JPanel dragArea=new JPanel();
-	public static int queue = 0; // Songs Order , 0~N ( N < 100 ) limited to 100
-									// songs
-	public static boolean changed = false; // When GoNext , GoPrevious or Play
-											// at demand list , false -> true ,
-											// to notify no need to changing
-	public static boolean repeat = false;
-	public static boolean firstSet = true;
-	static Point mouseDownCompCoords; // I don't know , but It tracks mouse
+	public static int songQueue = 0; // limited to 150
+	public static boolean isChanged = false; // notify no need to changing for continuous play
+	public static boolean isRepeating = false;
+	public static boolean hasSongList = false;
+	public static boolean isFlowing = true;
+	public static boolean allowChange = true;
+	public static boolean skip = false;
+	static Point mouseDownCompCoords; // It tracks mouse
 
-	private JPanel paint_w; // White Square to painting
-	private JPanel paint_w2;
-	private JPanel paint_w3;
-	private JPanel paint_g; // Grey Square to painting
+	public static JPanel paint_titleArea;
+	public static JPanel paint_controlArea;
+	public static JPanel paint_dockArea;
+	public static JPanel paint_frame;
+	public static int colorCode=0;
 	
-	protected URL icon_minimode;
-	protected URL icon_expand;
+	final private int default_height=193;
+	
 	public MusicPlayer() {
-		mouseDownCompCoords = null;
+		mouseDownCompCoords = null; // Initialize Mouse Tracker
 		setLayout(new BorderLayout());
-		setSize(350, 193); // ( width, height )
+		setSize(350, 193);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		/* Exit_on_close = exit all jframe , Dispose_on_close = exit only this */
 
@@ -100,7 +93,7 @@ final public class MusicPlayer extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 			}
 		});
-		// Enabling Draging Position Tracking
+		// Enabling Dragging Position Tracking
 		dragArea.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseMoved(MouseEvent e) {
 			}
@@ -111,121 +104,116 @@ final public class MusicPlayer extends JFrame {
 						- mouseDownCompCoords.y);
 			}
 		});
-		add(buildContentPane()); /* load Contents */
+		
+		add(buildContentPane()); /* load Compositions */
 	}
 
-	private void makeContents() {
+	private void makeCompositions() {
 
 		/* Panel */
-		info_panel = new SongInfo();
-		ctr_panel = new MusicController();
+		songInfo_panel = new SongInfo();
+		control_panel = new MusicController();
 		dock_panel = new FunctionDock();
 
 		/* Lists */
-		list_panel = new ListPanel();
+		songList_panel = new ListPanel();
 
 		/* Album Art */
 		albumArt = new AlbumArt();
 
 		/* Paints */
-		paint_w = paint(new Color(45,137,239));
-		paint_w2 = paint(new Color(45,137,239));
-		paint_w3 = paint(new Color(45,137,239));
-		paint_g = paint(new Color(255,255,255));
+		paint_titleArea = paint(new Color(45,137,239)); // Metro Blue
+		paint_controlArea = paint(new Color(45,137,239));
+		paint_dockArea = paint(new Color(45,137,239));
+		paint_frame = paint(new Color(255,255,255)); // White
+		
+		paint_titleArea = paint(new Color(126,56,120)); // Purple
+		paint_controlArea = paint(new Color(126,56,120));
+		paint_dockArea = paint(new Color(126,56,120));
 
+		paint_titleArea = paint(new Color(30,113,69)); // Dark Green
+		paint_controlArea = paint(new Color(30,113,69));
+		paint_dockArea = paint(new Color(30,113,69));
+		
 		/* File Browser Setting */
 		browser = new JFileChooser();
 		FileFilter songFilter = new FileNameExtensionFilter("Music File",
 				"mp3", "wav"); // 'showing name' , 'extensions .... '
-								// ,,,,
 		browser.addChoosableFileFilter(songFilter);
 		browser.setFileFilter(songFilter); // make own filter to default
-		browser.setMultiSelectionEnabled(true); // but can't use drag ...
-		browser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // can
-																			// select
-																			// file
-																			// or
-																			// dir
+		browser.setMultiSelectionEnabled(true); // but can't use drag ... only shift key
+		browser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-		/* Icons _ minimize / close */
+		/* Icons of Title */
 		final URL icon_mini = getClass().getResource("/images/icons/mini.png");
-		minimiseBtn = new JButton(new ImageIcon(icon_mini));
-		minimiseBtn.addActionListener(new MinimizeAction());
+		minimizeBtn = new JButton(new ImageIcon(icon_mini));
+		minimizeBtn.addActionListener(new MinimizeAction());
+		minimizeBtn.setBorder(null);
+		minimizeBtn.setFocusable(false);
+		minimizeBtn.setContentAreaFilled(false);
 
-		minimiseBtn.setBorder(null);
-		minimiseBtn.setFocusable(false);
-		minimiseBtn.setContentAreaFilled(false);
-
-		final URL icon_close = getClass()
-				.getResource("/images/icons/close.png");
+		final URL icon_close = getClass().getResource("/images/icons/close.png");
 		closeBtn = new JButton(new ImageIcon(icon_close));
 		closeBtn.addActionListener(new CloseAction());
-
 		closeBtn.setBorder(null);
 		closeBtn.setFocusable(false);
 		closeBtn.setContentAreaFilled(false);
 		
-		icon_minimode = getClass().getResource("/images/icons/minimode.png");
-		icon_expand = getClass().getResource("/images/icons/expand.png");
-		minimodeBtn = new JButton(new ImageIcon(icon_minimode));
-		minimodeBtn.setBorder(null);
-		minimodeBtn.setFocusable(false);
-		minimodeBtn.setContentAreaFilled(false);
-		minimodeBtn.addActionListener(new minimodeBtnAction());
+
+		final URL icon_expand = getClass().getResource("/images/icons/expand.png");
+		expandBtn = new JButton(new ImageIcon(icon_expand));
+		expandBtn.setBorder(null);
+		expandBtn.setFocusable(false);
+		expandBtn.setContentAreaFilled(false);
+		expandBtn.addActionListener(new expandBtnAction());
 		
-		// scroll Bar
-		scrollBar=new JScrollPane(list_panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		//		scrollBar.setViewportView(list_panel);
+		songList_scrollBar=new JScrollPane(songList_panel, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		dragArea.setOpaque(false);
 	}
 
 	private JComponent buildContentPane() {
-		JLayeredPane combo = new JLayeredPane();
-		/* Actually build process is almost done at this */
-		makeContents();
+		JLayeredPane design = new JLayeredPane();
+		makeCompositions();
 
 		/* Set position & size (x, y, width, height) */
 		dragArea.setBounds(1,1,348,25);
-		minimiseBtn.setBounds(286, 3, 21, 21);
-		minimodeBtn.setBounds(307,3,21,21);
+		paint_frame.setBounds(0, 0, 350, 400);
+		paint_titleArea.setBounds(1,1,348,25);
+		paint_controlArea.setBounds(126, 27, 223, 125);
+		paint_dockArea.setBounds(1, 152, 348, 40);
+		minimizeBtn.setBounds(286, 3, 21, 21);
+		expandBtn.setBounds(307,3,21,21);
 		closeBtn.setBounds(328, 3, 21, 21);
 		albumArt.setBounds(1, 27, 124, 124);
-		info_panel.setBounds(126, 42, 223, 40);
-		ctr_panel.setBounds(126, 97, 223, 50);
+		songInfo_panel.setBounds(126, 42, 223, 40);
+		control_panel.setBounds(126, 97, 223, 50);
 		dock_panel.setBounds(1, 152, 348, 40);
-		list_panel.setBounds(1, 193, 348, 206);
-		scrollBar.setBounds(1, 193, 348, 206);
-		paint_g.setBounds(0, 0, 350, 400);
-		paint_w.setBounds(1,1,348,25);
-		paint_w2.setBounds(126, 27, 223, 125);
-		paint_w3.setBounds(1, 152, 348, 40);
+		songList_panel.setBounds(1, 193, 348, 206);
+		songList_scrollBar.setBounds(1, 193, 348, 206);
 
-		/*
-		 * Lower loading is top , Higher is bottom but I don't know exactly
-		 * about the number
-		 */
-		combo.add(minimiseBtn, 1);
-		combo.add(minimodeBtn, 2);
-		combo.add(closeBtn, 3);
-		combo.add(dragArea,4);
-		combo.add(paint_w, 11);
-		combo.add(albumArt, 5);
-		combo.add(info_panel, 6);
-		combo.add(ctr_panel, 7);
-		combo.add(paint_w2, 12);
-		combo.add(dock_panel, 8);
-		combo.add(paint_w3, 13);
-		combo.add(list_panel, 9);
-		combo.add(scrollBar, 10);
-		combo.add(paint_g, 16);
-		return combo;
+
+//		Lower loading is top , Higher is bottom 
+		design.add(minimizeBtn);
+		design.add(expandBtn);
+		design.add(closeBtn);
+		design.add(dragArea);
+		design.add(paint_titleArea);
+		design.add(albumArt);
+		design.add(songInfo_panel);
+		design.add(control_panel);
+		design.add(paint_controlArea);
+		design.add(dock_panel);
+		design.add(paint_dockArea);
+		design.add(songList_panel);
+		design.add(songList_scrollBar);
+		design.add(paint_frame);
+		return design;
 	}	
 
 	public static void main(String[] args) throws Exception {
-		/* Default UI is windows */
-		UIManager
-				.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-		// make and visible
+		/* OS Specific Design at File Browsing */
+		UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		// make instance
 		rhyme = new MusicPlayer();
 		rhyme.setVisible(true);
 	}
@@ -244,22 +232,18 @@ final public class MusicPlayer extends JFrame {
 
 	class CloseAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (play_mp3 != null) {
-				play_mp3.exit();
+			if (playInstance != null) {
+				playInstance.exit(); 
 			}
 			dispose();
 		}
 	}
-	class minimodeBtnAction implements ActionListener {
+	class expandBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if(MusicPlayer.rhyme.getHeight()==193) {
+			if(MusicPlayer.rhyme.getHeight()!=default_height)
+				MusicPlayer.rhyme.setSize(350,193);
+			else 
 				MusicPlayer.rhyme.setSize(350,400);
-				minimodeBtn.setIcon(new ImageIcon(icon_expand));
-			}
-			else {
-				MusicPlayer.rhyme.setSize(350, 193);
-				minimodeBtn.setIcon(new ImageIcon(icon_minimode));
-			}
 		}
 	}
 }

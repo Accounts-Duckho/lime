@@ -44,7 +44,7 @@ public class Get {
 	}
 
 	public void metaData(boolean encoding) {
-		File currentSong = new File(MusicPlayer.list.get(MusicPlayer.queue));
+		File currentSong = new File(MusicPlayer.songList.get(MusicPlayer.songQueue));
 		AudioFile music;
 		try {
 			music = AudioFileIO.read(currentSong);
@@ -54,7 +54,6 @@ public class Get {
 			songname = infoTag.getFirst(FieldKey.TITLE);
 			genre = infoTag.getFirst(FieldKey.GENRE);
 			duration= music.getAudioHeader().getTrackLength();
-			System.out.println(genre);
 			final List<Artwork> artworkList = infoTag.getArtworkList();
 
 			if (artworkList.size() > 0) {
@@ -80,7 +79,7 @@ public class Get {
 	}
 	
 	public void metaData(int n) {
-		File currentSong = new File(MusicPlayer.list.get(n));
+		File currentSong = new File(MusicPlayer.songList.get(n));
 			AudioFile music;
 			try {
 				music = AudioFileIO.read(currentSong);
@@ -90,7 +89,6 @@ public class Get {
 				songname = infoTag.getFirst(FieldKey.TITLE);
 				genre = infoTag.getFirst(FieldKey.GENRE);
 				duration= music.getAudioHeader().getTrackLength();
-				System.out.println(genre);
 				final List<Artwork> artworkList = infoTag.getArtworkList();
 
 				if (artworkList.size() > 0) {

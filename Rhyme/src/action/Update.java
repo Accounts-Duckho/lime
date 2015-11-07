@@ -12,17 +12,17 @@ class Update {
 		String songName = get.songName();
 		Image albumArt = get.albumArt();
 		
-		MusicPlayer.info_panel.removeAll();
-		MusicPlayer.info_panel.getSongInfo(songName, singerName);
-		MusicPlayer.info_panel.loadInfoPanel();
-		MusicPlayer.info_panel.updateUI();
+		MusicPlayer.songInfo_panel.removeAll();
+		MusicPlayer.songInfo_panel.getSongInfo(songName, singerName);
+		MusicPlayer.songInfo_panel.loadInfoPanel();
+		MusicPlayer.songInfo_panel.updateUI();
 		
 		MusicPlayer.albumArt.changeBg(albumArt);
 	}
 	public void songInfo(String songName, String singerName) {
-		MusicPlayer.info_panel.removeAll();
-		MusicPlayer.info_panel.getSongInfo(songName, singerName);
-		MusicPlayer.info_panel.loadInfoPanel();
-		MusicPlayer.info_panel.updateUI();
+		MusicPlayer.songInfo_panel.removeAll();
+		MusicPlayer.songInfo_panel.getSongInfo(songName, singerName);
+		MusicPlayer.songInfo_panel.loadInfoPanel();
+		MusicPlayer.songInfo_panel.updateUI();
 	}
 	}

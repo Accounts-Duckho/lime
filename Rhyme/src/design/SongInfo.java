@@ -43,7 +43,7 @@ public class SongInfo extends JPanel {
 			this.songName = songName;
 			showFileName = false;
 		} else {
-			this.fileName = new File(MusicPlayer.list.get(MusicPlayer.queue))
+			this.fileName = new File(MusicPlayer.songList.get(MusicPlayer.songQueue))
 					.getName();
 			showFileName = true;
 		}
@@ -53,18 +53,18 @@ public class SongInfo extends JPanel {
 		// Foreground = text color
 		if (showFileName) {
 			fileNameInfo = new JLabel(fileName);
-			fileNameInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 15));
+			fileNameInfo.setFont(new Font("Bitstream Vera Sans Mono", Font.PLAIN, 15));
 			fileNameInfo.setForeground(Color.WHITE); // text color
 			fileNameInfo.setAlignmentX(CENTER_ALIGNMENT);
 		} else {
 			singerInfo = new JLabel(singerName);
-			singerInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 9));
+			singerInfo.setFont(new Font("Bitstream Vera Sans Mono", Font.PLAIN, 10));
 			singerInfo.setForeground(Color.WHITE);
 			singerInfo.setAlignmentX(CENTER_ALIGNMENT);
 			singerInfo.addMouseListener(new EncodeAction());
 
 			songNameInfo = new JLabel(songName);
-			songNameInfo.setFont(new Font("Malgun Gothic", Font.PLAIN, 20));
+			songNameInfo.setFont(new Font("Bitstream Vera Sans Mono", Font.PLAIN, 20));
 			songNameInfo.setForeground(Color.WHITE);
 			songNameInfo.setAlignmentX(CENTER_ALIGNMENT);
 			songNameInfo.addMouseListener(new EncodeAction());
@@ -80,7 +80,7 @@ public class SongInfo extends JPanel {
 			this.add(Box.createRigidArea(new Dimension(19, 0))); /* empty block */
 		} else {
 			this.add(songNameInfo);
-			this.add(Box.createRigidArea(new Dimension(3, 0))); /* empty block */
+			this.add(Box.createRigidArea(new Dimension(5, 0))); /* empty block */
 			this.add(singerInfo);
 			this.add(Box.createRigidArea(new Dimension(15, 0))); /* empty block */
 			// this.add(timer);

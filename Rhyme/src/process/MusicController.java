@@ -33,12 +33,12 @@ public class MusicController extends JPanel {
 	final URL icon_pause = getClass().getResource("/images/icons/pause.png");
 	final URL icon_stop = getClass().getResource("/images/icons/stop.png");
 	PlaySong playAction = new PlaySong();
+	public boolean isPlaying=false;
 
 	public MusicController() {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setSize(168, 70);
 		buildPanel();
-		switch_btn(false);
 		setOpaque(false);
 	}
 
@@ -85,8 +85,8 @@ public class MusicController extends JPanel {
 		this.add(Box.createRigidArea(new Dimension(18, 0))); /* empty block */
 	}
 
-	public void switch_btn(boolean playing) {
-		if (playing) {
+	public void switch_btn() {
+		if (isPlaying) {
 			onoffBtn.setIcon(new ImageIcon(icon_pause));
 		} else {
 			onoffBtn.setIcon(new ImageIcon(icon_play));
@@ -95,21 +95,19 @@ public class MusicController extends JPanel {
 
 	class previousBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			MusicPlayer.repeat=false;
 			playAction.playPrevious();
 		}
 	}
 
 	class nextBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			MusicPlayer.repeat=false;
 			playAction.playNext();
 		}
 	}
 
 	class onoffBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (MusicPlayer.list.size() == 0) {
+			if (MusicPlayer.songList.size() == 0) {
 				Get get = new Get();
 				get.song();
 				Set set = new Set();
@@ -117,7 +115,7 @@ public class MusicController extends JPanel {
 				playAction.readySong();
 				playAction.playSong();
 			}
-			if (MusicPlayer.play_mp3 != null) {
+			if (MusicPlayer.playInstance != null) {
 				
 				// NOTSTARTED = 0;
 				// PLAYING = 1;
@@ -125,19 +123,24 @@ public class MusicController extends JPanel {
 				// FINISHED = 3; auto play mod -> must not showing
 
 				try {
-					switch (MusicPlayer.play_mp3.getStatus()) {
+					switch (MusicPlayer.playInstance.getStatus()) {
 					case 0:
-						MusicPlayer.play_mp3.play();
+						isPlaying=true;
+						MusicPlayer.control_panel.switch_btn();
+						MusicPlayer.playInstance.play();
 						break;
 					case 1:
-						MusicPlayer.ctr_panel.switch_btn(false);
-						MusicPlayer.play_mp3.pause();
+						isPlaying=false;
+						MusicPlayer.control_panel.switch_btn();
+						MusicPlayer.playInstance.pause();
 						break;
 					case 2:
-						MusicPlayer.play_mp3.play();
+						isPlaying=true;
+						MusicPlayer.control_panel.switch_btn();
+						MusicPlayer.playInstance.play();
 						break;
 					case 3:
-						MusicPlayer.play_mp3.play();
+						MusicPlayer.playInstance.play();
 						break;
 					}
 				} catch (JavaLayerException e1) {
@@ -149,7 +152,10 @@ public class MusicController extends JPanel {
 	
 	class stopBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			MusicPlayer.play_mp3.stop();
+			isPlaying=false;
+			MusicPlayer.control_panel.switch_btn();
+			MusicPlayer.allowChange=false;
+			MusicPlayer.playInstance.stop();
 			playAction.readySong();
 		}
 	}
