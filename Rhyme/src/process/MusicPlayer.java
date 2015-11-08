@@ -128,6 +128,7 @@ final public class MusicPlayer extends JFrame {
 		paint_titleArea = paint(new Color(30, 113, 69)); // Default : Dark Green
 		paint_controlArea = paint(new Color(30, 113, 69));
 		paint_dockArea = paint(new Color(30, 113, 69));
+		paint_frame = paint(new Color(255,255,255));
 
 		/* File Browser Setting */
 		browser = new JFileChooser();
