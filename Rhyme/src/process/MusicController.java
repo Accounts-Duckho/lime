@@ -26,14 +26,16 @@ public class MusicController extends JPanel {
 	private JButton nextBtn;
 	private JButton onoffBtn;
 	private JButton stopBtn;
-	final URL icon_previous = getClass().getResource(
-			"/images/icons/previous.png");
+	final URL icon_previous = getClass().getResource("/images/icons/previous.png");
 	final URL icon_next = getClass().getResource("/images/icons/next.png");
 	final URL icon_play = getClass().getResource("/images/icons/play.png");
 	final URL icon_pause = getClass().getResource("/images/icons/pause.png");
 	final URL icon_stop = getClass().getResource("/images/icons/stop.png");
 	PlaySong playAction = new PlaySong();
-	public boolean isPlaying=false;
+
+	private final int STOP = 0;
+	private final int PLAY = 1;
+	private final int PAUSE = 2;
 
 	public MusicController() {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -63,7 +65,7 @@ public class MusicController extends JPanel {
 		onoffBtn.setContentAreaFilled(false);
 		onoffBtn.setMaximumSize(new Dimension(50, 50));
 		onoffBtn.addActionListener(new onoffBtnAction());
-		
+
 		stopBtn = new JButton(new ImageIcon(icon_stop));
 		stopBtn.setBorder(null);
 		stopBtn.setFocusable(false);
@@ -86,8 +88,10 @@ public class MusicController extends JPanel {
 	}
 
 	public void switch_btn() {
-		if (isPlaying) {
+		if (MusicPlayer.playStatus == PLAY) {
 			onoffBtn.setIcon(new ImageIcon(icon_pause));
+		} else if (MusicPlayer.playStatus == PAUSE) {
+			onoffBtn.setIcon(new ImageIcon(icon_play));
 		} else {
 			onoffBtn.setIcon(new ImageIcon(icon_play));
 		}
@@ -95,14 +99,14 @@ public class MusicController extends JPanel {
 
 	class previousBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			MusicPlayer.skip=true;
+			MusicPlayer.previousRequested = true;
 			playAction.playPrevious();
 		}
 	}
 
 	class nextBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			MusicPlayer.skip=true;
+			MusicPlayer.nextRequested = true;
 			playAction.playNext();
 		}
 	}
@@ -118,30 +122,30 @@ public class MusicController extends JPanel {
 				playAction.playSong();
 			}
 			if (MusicPlayer.playInstance != null) {
-				
+
 				// NOTSTARTED = 0;
 				// PLAYING = 1;
 				// PAUSED = 2;
-				// FINISHED = 3; auto play mod -> must not showing
-
+				// FINISHED = 3;
 				try {
 					switch (MusicPlayer.playInstance.getStatus()) {
 					case 0:
-						isPlaying=true;
+						MusicPlayer.playStatus = PLAY;
 						MusicPlayer.control_panel.switch_btn();
 						MusicPlayer.playInstance.play();
 						break;
 					case 1:
-						isPlaying=false;
+						MusicPlayer.playStatus = PAUSE;
 						MusicPlayer.control_panel.switch_btn();
 						MusicPlayer.playInstance.pause();
 						break;
 					case 2:
-						isPlaying=true;
+						MusicPlayer.playStatus = PLAY;
 						MusicPlayer.control_panel.switch_btn();
 						MusicPlayer.playInstance.play();
 						break;
 					case 3:
+						MusicPlayer.playStatus = PLAY;
 						MusicPlayer.playInstance.play();
 						break;
 					}
@@ -151,16 +155,14 @@ public class MusicController extends JPanel {
 			}
 		}
 	}
-	
+
 	class stopBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			isPlaying=false;
-			MusicPlayer.stopClicked=true;
+			MusicPlayer.playStatus = STOP;
+			MusicPlayer.stopRequested = true;
 			MusicPlayer.control_panel.switch_btn();
-			MusicPlayer.allowChange=false;
 			MusicPlayer.playInstance.stop();
-			playAction.readySong();
 		}
 	}
-	
+
 }

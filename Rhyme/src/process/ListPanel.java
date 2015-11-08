@@ -18,11 +18,13 @@ import action.PlaySong;
 
 @SuppressWarnings("serial")
 public class ListPanel extends JPanel {
+	private final int PLAY = 1;
 	private JButton[] songBtn;
+
 	public ListPanel() {
 		setVisible(false);
 		setLayout(new BorderLayout());
-		setBackground(new Color(255,255,255));
+		setBackground(new Color(255, 255, 255));
 		songBtn = new JButton[149];
 		setPreferredSize(new Dimension(348, 206));
 	}
@@ -36,10 +38,11 @@ public class ListPanel extends JPanel {
 				songBtn[i].setBorder(null);
 				songBtn[i].setFocusable(false);
 				songBtn[i].setContentAreaFilled(false);
-				String songname = new String (new File(MusicPlayer.songList.get(i)).getName()).replaceFirst("[.][^.]+$", "");
+				String songname = new String(new File(MusicPlayer.songList.get(i)).getName()).replaceFirst("[.][^.]+$",
+						"");
 				get.metaData(i);
-				int minute=get.duration()/60;
-				int second=get.duration()%60;
+				int minute = get.duration() / 60;
+				int second = get.duration() % 60;
 				songBtn[i].addMouseListener(new songBtnAction(i));
 				songBtn[i].setBounds(0, 10 + 17 * i, 348, 17);
 				songBtn[i].setText(songname + "|" + minute + ":" + String.format("%02d", second));
@@ -55,8 +58,8 @@ public class ListPanel extends JPanel {
 	public void refreshList() {
 		setVisible(false);
 		removeAll();
-		add(loadWaitList());		
-		setPreferredSize(new Dimension(348, 10+17*MusicPlayer.songList.size()));
+		add(loadWaitList());
+		setPreferredSize(new Dimension(348, 10 + 17 * MusicPlayer.songList.size()));
 		MusicPlayer.songList_scrollBar.getViewport().add(MusicPlayer.songList_panel);
 		setVisible(true);
 	}
@@ -72,9 +75,8 @@ public class ListPanel extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() == 2) {
 				try {
-					MusicPlayer.isChanged = true;
 					MusicPlayer.songQueue = count;
-					MusicPlayer.control_panel.isPlaying=true;
+					MusicPlayer.playStatus = PLAY;
 					MusicPlayer.control_panel.switch_btn();
 					playAction.readySong();
 					playAction.playSong();

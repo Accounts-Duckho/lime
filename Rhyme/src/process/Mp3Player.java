@@ -2,16 +2,22 @@ package process;
 
 import java.io.InputStream;
 
+import action.PlaySong;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.AudioDevice;
 import javazoom.jl.player.Player;
-import action.PlaySong;
 
 public class Mp3Player {
 	private final static int NOTSTARTED = 0;
 	private final static int PLAYING = 1;
 	private final static int PAUSED = 2;
 	private final static int FINISHED = 3;
+
+	private final int STOP = 0;
+
+	private final int NoChanged = 0;
+	private final int stopRequested = 3;
+
 	private final Player player;
 	private final Object playerLock = new Object();
 
@@ -29,6 +35,7 @@ public class Mp3Player {
 
 	// Starts playback (resumes if paused)
 	public void play() throws JavaLayerException {
+		MusicPlayer.setDefault();
 		synchronized (playerLock) {
 			switch (playerStatus) {
 			case NOTSTARTED:
@@ -97,43 +104,36 @@ public class Mp3Player {
 				}
 			}
 		}
+		player.close();
 		if (!MusicPlayer.isRepeating) {
-			if (MusicPlayer.isChanged || MusicPlayer.songQueue + 1 == MusicPlayer.songList.size()) {
-				MusicPlayer.control_panel.isPlaying = true;
-				if (!MusicPlayer.stopClicked) {
-					MusicPlayer.control_panel.switch_btn();
+			if (MusicPlayer.getStatus() == stopRequested || MusicPlayer.songQueue + 1 == MusicPlayer.songList.size()) {
+				MusicPlayer.playStatus = STOP;
+				MusicPlayer.control_panel.switch_btn();
+				playAction.readySong();
+			} else if (MusicPlayer.getStatus() != NoChanged) {
+				try {
+					playAction.readySong();
+					playAction.playSong();
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-				player.close();
-				if (MusicPlayer.isFlowing && !MusicPlayer.skip) {
-					if (MusicPlayer.songQueue + 1 != MusicPlayer.songList.size())
-						playAction.playNext();
-				}
-				MusicPlayer.isChanged = false;
-			} else
-				close();
-		} else {
+			} else {
+				if (!MusicPlayer.closeRequested)
+					playAction.playNext();
+			}
+		} else
 			try {
 				playAction.readySong();
 				playAction.playSong();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
 	}
 
 	public void close() {
 		synchronized (playerLock) {
 			playerStatus = FINISHED;
-			try {
-				if (MusicPlayer.allowChange)
-					playAction.playNext();
-				else {
-					MusicPlayer.allowChange = true;
-					player.close();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			player.close();
 		}
 	}
 
