@@ -39,7 +39,6 @@ public class PlaySong {
 		if (MusicPlayer.songQueue > 0) {
 			MusicPlayer.songQueue--;
 				MusicPlayer.isChanged = true;
-				MusicPlayer.skip=true;
 			readySong();
 			update.songInfo();
 			playSong();
@@ -50,7 +49,6 @@ public class PlaySong {
 		if (MusicPlayer.songQueue + 1 < MusicPlayer.songList.size()) {
 			MusicPlayer.songQueue++;
 				MusicPlayer.isChanged = true;
-				MusicPlayer.skip=true;
 			readySong();
 			update.songInfo();
 			playSong();

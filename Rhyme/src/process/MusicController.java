@@ -95,12 +95,14 @@ public class MusicController extends JPanel {
 
 	class previousBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			MusicPlayer.skip=true;
 			playAction.playPrevious();
 		}
 	}
 
 	class nextBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			MusicPlayer.skip=true;
 			playAction.playNext();
 		}
 	}
@@ -153,6 +155,7 @@ public class MusicController extends JPanel {
 	class stopBtnAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			isPlaying=false;
+			MusicPlayer.stopClicked=true;
 			MusicPlayer.control_panel.switch_btn();
 			MusicPlayer.allowChange=false;
 			MusicPlayer.playInstance.stop();

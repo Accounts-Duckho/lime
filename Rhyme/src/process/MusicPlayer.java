@@ -53,6 +53,7 @@ final public class MusicPlayer extends JFrame {
 	public static boolean isFlowing = true;
 	public static boolean allowChange = true;
 	public static boolean skip = false;
+	public static boolean stopClicked = false;
 	static Point mouseDownCompCoords; // It tracks mouse
 
 	public static JPanel paint_titleArea;

@@ -21,8 +21,7 @@ public class Mp3Player {
 		this.player = new Player(inputStream);
 	}
 
-	public Mp3Player(final InputStream inputStream,
-			final AudioDevice audioDevice) throws JavaLayerException {
+	public Mp3Player(final InputStream inputStream, final AudioDevice audioDevice) throws JavaLayerException {
 		this.player = new Player(inputStream, audioDevice);
 	}
 
@@ -99,23 +98,23 @@ public class Mp3Player {
 			}
 		}
 		if (!MusicPlayer.isRepeating) {
-			if (MusicPlayer.isChanged
-					|| MusicPlayer.songQueue + 1 == MusicPlayer.songList.size()) {
-				MusicPlayer.control_panel.isPlaying=true;
-				MusicPlayer.control_panel.switch_btn();
+			if (MusicPlayer.isChanged || MusicPlayer.songQueue + 1 == MusicPlayer.songList.size()) {
+				MusicPlayer.control_panel.isPlaying = true;
+				if (!MusicPlayer.stopClicked) {
+					MusicPlayer.control_panel.switch_btn();
+				}
 				player.close();
-				if(MusicPlayer.isFlowing && !MusicPlayer.skip) {
-					if(MusicPlayer.songQueue + 1 != MusicPlayer.songList.size())
-				playAction.playNext();
+				if (MusicPlayer.isFlowing && !MusicPlayer.skip) {
+					if (MusicPlayer.songQueue + 1 != MusicPlayer.songList.size())
+						playAction.playNext();
 				}
 				MusicPlayer.isChanged = false;
 			} else
 				close();
-		}
-		else {
+		} else {
 			try {
-					playAction.readySong();
-					playAction.playSong();
+				playAction.readySong();
+				playAction.playSong();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -126,10 +125,10 @@ public class Mp3Player {
 		synchronized (playerLock) {
 			playerStatus = FINISHED;
 			try {
-				if(MusicPlayer.allowChange)
+				if (MusicPlayer.allowChange)
 					playAction.playNext();
 				else {
-					MusicPlayer.allowChange=true;
+					MusicPlayer.allowChange = true;
 					player.close();
 				}
 			} catch (Exception e) {
