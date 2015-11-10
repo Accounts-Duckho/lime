@@ -54,6 +54,7 @@ final public class MusicPlayer extends JFrame {
 	public static boolean previousRequested = false;
 	public static boolean stopRequested = false;
 	public static boolean closeRequested = false;
+	public static boolean changeRequested=false;
 	public static int playStatus = 0;
 	// 0 = stop 1= play 2= pause
 	static Point mouseDownCompCoords; // It tracks mouse
@@ -224,6 +225,7 @@ final public class MusicPlayer extends JFrame {
 		nextRequested = false;
 		previousRequested = false;
 		stopRequested = false;
+		changeRequested = false;
 	}
 
 	public static void main(String[] args) throws Exception {

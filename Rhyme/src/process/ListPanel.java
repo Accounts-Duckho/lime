@@ -65,7 +65,6 @@ public class ListPanel extends JPanel {
 	}
 
 	class songBtnAction implements MouseListener {
-		PlaySong playAction = new PlaySong();
 		private int count;
 
 		public songBtnAction(int n) {
@@ -75,6 +74,9 @@ public class ListPanel extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() == 2) {
 				try {
+					PlaySong playAction = new PlaySong();
+					MusicPlayer.changeRequested=true;
+					System.out.println(count);
 					MusicPlayer.songQueue = count;
 					MusicPlayer.playStatus = PLAY;
 					MusicPlayer.control_panel.switch_btn();

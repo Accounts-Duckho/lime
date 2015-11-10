@@ -118,7 +118,7 @@ public class Mp3Player {
 					e.printStackTrace();
 				}
 			} else {
-				if (!MusicPlayer.closeRequested)
+				if (!MusicPlayer.closeRequested && !MusicPlayer.changeRequested)
 					playAction.playNext();
 			}
 		} else
