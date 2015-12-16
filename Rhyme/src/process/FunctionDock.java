@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,7 +38,7 @@ public class FunctionDock extends JPanel {
 	private JButton yellowBtn;
 	private JButton darkOrangeBtn;
 	private JButton redBtn;
-	private JButton darkRedBtn;
+	private JButton greyBlackBtn;
 	/* Icon Load */
 	final URL icon_load = getClass().getResource("/images/icons/load.png");
 	final URL icon_repeat = getClass().getResource("/images/icons/repeat.png");
@@ -56,7 +57,7 @@ public class FunctionDock extends JPanel {
 	final URL icon_yellow = getClass().getResource("/images/colors/yellow.png");
 	final URL icon_darkOrange = getClass().getResource("/images/colors/darkorange.png");
 	final URL icon_red = getClass().getResource("/images/colors/red.png");
-	final URL icon_darkRed = getClass().getResource("/images/colors/darkred.png");
+	final URL icon_greyBlack = getClass().getResource("/images/colors/greyBlack.png");
 
 	public FunctionDock() {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -80,42 +81,42 @@ public class FunctionDock extends JPanel {
 		repeatBtn.setMaximumSize(new Dimension(20, 20));
 		repeatBtn.addActionListener(new repeatBtnAction());
 		
-		lightGreenBtn = new JButton(new ImageIcon(icon_lightGreen));
-		lightGreenBtn.setBorder(null);
-		lightGreenBtn.setFocusable(false);
-		lightGreenBtn.setContentAreaFilled(false);
-		lightGreenBtn.setMaximumSize(new Dimension(20, 20));
-		lightGreenBtn.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent event) {
-		        setBackgroundColor(new Color(153,180,51));
-		    }
-		    public final void setBackgroundColor(Color background) 
-		    { 
-		    	MusicPlayer.paint_titleArea.setBackground(background); 
-		    	MusicPlayer.paint_controlArea.setBackground(background);
-		    	MusicPlayer.paint_dockArea.setBackground(background);
-		    	MusicPlayer.rhyme.repaint();
-		    } 
-		});
+//		lightGreenBtn = new JButton(new ImageIcon(icon_lightGreen));
+//		lightGreenBtn.setBorder(null);
+//		lightGreenBtn.setFocusable(false);
+//		lightGreenBtn.setContentAreaFilled(false);
+//		lightGreenBtn.setMaximumSize(new Dimension(20, 20));
+//		lightGreenBtn.addActionListener(new ActionListener() {
+//		    public void actionPerformed(ActionEvent event) {
+//		        setBackgroundColor(new Color(153,180,51));
+//		    }
+//		    public final void setBackgroundColor(Color background) 
+//		    { 
+//		    	MusicPlayer.paint_titleArea.setBackground(background); 
+//		    	MusicPlayer.paint_controlArea.setBackground(background);
+//		    	MusicPlayer.paint_dockArea.setBackground(background);
+//		    	MusicPlayer.rhyme.repaint();
+//		    } 
+//		});
 
 		
-		greenBtn = new JButton(new ImageIcon(icon_green));
-		greenBtn.setBorder(null);
-		greenBtn.setFocusable(false);
-		greenBtn.setContentAreaFilled(false);
-		greenBtn.setMaximumSize(new Dimension(20, 20));
-		greenBtn.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent event) {
-		        setBackgroundColor(new Color(0,163,0));
-		    }
-		    public final void setBackgroundColor(Color background) 
-		    { 
-		    	MusicPlayer.paint_titleArea.setBackground(background); 
-		    	MusicPlayer.paint_controlArea.setBackground(background);
-		    	MusicPlayer.paint_dockArea.setBackground(background);
-		    	MusicPlayer.rhyme.repaint();
-		    } 
-		});
+//		greenBtn = new JButton(new ImageIcon(icon_green));
+//		greenBtn.setBorder(null);
+//		greenBtn.setFocusable(false);
+//		greenBtn.setContentAreaFilled(false);
+//		greenBtn.setMaximumSize(new Dimension(20, 20));
+//		greenBtn.addActionListener(new ActionListener() {
+//		    public void actionPerformed(ActionEvent event) {
+//		        setBackgroundColor(new Color(0,163,0));
+//		    }
+//		    public final void setBackgroundColor(Color background) 
+//		    { 
+//		    	MusicPlayer.paint_titleArea.setBackground(background); 
+//		    	MusicPlayer.paint_controlArea.setBackground(background);
+//		    	MusicPlayer.paint_dockArea.setBackground(background);
+//		    	MusicPlayer.rhyme.repaint();
+//		    } 
+//		});
 		
 		darkGreenBtn = new JButton(new ImageIcon(icon_darkGreen));
 		darkGreenBtn.setBorder(null);
@@ -135,41 +136,41 @@ public class FunctionDock extends JPanel {
 		    } 
 		});
 		
-		magentaBtn = new JButton(new ImageIcon(icon_magenta));
-		magentaBtn.setBorder(null);
-		magentaBtn.setFocusable(false);
-		magentaBtn.setContentAreaFilled(false);
-		magentaBtn.setMaximumSize(new Dimension(20, 20));
-		magentaBtn.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent event) {
-		        setBackgroundColor(new Color(255,0,151));
-		    }
-		    public final void setBackgroundColor(Color background) 
-		    { 
-		    	MusicPlayer.paint_titleArea.setBackground(background); 
-		    	MusicPlayer.paint_controlArea.setBackground(background);
-		    	MusicPlayer.paint_dockArea.setBackground(background);
-		    	MusicPlayer.rhyme.repaint();
-		    } 
-		});
+//		magentaBtn = new JButton(new ImageIcon(icon_magenta));
+//		magentaBtn.setBorder(null);
+//		magentaBtn.setFocusable(false);
+//		magentaBtn.setContentAreaFilled(false);
+//		magentaBtn.setMaximumSize(new Dimension(20, 20));
+//		magentaBtn.addActionListener(new ActionListener() {
+//		    public void actionPerformed(ActionEvent event) {
+//		        setBackgroundColor(new Color(255,0,151));
+//		    }
+//		    public final void setBackgroundColor(Color background) 
+//		    { 
+//		    	MusicPlayer.paint_titleArea.setBackground(background); 
+//		    	MusicPlayer.paint_controlArea.setBackground(background);
+//		    	MusicPlayer.paint_dockArea.setBackground(background);
+//		    	MusicPlayer.rhyme.repaint();
+//		    } 
+//		});
 		
-		lightPurpleBtn = new JButton(new ImageIcon(icon_lightPurple));
-		lightPurpleBtn.setBorder(null);
-		lightPurpleBtn.setFocusable(false);
-		lightPurpleBtn.setContentAreaFilled(false);
-		lightPurpleBtn.setMaximumSize(new Dimension(20, 20));
-		lightPurpleBtn.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent event) {
-		        setBackgroundColor(new Color(159,0,167));
-		    }
-		    public final void setBackgroundColor(Color background) 
-		    { 
-		    	MusicPlayer.paint_titleArea.setBackground(background); 
-		    	MusicPlayer.paint_controlArea.setBackground(background);
-		    	MusicPlayer.paint_dockArea.setBackground(background);
-		    	MusicPlayer.rhyme.repaint();
-		    } 
-		});
+//		lightPurpleBtn = new JButton(new ImageIcon(icon_lightPurple));
+//		lightPurpleBtn.setBorder(null);
+//		lightPurpleBtn.setFocusable(false);
+//		lightPurpleBtn.setContentAreaFilled(false);
+//		lightPurpleBtn.setMaximumSize(new Dimension(20, 20));
+//		lightPurpleBtn.addActionListener(new ActionListener() {
+//		    public void actionPerformed(ActionEvent event) {
+//		        setBackgroundColor(new Color(159,0,167));
+//		    }
+//		    public final void setBackgroundColor(Color background) 
+//		    { 
+//		    	MusicPlayer.paint_titleArea.setBackground(background); 
+//		    	MusicPlayer.paint_controlArea.setBackground(background);
+//		    	MusicPlayer.paint_dockArea.setBackground(background);
+//		    	MusicPlayer.rhyme.repaint();
+//		    } 
+//		});
 		
 		purpleBtn = new JButton(new ImageIcon(icon_purple));
 		purpleBtn.setBorder(null);
@@ -279,68 +280,68 @@ public class FunctionDock extends JPanel {
 		    } 
 		});
 		
-		yellowBtn = new JButton(new ImageIcon(icon_yellow));
-		yellowBtn.setBorder(null);
-		yellowBtn.setFocusable(false);
-		yellowBtn.setContentAreaFilled(false);
-		yellowBtn.setMaximumSize(new Dimension(20, 20));
-		yellowBtn.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent event) {
-		        setBackgroundColor(new Color(255,196,13));
-		    }
-		    public final void setBackgroundColor(Color background) 
-		    { 
-		    	MusicPlayer.paint_titleArea.setBackground(background); 
-		    	MusicPlayer.paint_controlArea.setBackground(background);
-		    	MusicPlayer.paint_dockArea.setBackground(background);
-		    	MusicPlayer.rhyme.repaint();
-		    } 
-		});
+//		yellowBtn = new JButton(new ImageIcon(icon_yellow));
+//		yellowBtn.setBorder(null);
+//		yellowBtn.setFocusable(false);
+//		yellowBtn.setContentAreaFilled(false);
+//		yellowBtn.setMaximumSize(new Dimension(20, 20));
+//		yellowBtn.addActionListener(new ActionListener() {
+//		    public void actionPerformed(ActionEvent event) {
+//		        setBackgroundColor(new Color(R,G,B));
+//		    }
+//		    public final void setBackgroundColor(Color background) 
+//		    { 
+//		    	MusicPlayer.paint_titleArea.setBackground(background); 
+//		    	MusicPlayer.paint_controlArea.setBackground(background);
+//		    	MusicPlayer.paint_dockArea.setBackground(background);
+//		    	MusicPlayer.rhyme.repaint();
+//		    } 
+//		});
 		
-		darkOrangeBtn = new JButton(new ImageIcon(icon_darkOrange));
-		darkOrangeBtn.setBorder(null);
-		darkOrangeBtn.setFocusable(false);
-		darkOrangeBtn.setContentAreaFilled(false);
-		darkOrangeBtn.setMaximumSize(new Dimension(20, 20));
-		darkOrangeBtn.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent event) {
-		        setBackgroundColor(new Color(218,83,44));
-		    }
-		    public final void setBackgroundColor(Color background) 
-		    { 
-		    	MusicPlayer.paint_titleArea.setBackground(background); 
-		    	MusicPlayer.paint_controlArea.setBackground(background);
-		    	MusicPlayer.paint_dockArea.setBackground(background);
-		    	MusicPlayer.rhyme.repaint();
-		    } 
-		});
+//		darkOrangeBtn = new JButton(new ImageIcon(icon_darkOrange));
+//		darkOrangeBtn.setBorder(null);
+//		darkOrangeBtn.setFocusable(false);
+//		darkOrangeBtn.setContentAreaFilled(false);
+//		darkOrangeBtn.setMaximumSize(new Dimension(20, 20));
+//		darkOrangeBtn.addActionListener(new ActionListener() {
+//		    public void actionPerformed(ActionEvent event) {
+//		        setBackgroundColor(new Color(218,83,44));
+//		    }
+//		    public final void setBackgroundColor(Color background) 
+//		    { 
+//		    	MusicPlayer.paint_titleArea.setBackground(background); 
+//		    	MusicPlayer.paint_controlArea.setBackground(background);
+//		    	MusicPlayer.paint_dockArea.setBackground(background);
+//		    	MusicPlayer.rhyme.repaint();
+//		    } 
+//		});
 		
-		redBtn = new JButton(new ImageIcon(icon_red));
-		redBtn.setBorder(null);
-		redBtn.setFocusable(false);
-		redBtn.setContentAreaFilled(false);
-		redBtn.setMaximumSize(new Dimension(20, 20));
-		redBtn.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent event) {
-		        setBackgroundColor(new Color(238,17,17));
-		    }
-		    public final void setBackgroundColor(Color background) 
-		    { 
-		    	MusicPlayer.paint_titleArea.setBackground(background); 
-		    	MusicPlayer.paint_controlArea.setBackground(background);
-		    	MusicPlayer.paint_dockArea.setBackground(background);
-		    	MusicPlayer.rhyme.repaint();
-		    } 
-		});
+//		redBtn = new JButton(new ImageIcon(icon_red));
+//		redBtn.setBorder(null);
+//		redBtn.setFocusable(false);
+//		redBtn.setContentAreaFilled(false);
+//		redBtn.setMaximumSize(new Dimension(20, 20));
+//		redBtn.addActionListener(new ActionListener() {
+//		    public void actionPerformed(ActionEvent event) {
+//		        setBackgroundColor(new Color(238,17,17));
+//		    }
+//		    public final void setBackgroundColor(Color background) 
+//		    { 
+//		    	MusicPlayer.paint_titleArea.setBackground(background); 
+//		    	MusicPlayer.paint_controlArea.setBackground(background);
+//		    	MusicPlayer.paint_dockArea.setBackground(background);
+//		    	MusicPlayer.rhyme.repaint();
+//		    } 
+//		});
 
-		darkRedBtn = new JButton(new ImageIcon(icon_darkRed));
-		darkRedBtn.setBorder(null);
-		darkRedBtn.setFocusable(false);
-		darkRedBtn.setContentAreaFilled(false);
-		darkRedBtn.setMaximumSize(new Dimension(20, 20));
-		darkRedBtn.addActionListener(new ActionListener() {
+		greyBlackBtn = new JButton(new ImageIcon(icon_greyBlack));
+		greyBlackBtn.setBorder(null);
+		greyBlackBtn.setFocusable(false);
+		greyBlackBtn.setContentAreaFilled(false);
+		greyBlackBtn.setMaximumSize(new Dimension(20, 20));
+		greyBlackBtn.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent event) {
-		        setBackgroundColor(new Color(185,29,71));
+		        setBackgroundColor(new Color(42,43,51));
 		    }
 		    public final void setBackgroundColor(Color background) 
 		    { 
@@ -350,24 +351,26 @@ public class FunctionDock extends JPanel {
 		    	MusicPlayer.rhyme.repaint();
 		    } 
 		});
-		
+		this.add(Box.createRigidArea(new Dimension(3, 0)));
 		this.add(repeatBtn);
+		this.add(Box.createRigidArea(new Dimension(3, 0)));
 		this.add(loadBtn);
-		this.add(lightGreenBtn);
-		this.add(greenBtn);
+//		this.add(Box.createRigidArea(new Dimension(140, 0)));
+//		this.add(lightGreenBtn);
+//		this.add(greenBtn);
 		this.add(darkGreenBtn);
-		this.add(magentaBtn);
-		this.add(lightPurpleBtn);
+//		this.add(magentaBtn);
+//		this.add(lightPurpleBtn);
 		this.add(purpleBtn);
 		this.add(darkPurpleBtn);
 		this.add(darkenBtn);
 		this.add(tealBtn);
 		this.add(blueBtn);
 		this.add(darkBlueBtn);
-		this.add(yellowBtn);
-		this.add(darkOrangeBtn);
-		this.add(redBtn);
-		this.add(darkRedBtn);
+//		this.add(yellowBtn);
+//		this.add(darkOrangeBtn);
+//		this.add(redBtn);
+		this.add(greyBlackBtn);
 	}
 
 	class LoadBtnAction implements ActionListener {
