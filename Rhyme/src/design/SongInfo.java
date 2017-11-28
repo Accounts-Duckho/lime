@@ -6,8 +6,8 @@ package design;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 
 import javax.swing.Box;
@@ -87,7 +87,7 @@ public class SongInfo extends JPanel {
 		}
 	}
 
-	class EncodeAction implements MouseListener {
+	class EncodeAction extends MouseAdapter {
 		String object;
 
 		public void mouseClicked(MouseEvent e) {
@@ -97,18 +97,6 @@ public class SongInfo extends JPanel {
 				Set set = new Set();
 				set.fixEncode(get.songName(), get.singerName());
 			}
-		}
-
-		public void mouseEntered(MouseEvent e1) {
-		}
-
-		public void mouseExited(MouseEvent e2) {
-		}
-
-		public void mouseReleased(MouseEvent e3) {
-		}
-
-		public void mousePressed(MouseEvent e4) {
 		}
 	}
 
