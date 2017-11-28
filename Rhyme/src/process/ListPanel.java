@@ -4,8 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -64,7 +64,7 @@ public class ListPanel extends JPanel {
 		setVisible(true);
 	}
 
-	class songBtnAction implements MouseListener {
+	class songBtnAction extends MouseAdapter {
 		private int count;
 
 		public songBtnAction(int n) {
@@ -86,18 +86,6 @@ public class ListPanel extends JPanel {
 					e1.printStackTrace();
 				}
 			}
-		}
-
-		public void mouseEntered(MouseEvent e1) {
-		}
-
-		public void mouseExited(MouseEvent e2) {
-		}
-
-		public void mouseReleased(MouseEvent e3) {
-		}
-
-		public void mousePressed(MouseEvent e4) {
 		}
 	}
 }
