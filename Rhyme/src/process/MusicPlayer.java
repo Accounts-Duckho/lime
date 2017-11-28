@@ -8,9 +8,9 @@ import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseMotionAdapter;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -32,7 +32,7 @@ import design.SongInfo;
 
 @SuppressWarnings("serial")
 final public class MusicPlayer extends JFrame {
-	public static MusicPlayer rhyme;
+	public static MusicPlayer rhyme; 
 	public static SongInfo songInfo_panel;
 	public static MusicController control_panel; // Previous, Play, Pause,
 													// Resume, Next
@@ -80,29 +80,16 @@ final public class MusicPlayer extends JFrame {
 		setLocationRelativeTo(null); /* make it locate center */
 
 		// Enabling Mouse Button Tracking
-		dragArea.addMouseListener(new MouseListener() {
+		dragArea.addMouseListener(new MouseAdapter() {
 			public void mouseReleased(MouseEvent e) {
 				mouseDownCompCoords = null;
 			}
-
 			public void mousePressed(MouseEvent e) {
 				mouseDownCompCoords = e.getPoint();
 			}
-
-			public void mouseExited(MouseEvent e) {
-			}
-
-			public void mouseEntered(MouseEvent e) {
-			}
-
-			public void mouseClicked(MouseEvent e) {
-			}
 		});
 		// Enabling Dragging Position Tracking
-		dragArea.addMouseMotionListener(new MouseMotionListener() {
-			public void mouseMoved(MouseEvent e) {
-			}
-
+		dragArea.addMouseMotionListener(new MouseMotionAdapter() {
 			public void mouseDragged(MouseEvent e) {
 				Point currCoords = e.getLocationOnScreen();
 				rhyme.setLocation(currCoords.x - mouseDownCompCoords.x, currCoords.y - mouseDownCompCoords.y);
